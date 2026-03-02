@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 
 export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
-  const cursorDotRef = useRef<HTMLDivElement>(null);
   const [isHoveringLink, setIsHoveringLink] = useState(false);
   const [isHoveringDarkText, setIsHoveringDarkText] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -13,6 +12,9 @@ export function CustomCursor() {
   const velocity = useRef({ x: 0, y: 0 });
   const lastMousePos = useRef({ x: 0, y: 0 });
   const rafId = useRef<number | undefined>(undefined);
+  
+  // Pour l'effet de trail/smear
+  const prevPositions = useRef<Array<{ x: number; y: number }>>([]);
 
   useEffect(() => {
     // Détecter si on est sur mobile/touch
@@ -28,6 +30,12 @@ export function CustomCursor() {
         y: e.clientY - lastMousePos.current.y
       };
       lastMousePos.current = { x: e.clientX, y: e.clientY };
+      
+      // Stocker les positions précédentes pour l'effet de trail
+      prevPositions.current.push({ x: e.clientX, y: e.clientY });
+      if (prevPositions.current.length > 5) {
+        prevPositions.current.shift();
+      }
       
       if (!isVisible) setIsVisible(true);
     };
@@ -65,26 +73,34 @@ export function CustomCursor() {
 
     // Animation fluide
     const animate = () => {
-      if (cursorRef.current && cursorDotRef.current) {
+      if (cursorRef.current) {
         // Suivi exact de la souris sans délai
         cursorPos.current.x = mousePos.current.x;
         cursorPos.current.y = mousePos.current.y;
         
-        // Calculer la déformation basée sur la vélocité
+        // Calculer la vitesse pour l'effet de déformation
         const speed = Math.sqrt(velocity.current.x ** 2 + velocity.current.y ** 2);
-        const maxStretch = 0.3;
-        const stretch = Math.min(speed * 0.02, maxStretch);
+        
+        // Effet flasque plus prononcé
+        const maxStretch = 0.8;
+        const stretch = Math.min(speed * 0.03, maxStretch);
         
         // Calculer l'angle de déformation
         const angle = Math.atan2(velocity.current.y, velocity.current.x) * (180 / Math.PI);
         
-        // Appliquer les transformations
-        cursorRef.current.style.transform = `translate(${cursorPos.current.x - 20}px, ${cursorPos.current.y - 20}px) rotate(${angle}deg) scale(${1 + stretch}, ${1 - stretch * 0.5})`;
-        cursorDotRef.current.style.transform = `translate(${mousePos.current.x - 4}px, ${mousePos.current.y - 4}px)`;
+        // Appliquer les transformations au curseur
+        // Scale X augmente dans la direction du mouvement, Scale Y diminue (effet flasque)
+        const scaleX = 1 + stretch;
+        const scaleY = 1 - stretch * 0.6;
+        
+        // Ajouter une légère rotation pour accentuer l'effet de mouvement
+        const rotation = angle;
+        
+        cursorRef.current.style.transform = `translate(${cursorPos.current.x - 20}px, ${cursorPos.current.y - 20}px) rotate(${rotation}deg) scale(${scaleX}, ${scaleY})`;
         
         // Réduire progressivement la vélocité
-        velocity.current.x *= 0.9;
-        velocity.current.y *= 0.9;
+        velocity.current.x *= 0.85;
+        velocity.current.y *= 0.85;
       }
       
       rafId.current = requestAnimationFrame(animate);
@@ -113,26 +129,16 @@ export function CustomCursor() {
 
   return (
     <>
-      {/* Curseur principal (cercle) */}
+      {/* Curseur unique avec effet flasque intégré */}
       <div
         ref={cursorRef}
-        className={`fixed top-0 left-0 w-10 h-10 rounded-full pointer-events-none z-[9999] mix-blend-difference transition-all duration-200 ${
+        className={`fixed top-0 left-0 w-10 h-10 rounded-full pointer-events-none z-[9999] mix-blend-difference transition-transform duration-100 ${
           isVisible ? 'opacity-100' : 'opacity-0'
         } ${isHoveringLink ? 'scale-150' : 'scale-100'}`}
         style={{
           backgroundColor: isHoveringDarkText ? '#ffffff' : '#000000',
           border: isHoveringDarkText ? '2px solid #ffffff' : '2px solid #000000',
-        }}
-      />
-      
-      {/* Point central */}
-      <div
-        ref={cursorDotRef}
-        className={`fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-[9999] transition-opacity duration-150 ${
-          isVisible ? 'opacity-100' : 'opacity-0'
-        } ${isHoveringLink ? 'opacity-0' : ''}`}
-        style={{
-          backgroundColor: isHoveringDarkText ? '#000000' : '#ffffff',
+          willChange: 'transform',
         }}
       />
       
