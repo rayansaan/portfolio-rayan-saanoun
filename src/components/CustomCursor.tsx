@@ -40,7 +40,7 @@ export function CustomCursor() {
     <>
       <div
         ref={cursorRef}
-        className={`fixed top-0 left-0 rounded-full pointer-events-none z-[9999] opacity-100 ${
+        className={`fixed top-0 left-0 rounded-full pointer-events-none z-[10000] opacity-100 ${
           isHoveringLink ? 'scale-110' : 'scale-100'
         }`}
         style={{
