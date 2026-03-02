@@ -45,7 +45,7 @@ export function CustomCursor() {
 
   return (
     <>
-      {/* Curseur toujours visible avec contour blanc */}
+      {/* Curseur avec bordure transparente et effet négatif sur le remplissage */}
       <div
         ref={cursorRef}
         className={`fixed top-0 left-0 rounded-full pointer-events-none z-[9999] opacity-100 ${
@@ -54,9 +54,10 @@ export function CustomCursor() {
         style={{
           width: `${CURSOR_SIZE}px`,
           height: `${CURSOR_SIZE}px`,
-          backgroundColor: '#000000',
-          border: '2px solid #ffffff',
-          boxShadow: '0 0 0 1px rgba(0,0,0,0.3)',
+          backgroundColor: '#ffffff',
+          mixBlendMode: 'difference',
+          border: '2px solid rgba(255, 255, 255, 0.6)',
+          boxShadow: '0 0 0 1px rgba(0,0,0,0.1)',
           willChange: 'transform',
         }}
       />
