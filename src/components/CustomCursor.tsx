@@ -5,15 +5,9 @@ export function CustomCursor() {
   const [isHoveringLink, setIsHoveringLink] = useState(false);
   const [isHoveringDarkText, setIsHoveringDarkText] = useState(false);
   
-  // Position et vélocité pour l'effet flasque
-  const mousePos = useRef({ x: 0, y: 0 });
-  const cursorPos = useRef({ x: 0, y: 0 });
-  const velocity = useRef({ x: 0, y: 0 });
-  const lastMousePos = useRef({ x: 0, y: 0 });
-  const rafId = useRef<number | undefined>(undefined);
-  
-  // Pour l'effet de trail/smear
-  const prevPositions = useRef<Array<{ x: number; y: number }>>([]);
+  // Taille du curseur
+  const CURSOR_SIZE = 24;
+  const HALF_SIZE = CURSOR_SIZE / 2;
 
   useEffect(() => {
     // Détecter si on est sur mobile/touch
@@ -21,19 +15,9 @@ export function CustomCursor() {
     if (isTouchDevice) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-      mousePos.current = { x: e.clientX, y: e.clientY };
-      
-      // Calculer la vélocité pour l'effet de déformation
-      velocity.current = {
-        x: e.clientX - lastMousePos.current.x,
-        y: e.clientY - lastMousePos.current.y
-      };
-      lastMousePos.current = { x: e.clientX, y: e.clientY };
-      
-      // Stocker les positions précédentes pour l'effet de trail
-      prevPositions.current.push({ x: e.clientX, y: e.clientY });
-      if (prevPositions.current.length > 5) {
-        prevPositions.current.shift();
+      if (cursorRef.current) {
+        // Position directe sans fluidité
+        cursorRef.current.style.transform = `translate(${e.clientX - HALF_SIZE}px, ${e.clientY - HALF_SIZE}px)`;
       }
     };
 
@@ -65,50 +49,12 @@ export function CustomCursor() {
       setIsHoveringDarkText(isDarkText && isLightBg && target.textContent !== null && target.textContent.trim() !== '');
     };
 
-    // Animation fluide
-    const animate = () => {
-      if (cursorRef.current) {
-        // Suivi exact de la souris sans délai
-        cursorPos.current.x = mousePos.current.x;
-        cursorPos.current.y = mousePos.current.y;
-        
-        // Calculer la vitesse pour l'effet de déformation
-        const speed = Math.sqrt(velocity.current.x ** 2 + velocity.current.y ** 2);
-        
-        // Effet flasque plus prononcé
-        const maxStretch = 0.8;
-        const stretch = Math.min(speed * 0.03, maxStretch);
-        
-        // Calculer l'angle de déformation
-        const angle = Math.atan2(velocity.current.y, velocity.current.x) * (180 / Math.PI);
-        
-        // Appliquer les transformations au curseur
-        // Scale X augmente dans la direction du mouvement, Scale Y diminue (effet flasque)
-        const scaleX = 1 + stretch;
-        const scaleY = 1 - stretch * 0.6;
-        
-        // Ajouter une légère rotation pour accentuer l'effet de mouvement
-        const rotation = angle;
-        
-        cursorRef.current.style.transform = `translate(${cursorPos.current.x - 20}px, ${cursorPos.current.y - 20}px) rotate(${rotation}deg) scale(${scaleX}, ${scaleY})`;
-        
-        // Réduire progressivement la vélocité
-        velocity.current.x *= 0.85;
-        velocity.current.y *= 0.85;
-      }
-      
-      rafId.current = requestAnimationFrame(animate);
-    };
-
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('mousemove', handleElementHover, { passive: true });
-    
-    rafId.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mousemove', handleElementHover);
-      if (rafId.current) cancelAnimationFrame(rafId.current);
     };
   }, []);
 
@@ -119,15 +65,17 @@ export function CustomCursor() {
 
   return (
     <>
-      {/* Curseur unique avec effet flasque intégré */}
+      {/* Curseur simple et direct */}
       <div
         ref={cursorRef}
-        className={`fixed top-0 left-0 w-10 h-10 rounded-full pointer-events-none z-[9999] mix-blend-difference transition-transform duration-100 opacity-100 ${
-          isHoveringLink ? 'scale-150' : 'scale-100'
+        className={`fixed top-0 left-0 rounded-full pointer-events-none z-[9999] mix-blend-difference transition-transform duration-150 opacity-100 ${
+          isHoveringLink ? 'scale-125' : 'scale-100'
         }`}
         style={{
+          width: `${CURSOR_SIZE}px`,
+          height: `${CURSOR_SIZE}px`,
           backgroundColor: isHoveringDarkText ? '#ffffff' : '#000000',
-          border: isHoveringDarkText ? '2px solid #ffffff' : '2px solid #000000',
+          border: isHoveringDarkText ? '1.5px solid #ffffff' : '1.5px solid #000000',
           willChange: 'transform',
         }}
       />
