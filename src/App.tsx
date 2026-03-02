@@ -7,6 +7,7 @@ import { Footer } from '@/components/Footer';
 import { HoverImage } from '@/components/HoverImage';
 import { HoverImageProvider } from '@/context/HoverImageContext';
 import { CustomCursor } from '@/components/CustomCursor';
+import { SmoothScroll } from '@/components/SmoothScroll';
 import { ProjectDetail } from '@/pages/ProjectDetail';
 import { uxUiProjects, otherProjects } from '@/data/projects';
 
@@ -46,6 +47,7 @@ function HomePage() {
 function App() {
   return (
     <HoverImageProvider>
+      <SmoothScroll />
       <CustomCursor />
       <BrowserRouter>
         <Routes>
