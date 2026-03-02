@@ -4,7 +4,7 @@ export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const [isHoveringLink, setIsHoveringLink] = useState(false);
   const [isHoveringDarkText, setIsHoveringDarkText] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   
   // Position et vélocité pour l'effet flasque
   const mousePos = useRef({ x: 0, y: 0 });
@@ -36,12 +36,7 @@ export function CustomCursor() {
       if (prevPositions.current.length > 5) {
         prevPositions.current.shift();
       }
-      
-      if (!isVisible) setIsVisible(true);
     };
-
-    const handleMouseEnter = () => setIsVisible(true);
-    const handleMouseLeave = () => setIsVisible(false);
 
     // Détecter les éléments survolés
     const handleElementHover = (e: MouseEvent) => {
@@ -108,19 +103,15 @@ export function CustomCursor() {
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('mousemove', handleElementHover, { passive: true });
-    document.addEventListener('mouseenter', handleMouseEnter);
-    document.addEventListener('mouseleave', handleMouseLeave);
     
     rafId.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mousemove', handleElementHover);
-      document.removeEventListener('mouseenter', handleMouseEnter);
-      document.removeEventListener('mouseleave', handleMouseLeave);
       if (rafId.current) cancelAnimationFrame(rafId.current);
     };
-  }, [isVisible]);
+  }, []);
 
   // Ne pas afficher sur mobile
   if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
@@ -132,9 +123,9 @@ export function CustomCursor() {
       {/* Curseur unique avec effet flasque intégré */}
       <div
         ref={cursorRef}
-        className={`fixed top-0 left-0 w-10 h-10 rounded-full pointer-events-none z-[9999] mix-blend-difference transition-transform duration-100 ${
-          isVisible ? 'opacity-100' : 'opacity-0'
-        } ${isHoveringLink ? 'scale-150' : 'scale-100'}`}
+        className={`fixed top-0 left-0 w-10 h-10 rounded-full pointer-events-none z-[9999] mix-blend-difference transition-transform duration-100 opacity-100 ${
+          isHoveringLink ? 'scale-150' : 'scale-100'
+        }`}
         style={{
           backgroundColor: isHoveringDarkText ? '#ffffff' : '#000000',
           border: isHoveringDarkText ? '2px solid #ffffff' : '2px solid #000000',
