@@ -10,6 +10,9 @@ export interface Project {
   tags: string[];
   tools: string[];
   description: string;
+  context?: string;
+  website?: string;
+  useCases?: string[];
   role?: string;
   team?: string[];
   challenge?: string;

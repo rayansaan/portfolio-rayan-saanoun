@@ -2,6 +2,16 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { allProjects } from '@/data/projects';
 
+// Composant pour afficher du texte avec des sauts de ligne
+function FormattedText({ text }: { text: string }) {
+  if (!text) return null;
+  return (
+    <div className="whitespace-pre-wrap text-base leading-relaxed">
+      {text}
+    </div>
+  );
+}
+
 export function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
   
@@ -67,9 +77,24 @@ export function ProjectDetail() {
           </h1>
 
           {/* Description */}
-          <p className="text-lg sm:text-xl leading-relaxed max-w-2xl mb-12">
-            {project.description}
-          </p>
+          <div className="text-lg sm:text-xl leading-relaxed max-w-2xl mb-12">
+            <FormattedText text={project.description} />
+          </div>
+
+          {/* Website Link */}
+          {project.website && (
+            <div className="mb-12">
+              <a 
+                href={project.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-base hover:opacity-70 transition-opacity"
+              >
+                Voir le site
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
+          )}
 
           {/* Metadata Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 py-8 border-y border-gray-300/30">
@@ -93,7 +118,31 @@ export function ProjectDetail() {
         </div>
       </section>
 
-      {/* 1. Rôle, équipe, année, durée */}
+      {/* Context */}
+      {project.context && (
+        <section className="w-full px-6 sm:px-10 py-12 sm:py-16 border-t border-gray-300/30">
+          <div className="max-w-4xl">
+            <h2 className="text-sm mb-8">Contexte</h2>
+            <FormattedText text={project.context} />
+          </div>
+        </section>
+      )}
+
+      {/* Use Cases */}
+      {project.useCases && project.useCases.length > 0 && (
+        <section className="w-full px-6 sm:px-10 py-12 sm:py-16 border-t border-gray-300/30">
+          <div className="max-w-4xl">
+            <h2 className="text-sm mb-8">Use Cases</h2>
+            <ul className="list-disc list-inside space-y-2">
+              {project.useCases.map((useCase, index) => (
+                <li key={index} className="text-base">{useCase}</li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {/* Rôle, équipe, année, durée */}
       {(project.role || project.team) && (
         <section className="w-full px-6 sm:px-10 py-12 sm:py-16 border-t border-gray-300/30">
           <div className="max-w-4xl">
@@ -102,7 +151,7 @@ export function ProjectDetail() {
             {project.role && (
               <div className="mb-8">
                 <h3 className="text-lg font-medium mb-4">Mon rôle</h3>
-                <p className="text-base leading-relaxed">{project.role}</p>
+                <FormattedText text={project.role} />
               </div>
             )}
             
@@ -120,27 +169,27 @@ export function ProjectDetail() {
         </section>
       )}
 
-      {/* 2. Challenge */}
+      {/* Challenge */}
       {project.challenge && (
         <section className="w-full px-6 sm:px-10 py-12 sm:py-16 border-t border-gray-300/30">
           <div className="max-w-4xl">
             <h2 className="text-sm mb-8">Challenge</h2>
-            <p className="text-lg leading-relaxed">{project.challenge}</p>
+            <FormattedText text={project.challenge} />
           </div>
         </section>
       )}
 
-      {/* 3. Status Quo */}
+      {/* Status Quo */}
       {project.statusQuo && (
         <section className="w-full px-6 sm:px-10 py-12 sm:py-16 border-t border-gray-300/30">
           <div className="max-w-4xl">
             <h2 className="text-sm mb-8">Status Quo</h2>
-            <p className="text-lg leading-relaxed">{project.statusQuo}</p>
+            <FormattedText text={project.statusQuo} />
           </div>
         </section>
       )}
 
-      {/* 4. Process */}
+      {/* Process */}
       {project.process && Object.values(project.process).some(v => v) && (
         <section className="w-full px-6 sm:px-10 py-12 sm:py-16 border-t border-gray-300/30">
           <div className="max-w-4xl">
@@ -150,42 +199,42 @@ export function ProjectDetail() {
               {project.process.discovery && (
                 <div>
                   <h3 className="text-lg font-medium mb-4">Discovery</h3>
-                  <p className="text-base leading-relaxed">{project.process.discovery}</p>
+                  <FormattedText text={project.process.discovery} />
                 </div>
               )}
               
               {project.process.define && (
                 <div>
                   <h3 className="text-lg font-medium mb-4">Define</h3>
-                  <p className="text-base leading-relaxed">{project.process.define}</p>
+                  <FormattedText text={project.process.define} />
                 </div>
               )}
               
               {project.process.design && (
                 <div>
                   <h3 className="text-lg font-medium mb-4">Design</h3>
-                  <p className="text-base leading-relaxed">{project.process.design}</p>
+                  <FormattedText text={project.process.design} />
                 </div>
               )}
               
               {project.process.prototyping && (
                 <div>
                   <h3 className="text-lg font-medium mb-4">Prototyping</h3>
-                  <p className="text-base leading-relaxed">{project.process.prototyping}</p>
+                  <FormattedText text={project.process.prototyping} />
                 </div>
               )}
               
               {project.process.testing && (
                 <div>
                   <h3 className="text-lg font-medium mb-4">Testing</h3>
-                  <p className="text-base leading-relaxed">{project.process.testing}</p>
+                  <FormattedText text={project.process.testing} />
                 </div>
               )}
               
               {project.process.delivery && (
                 <div>
                   <h3 className="text-lg font-medium mb-4">Delivery</h3>
-                  <p className="text-base leading-relaxed">{project.process.delivery}</p>
+                  <FormattedText text={project.process.delivery} />
                 </div>
               )}
             </div>
@@ -193,32 +242,32 @@ export function ProjectDetail() {
         </section>
       )}
 
-      {/* 5. Solution */}
+      {/* Solution */}
       {project.solution && (
         <section className="w-full px-6 sm:px-10 py-12 sm:py-16 border-t border-gray-300/30">
           <div className="max-w-4xl">
             <h2 className="text-sm mb-8">Solution</h2>
-            <p className="text-lg leading-relaxed">{project.solution}</p>
+            <FormattedText text={project.solution} />
           </div>
         </section>
       )}
 
-      {/* 6. Impact */}
+      {/* Impact */}
       {project.impact && (
         <section className="w-full px-6 sm:px-10 py-12 sm:py-16 border-t border-gray-300/30">
           <div className="max-w-4xl">
             <h2 className="text-sm mb-8">Impact</h2>
-            <p className="text-lg leading-relaxed">{project.impact}</p>
+            <FormattedText text={project.impact} />
           </div>
         </section>
       )}
 
-      {/* 7. Learnings */}
+      {/* Learnings */}
       {project.learnings && (
         <section className="w-full px-6 sm:px-10 py-12 sm:py-16 border-t border-gray-300/30">
           <div className="max-w-4xl">
             <h2 className="text-sm mb-8">Learnings</h2>
-            <p className="text-lg leading-relaxed">{project.learnings}</p>
+            <FormattedText text={project.learnings} />
           </div>
         </section>
       )}
