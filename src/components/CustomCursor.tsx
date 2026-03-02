@@ -4,7 +4,6 @@ export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const [isHoveringLink, setIsHoveringLink] = useState(false);
   
-  // Taille du curseur
   const CURSOR_SIZE = 24;
   const HALF_SIZE = CURSOR_SIZE / 2;
 
