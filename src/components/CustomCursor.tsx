@@ -8,22 +8,17 @@ export function CustomCursor() {
   const HALF_SIZE = CURSOR_SIZE / 2;
 
   useEffect(() => {
-    // Détecter si on est sur mobile/touch
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
     if (isTouchDevice) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       if (cursorRef.current) {
-        // Position directe sans fluidité
         cursorRef.current.style.transform = `translate(${e.clientX - HALF_SIZE}px, ${e.clientY - HALF_SIZE}px)`;
       }
     };
 
-    // Détecter les éléments survolés
     const handleElementHover = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      
-      // Détecter les liens, boutons, éléments cliquables
       const isLink = target.closest('a, button, [role="button"], input, textarea, select, [data-cursor-hover]');
       setIsHoveringLink(!!isLink);
     };
@@ -37,14 +32,12 @@ export function CustomCursor() {
     };
   }, []);
 
-  // Ne pas afficher sur mobile
   if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
     return null;
   }
 
   return (
     <>
-      {/* Curseur avec bordure transparente et effet négatif sur le remplissage */}
       <div
         ref={cursorRef}
         className={`fixed top-0 left-0 rounded-full pointer-events-none z-[9999] opacity-100 ${
@@ -61,7 +54,6 @@ export function CustomCursor() {
         }}
       />
       
-      {/* Styles globaux pour cacher le curseur par défaut */}
       <style>{`
         * {
           cursor: none !important;
