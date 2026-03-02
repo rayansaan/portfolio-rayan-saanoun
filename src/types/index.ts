@@ -1,3 +1,8 @@
+export interface ProjectSection {
+  content: string;
+  images?: string[];
+}
+
 export interface Project {
   id: string;
   name: string;
@@ -18,14 +23,14 @@ export interface Project {
   challenge?: string;
   statusQuo?: string;
   process?: {
-    discovery?: string;
-    define?: string;
-    design?: string;
-    prototyping?: string;
-    testing?: string;
-    delivery?: string;
+    discovery?: string | ProjectSection;
+    define?: string | ProjectSection;
+    design?: string | ProjectSection;
+    prototyping?: string | ProjectSection;
+    testing?: string | ProjectSection;
+    delivery?: string | ProjectSection;
   };
-  solution?: string;
+  solution?: string | ProjectSection;
   impact?: string;
   learnings?: string;
   prototypeUrl?: string;

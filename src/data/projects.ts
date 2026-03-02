@@ -35,14 +35,33 @@ Mon objectif était :
     challenge: 'Bien que l\'analyse comparative soit exécutée rapidement, elle manque actuellement d\'une présentation claire des forces et des faiblesses de chaque option de voyage. Cette lacune ne permet pas de mettre en évidence les avantages ou les inconvénients comparatifs de manière efficace pour l\'utilisateur final.',
     statusQuo: '',
     process: {
-      discovery: 'Avant de se lancer dans la conception, nous avons mené des sessions d\'interviews avec différents profils d\'utilisateurs (familiers avec l\'outil et d\'autres non) afin d\'identifier les principaux problèmes et d\'orienter le projet dans la bonne direction. J\'ai collaboré avec les fondateurs et les développeurs pour mener à bien ce projet, en prenant en charge la conception UX et l\'interface UI. Les développeurs ont joué un rôle clé dans l\'implémentation technique, et nous avons utilisé Bubble, un outil no-code, pour accélérer le développement.',
-      define: 'Définition des objectifs et prioritisation des fonctionnalités. Notre outil doit être adaptable à la fois aux clients qui recherchent un voyage adapté à leurs besoins et aux opérateurs qui souhaitent mettre en avant les avantages de leurs services.',
-      design: 'Conception des interfaces et parcours utilisateurs en mettant l\'accent sur la comparaison multimodale complète.',
-      prototyping: 'Création de prototypes interactifs pour validation. Nous avons structuré les tests utilisateurs en étapes clés, de la définition des objectifs jusqu\'à la phase pilote, afin d\'obtenir des retours exploitables pour optimiser l\'expérience de la search page.',
-      testing: 'Tests utilisateurs et itérations efficaces sur notre proposition de valeur.',
-      delivery: 'Livraison des maquettes finales et accompagnement développement avec les équipes techniques.'
+      discovery: {
+        content: 'Avant de se lancer dans la conception, nous avons mené des sessions d\'interviews avec différents profils d\'utilisateurs (familiers avec l\'outil et d\'autres non) afin d\'identifier les principaux problèmes et d\'orienter le projet dans la bonne direction. J\'ai collaboré avec les fondateurs et les développeurs pour mener à bien ce projet, en prenant en charge la conception UX et l\'interface UI.',
+        images: ['/images/projects/moove/search/golden_nuggets.png', '/images/projects/moove/search/Bastien__scapin.png']
+      },
+      define: {
+        content: 'Définition des objectifs et prioritisation des fonctionnalités. Notre outil doit être adaptable à la fois aux clients qui recherchent un voyage adapté à leurs besoins et aux opérateurs qui souhaitent mettre en avant les avantages de leurs services.',
+        images: ['/images/projects/moove/search/User_map_B2C.png']
+      },
+      design: {
+        content: 'Conception des interfaces et parcours utilisateurs en mettant l\'accent sur la comparaison multimodale complète.',
+        images: ['/images/projects/moove/search/voles__vide_agrgateur.png']
+      },
+      prototyping: {
+        content: 'Création de prototypes interactifs pour validation. Nous avons structuré les tests utilisateurs en étapes clés, de la définition des objectifs jusqu\'à la phase pilote, afin d\'obtenir des retours exploitables pour optimiser l\'expérience de la search page.',
+        images: ['/images/projects/moove/search/image.png', '/images/projects/moove/search/image 1.png']
+      },
+      testing: {
+        content: 'Tests utilisateurs et itérations efficaces sur notre proposition de valeur.',
+        images: ['/images/projects/moove/search/image 2.png', '/images/projects/moove/search/Frame_306.png']
+      },
+      delivery: {
+        content: 'Livraison des maquettes finales et accompagnement développement avec les équipes techniques.',
+        images: ['/images/projects/moove/Screen_prez_search.png']
+      }
     },
-    solution: `Nous avons donc cherché à facilité la comparaison entre les différents modes de transport en créant des fiches détaillées. Notre proposition de valeurs se décompose en 3 éléments distinct :
+    solution: {
+      content: `Nous avons donc cherché à facilité la comparaison entre les différents modes de transport en créant des fiches détaillées. Notre proposition de valeurs se décompose en 3 éléments distinct :
 
 **Temps de trajet total** (y compris les temps d'attente en aéroport)
 **Budget** (coût total du voyage)
@@ -51,6 +70,8 @@ Mon objectif était :
 Cette approche permet aux utilisateurs de comparer facilement les différentes options de transport en avion privé, vols commerciaux, train et voiture, en mettant en avant la solution la plus adaptée à leurs besoins.
 
 La page de recherche propose un calculateur multimodal complet qui évalue le temps de trajet porte-à-porte, le coût total et l'impact écologique pour différents modes de transport.`,
+      images: ['/images/projects/moove/image.png']
+    },
     impact: '',
     learnings: '',
     useCases: ['Search page'],

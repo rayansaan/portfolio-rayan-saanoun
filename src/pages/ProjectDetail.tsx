@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { allProjects } from '@/data/projects';
+import type { ProjectSection } from '@/types';
 
 // Composant pour afficher du texte avec des sauts de ligne
 function FormattedText({ text }: { text: string }) {
@@ -8,6 +9,42 @@ function FormattedText({ text }: { text: string }) {
   return (
     <div className="whitespace-pre-wrap text-base leading-relaxed">
       {text}
+    </div>
+  );
+}
+
+// Helper pour extraire le contenu et les images d'une section
+function getSectionData(section: string | ProjectSection | undefined): { content: string; images: string[] } {
+  if (!section) return { content: '', images: [] };
+  if (typeof section === 'string') {
+    return { content: section, images: [] };
+  }
+  return { content: section.content, images: section.images || [] };
+}
+
+// Composant pour afficher une section avec ses images
+function SectionWithImages({ title, section }: { title: string; section: string | ProjectSection | undefined }) {
+  const { content, images } = getSectionData(section);
+  if (!content) return null;
+  
+  return (
+    <div>
+      <h3 className="text-lg font-medium mb-4">{title}</h3>
+      <FormattedText text={content} />
+      
+      {images.length > 0 && (
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          {images.map((img, idx) => (
+            <figure key={idx} className="overflow-hidden rounded-lg">
+              <img 
+                src={img} 
+                alt={`${title} - Image ${idx + 1}`}
+                className="w-full h-auto object-cover"
+              />
+            </figure>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -33,6 +70,9 @@ export function ProjectDetail() {
   const otherProjects = allProjects
     .filter(p => p.id !== id)
     .slice(0, 3);
+
+  // Récupérer les données de la solution
+  const solutionData = getSectionData(project.solution);
 
   return (
     <div className="min-h-screen">
@@ -195,47 +235,29 @@ export function ProjectDetail() {
           <div className="max-w-4xl">
             <h2 className="text-sm mb-8">Process</h2>
             
-            <div className="space-y-8">
+            <div className="space-y-12">
               {project.process.discovery && (
-                <div>
-                  <h3 className="text-lg font-medium mb-4">Discovery</h3>
-                  <FormattedText text={project.process.discovery} />
-                </div>
+                <SectionWithImages title="Discovery" section={project.process.discovery} />
               )}
               
               {project.process.define && (
-                <div>
-                  <h3 className="text-lg font-medium mb-4">Define</h3>
-                  <FormattedText text={project.process.define} />
-                </div>
+                <SectionWithImages title="Define" section={project.process.define} />
               )}
               
               {project.process.design && (
-                <div>
-                  <h3 className="text-lg font-medium mb-4">Design</h3>
-                  <FormattedText text={project.process.design} />
-                </div>
+                <SectionWithImages title="Design" section={project.process.design} />
               )}
               
               {project.process.prototyping && (
-                <div>
-                  <h3 className="text-lg font-medium mb-4">Prototyping</h3>
-                  <FormattedText text={project.process.prototyping} />
-                </div>
+                <SectionWithImages title="Prototyping" section={project.process.prototyping} />
               )}
               
               {project.process.testing && (
-                <div>
-                  <h3 className="text-lg font-medium mb-4">Testing</h3>
-                  <FormattedText text={project.process.testing} />
-                </div>
+                <SectionWithImages title="Testing" section={project.process.testing} />
               )}
               
               {project.process.delivery && (
-                <div>
-                  <h3 className="text-lg font-medium mb-4">Delivery</h3>
-                  <FormattedText text={project.process.delivery} />
-                </div>
+                <SectionWithImages title="Delivery" section={project.process.delivery} />
               )}
             </div>
           </div>
@@ -243,11 +265,25 @@ export function ProjectDetail() {
       )}
 
       {/* Solution */}
-      {project.solution && (
+      {solutionData.content && (
         <section className="w-full px-6 sm:px-10 py-12 sm:py-16 border-t border-gray-300/30">
           <div className="max-w-4xl">
             <h2 className="text-sm mb-8">Solution</h2>
-            <FormattedText text={project.solution} />
+            <FormattedText text={solutionData.content} />
+            
+            {solutionData.images.length > 0 && (
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                {solutionData.images.map((img, idx) => (
+                  <figure key={idx} className="overflow-hidden rounded-lg">
+                    <img 
+                      src={img} 
+                      alt={`Solution - Image ${idx + 1}`}
+                      className="w-full h-auto object-cover"
+                    />
+                  </figure>
+                ))}
+              </div>
+            )}
           </div>
         </section>
       )}
