@@ -16,7 +16,7 @@ const experiences = [
 
 export function InfoSection() {
   return (
-    <section className="w-full px-6 sm:px-10 py-16 sm:py-24 border-t border-gray-300/30 dark:border-gray-700/30">
+    <section className="w-full px-8 sm:px-12 lg:px-16 py-16 sm:py-24 border-t border-gray-300/30 dark:border-gray-700/30">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-16">
         {/* Services Column */}
         <div>
