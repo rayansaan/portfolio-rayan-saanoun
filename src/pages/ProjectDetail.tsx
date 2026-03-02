@@ -50,7 +50,7 @@ function SectionWithImages({
               key={idx}
               src={img}
               alt={`${title} - Image ${idx + 1}`}
-              onClick={(e, originX, originY) => onImageClick(img, originX, originY)}
+              onClick={(_, originX, originY) => onImageClick(img, originX, originY)}
             />
           ))}
         </div>
@@ -199,7 +199,7 @@ export function ProjectDetail() {
           src={project.imageUrl}
           alt={project.name}
           className="w-full h-full"
-          onClick={(e, originX, originY) => openImageWithAnimation(project.imageUrl, originX, originY)}
+          onClick={(_, originX, originY) => openImageWithAnimation(project.imageUrl, originX, originY)}
         />
       </div>
 

@@ -10,7 +10,7 @@ interface ImageWithPreloadProps {
 export function ImageWithPreload({ src, alt, className = '', onClick }: ImageWithPreloadProps) {
   const [isPreloading, setIsPreloading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const preloadTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const preloadTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const imgRef = useRef<HTMLImageElement>(null);
 
   const handleMouseEnter = useCallback(() => {
@@ -35,7 +35,6 @@ export function ImageWithPreload({ src, alt, className = '', onClick }: ImageWit
   }, []);
 
   const handleClick = useCallback((e: React.MouseEvent<HTMLImageElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
     const originX = e.clientX;
     const originY = e.clientY;
     
