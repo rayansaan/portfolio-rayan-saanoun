@@ -6,6 +6,7 @@ import { InfoSection } from '@/components/InfoSection';
 import { Footer } from '@/components/Footer';
 import { HoverImage } from '@/components/HoverImage';
 import { HoverImageProvider } from '@/context/HoverImageContext';
+import { CustomCursor } from '@/components/CustomCursor';
 import { ProjectDetail } from '@/pages/ProjectDetail';
 import { uxUiProjects, otherProjects } from '@/data/projects';
 
