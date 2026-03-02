@@ -1,6 +1,6 @@
 export function Header() {
   return (
-    <header className="w-full px-8 sm:px-12 lg:px-16 py-6 sm:py-8">
+    <header className="w-full px-12 sm:px-16 lg:px-24 py-6 sm:py-8">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 items-start">
         {/* Name */}
         <div className="text-sm sm:text-base font-medium">

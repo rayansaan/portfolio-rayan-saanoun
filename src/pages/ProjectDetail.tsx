@@ -161,7 +161,7 @@ export function ProjectDetail() {
       />
 
       {/* Header */}
-      <header className="w-full px-8 sm:px-12 lg:px-16 py-6 sm:py-8">
+      <header className="w-full px-12 sm:px-16 lg:px-24 py-6 sm:py-8">
         <div className="flex items-center justify-between">
           <Link 
             to="/" 
@@ -187,8 +187,8 @@ export function ProjectDetail() {
       </div>
 
       {/* Project Info */}
-      <section className="w-full px-8 sm:px-12 lg:px-16 py-12 sm:py-16">
-        <div className="max-w-3xl mx-auto">
+      <section className="w-full px-12 sm:px-16 lg:px-24 py-12 sm:py-16">
+        <div className="max-w-2xl mx-auto">
           {/* Category & Year */}
           <div className="flex items-center gap-4 mb-6">
             <span className="text-sm">UX/UI Design</span>
@@ -247,8 +247,8 @@ export function ProjectDetail() {
 
       {/* Context */}
       {project.context && (
-        <section className="w-full px-8 sm:px-12 lg:px-16 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-3xl mx-auto">
+        <section className="w-full px-12 sm:px-16 lg:px-24 py-12 sm:py-16 border-t border-gray-300/30">
+          <div className="max-w-2xl mx-auto">
             <h2 className="text-sm mb-8">Contexte</h2>
             <FormattedText text={project.context} />
           </div>
@@ -257,8 +257,8 @@ export function ProjectDetail() {
 
       {/* Use Cases */}
       {project.useCases && project.useCases.length > 0 && (
-        <section className="w-full px-8 sm:px-12 lg:px-16 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-3xl mx-auto">
+        <section className="w-full px-12 sm:px-16 lg:px-24 py-12 sm:py-16 border-t border-gray-300/30">
+          <div className="max-w-2xl mx-auto">
             <h2 className="text-sm mb-8">Use Cases</h2>
             <ul className="list-disc list-inside space-y-2">
               {project.useCases.map((useCase, index) => (
@@ -271,8 +271,8 @@ export function ProjectDetail() {
 
       {/* Rôle, équipe, année, durée */}
       {(project.role || project.team) && (
-        <section className="w-full px-8 sm:px-12 lg:px-16 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-3xl mx-auto">
+        <section className="w-full px-12 sm:px-16 lg:px-24 py-12 sm:py-16 border-t border-gray-300/30">
+          <div className="max-w-2xl mx-auto">
             <h2 className="text-sm mb-8">Rôle & Équipe</h2>
             
             {project.role && (
@@ -298,8 +298,8 @@ export function ProjectDetail() {
 
       {/* Challenge */}
       {project.challenge && (
-        <section className="w-full px-8 sm:px-12 lg:px-16 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-3xl mx-auto">
+        <section className="w-full px-12 sm:px-16 lg:px-24 py-12 sm:py-16 border-t border-gray-300/30">
+          <div className="max-w-2xl mx-auto">
             <h2 className="text-sm mb-8">Challenge</h2>
             <FormattedText text={project.challenge} />
           </div>
@@ -308,8 +308,8 @@ export function ProjectDetail() {
 
       {/* Status Quo */}
       {project.statusQuo && (
-        <section className="w-full px-8 sm:px-12 lg:px-16 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-3xl mx-auto">
+        <section className="w-full px-12 sm:px-16 lg:px-24 py-12 sm:py-16 border-t border-gray-300/30">
+          <div className="max-w-2xl mx-auto">
             <h2 className="text-sm mb-8">Status Quo</h2>
             <FormattedText text={project.statusQuo} />
           </div>
@@ -318,8 +318,8 @@ export function ProjectDetail() {
 
       {/* Process */}
       {project.process && Object.values(project.process).some(v => v) && (
-        <section className="w-full px-8 sm:px-12 lg:px-16 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-3xl mx-auto">
+        <section className="w-full px-12 sm:px-16 lg:px-24 py-12 sm:py-16 border-t border-gray-300/30">
+          <div className="max-w-2xl mx-auto">
             <h2 className="text-sm mb-8">Process</h2>
             
             <div className="space-y-12">
@@ -377,8 +377,8 @@ export function ProjectDetail() {
 
       {/* Solution */}
       {solutionData.content && (
-        <section className="w-full px-8 sm:px-12 lg:px-16 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-3xl mx-auto">
+        <section className="w-full px-12 sm:px-16 lg:px-24 py-12 sm:py-16 border-t border-gray-300/30">
+          <div className="max-w-2xl mx-auto">
             <h2 className="text-sm mb-8">Solution</h2>
             <FormattedText text={solutionData.content} />
             
@@ -400,8 +400,8 @@ export function ProjectDetail() {
 
       {/* Impact */}
       {project.impact && (
-        <section className="w-full px-8 sm:px-12 lg:px-16 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-3xl mx-auto">
+        <section className="w-full px-12 sm:px-16 lg:px-24 py-12 sm:py-16 border-t border-gray-300/30">
+          <div className="max-w-2xl mx-auto">
             <h2 className="text-sm mb-8">Impact</h2>
             <FormattedText text={project.impact} />
           </div>
@@ -410,8 +410,8 @@ export function ProjectDetail() {
 
       {/* Learnings */}
       {project.learnings && (
-        <section className="w-full px-8 sm:px-12 lg:px-16 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-3xl mx-auto">
+        <section className="w-full px-12 sm:px-16 lg:px-24 py-12 sm:py-16 border-t border-gray-300/30">
+          <div className="max-w-2xl mx-auto">
             <h2 className="text-sm mb-8">Learnings</h2>
             <FormattedText text={project.learnings} />
           </div>
@@ -420,8 +420,8 @@ export function ProjectDetail() {
 
       {/* Prototype CTA */}
       {project.prototypeUrl && (
-        <section className="w-full px-8 sm:px-12 lg:px-16 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-3xl mx-auto">
+        <section className="w-full px-12 sm:px-16 lg:px-24 py-12 sm:py-16 border-t border-gray-300/30">
+          <div className="max-w-2xl mx-auto">
             <a 
               href={project.prototypeUrl}
               target="_blank"
@@ -437,7 +437,7 @@ export function ProjectDetail() {
 
       {/* More Projects */}
       {otherProjects.length > 0 && (
-        <section className="w-full px-8 sm:px-12 lg:px-16 py-12 sm:py-16 border-t border-gray-300/30">
+        <section className="w-full px-12 sm:px-16 lg:px-24 py-12 sm:py-16 border-t border-gray-300/30">
           <h2 className="text-sm mb-8">Autres projets</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {otherProjects.map((p) => (
@@ -463,7 +463,7 @@ export function ProjectDetail() {
       )}
 
       {/* Footer */}
-      <footer className="w-full px-8 sm:px-12 lg:px-16 py-8 border-t border-gray-300/30">
+      <footer className="w-full px-12 sm:px-16 lg:px-24 py-8 border-t border-gray-300/30">
         <Link 
           to="/"
           className="text-sm hover:opacity-70 transition-opacity"
