@@ -406,7 +406,7 @@ export function ProjectDetail() {
                     key={idx}
                     src={img}
                     alt={`Solution - Image ${idx + 1}`}
-                    onClick={(e, originX, originY) => openImageWithAnimation(img, originX, originY)}
+                    onClick={(_, originX, originY) => openImageWithAnimation(img, originX, originY)}
                   />
                 ))}
               </div>
