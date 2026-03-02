@@ -12,7 +12,7 @@ export function CustomCursor() {
   const cursorPos = useRef({ x: 0, y: 0 });
   const velocity = useRef({ x: 0, y: 0 });
   const lastMousePos = useRef({ x: 0, y: 0 });
-  const rafId = useRef<number>();
+  const rafId = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     // Détecter si on est sur mobile/touch
