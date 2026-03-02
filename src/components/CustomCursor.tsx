@@ -4,7 +4,6 @@ export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const [isHoveringLink, setIsHoveringLink] = useState(false);
   const [isHoveringDarkText, setIsHoveringDarkText] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
   
   // Position et vélocité pour l'effet flasque
   const mousePos = useRef({ x: 0, y: 0 });
