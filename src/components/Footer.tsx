@@ -7,7 +7,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full px-12 sm:px-16 lg:px-24 pt-16 sm:pt-24 pb-8 sm:pb-10">
+    <footer className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 pt-16 sm:pt-24 pb-8 sm:pb-10">
       {/* Large Email */}
       <a 
         href="mailto:rayansaan.pro@gmail.com"
