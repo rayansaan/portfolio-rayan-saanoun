@@ -68,7 +68,7 @@ export function CustomCursor() {
       {/* Curseur simple et direct */}
       <div
         ref={cursorRef}
-        className={`fixed top-0 left-0 rounded-full pointer-events-none z-[9999] mix-blend-difference transition-transform duration-75 opacity-100 ${
+        className={`fixed top-0 left-0 rounded-full pointer-events-none z-[9999] mix-blend-difference opacity-100 ${
           isHoveringLink ? 'scale-110' : 'scale-100'
         }`}
         style={{
