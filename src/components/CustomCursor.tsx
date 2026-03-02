@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const [isHoveringLink, setIsHoveringLink] = useState(false);
-  const [isHoveringDarkText, setIsHoveringDarkText] = useState(false);
   
   // Taille du curseur
   const CURSOR_SIZE = 24;
@@ -28,25 +27,6 @@ export function CustomCursor() {
       // Détecter les liens, boutons, éléments cliquables
       const isLink = target.closest('a, button, [role="button"], input, textarea, select, [data-cursor-hover]');
       setIsHoveringLink(!!isLink);
-      
-      // Détecter le texte noir/texte sur fond clair
-      const computedStyle = window.getComputedStyle(target);
-      const color = computedStyle.color;
-      const bgColor = computedStyle.backgroundColor;
-      
-      // Vérifier si c'est du texte noir ou foncé
-      const isDarkText = color.includes('rgb(0, 0, 0)') || 
-                         color.includes('rgb(55, 53, 47)') ||
-                         color.includes('#000') ||
-                         color.includes('#37352f') ||
-                         parseInt(computedStyle.fontWeight) >= 600;
-      
-      // Vérifier si le fond est clair
-      const isLightBg = bgColor.includes('255') || 
-                        bgColor.includes('transparent') ||
-                        bgColor === 'rgba(0, 0, 0, 0)';
-      
-      setIsHoveringDarkText(isDarkText && isLightBg && target.textContent !== null && target.textContent.trim() !== '');
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
@@ -65,17 +45,18 @@ export function CustomCursor() {
 
   return (
     <>
-      {/* Curseur simple et direct */}
+      {/* Curseur toujours visible avec contour blanc */}
       <div
         ref={cursorRef}
-        className={`fixed top-0 left-0 rounded-full pointer-events-none z-[9999] mix-blend-difference opacity-100 ${
+        className={`fixed top-0 left-0 rounded-full pointer-events-none z-[9999] opacity-100 ${
           isHoveringLink ? 'scale-110' : 'scale-100'
         }`}
         style={{
           width: `${CURSOR_SIZE}px`,
           height: `${CURSOR_SIZE}px`,
-          backgroundColor: isHoveringDarkText ? '#ffffff' : '#000000',
-          border: isHoveringDarkText ? '1.5px solid #ffffff' : '1.5px solid #000000',
+          backgroundColor: '#000000',
+          border: '2px solid #ffffff',
+          boxShadow: '0 0 0 1px rgba(0,0,0,0.3)',
           willChange: 'transform',
         }}
       />
