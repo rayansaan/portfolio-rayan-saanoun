@@ -66,10 +66,9 @@ export function CustomCursor() {
     // Animation fluide
     const animate = () => {
       if (cursorRef.current && cursorDotRef.current) {
-        // Interpolation linéaire pour le suivi fluide
-        const ease = 0.15;
-        cursorPos.current.x += (mousePos.current.x - cursorPos.current.x) * ease;
-        cursorPos.current.y += (mousePos.current.y - cursorPos.current.y) * ease;
+        // Suivi exact de la souris sans délai
+        cursorPos.current.x = mousePos.current.x;
+        cursorPos.current.y = mousePos.current.y;
         
         // Calculer la déformation basée sur la vélocité
         const speed = Math.sqrt(velocity.current.x ** 2 + velocity.current.y ** 2);
