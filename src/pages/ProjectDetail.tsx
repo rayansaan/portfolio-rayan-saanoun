@@ -1,6 +1,8 @@
+import { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { allProjects } from '@/data/projects';
+import { Lightbox } from '@/components/Lightbox';
 import type { ProjectSection } from '@/types';
 
 // Composant pour afficher du texte avec des sauts de ligne
@@ -22,8 +24,40 @@ function getSectionData(section: string | ProjectSection | undefined): { content
   return { content: section.content, images: section.images || [] };
 }
 
-// Composant pour afficher une section avec ses images
-function SectionWithImages({ title, section }: { title: string; section: string | ProjectSection | undefined }) {
+// Composant pour afficher une image cliquable
+function ClickableImage({ 
+  src, 
+  alt, 
+  onClick 
+}: { 
+  src: string; 
+  alt: string; 
+  onClick: () => void;
+}) {
+  return (
+    <figure 
+      className="overflow-hidden rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
+      onClick={onClick}
+    >
+      <img 
+        src={src} 
+        alt={alt}
+        className="w-full h-auto object-cover"
+      />
+    </figure>
+  );
+}
+
+// Composant pour afficher une section avec ses images cliquables
+function SectionWithImages({ 
+  title, 
+  section, 
+  onImageClick 
+}: { 
+  title: string; 
+  section: string | ProjectSection | undefined;
+  onImageClick: (index: number, images: string[]) => void;
+}) {
   const { content, images } = getSectionData(section);
   if (!content) return null;
   
@@ -35,13 +69,12 @@ function SectionWithImages({ title, section }: { title: string; section: string 
       {images.length > 0 && (
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
           {images.map((img, idx) => (
-            <figure key={idx} className="overflow-hidden rounded-lg">
-              <img 
-                src={img} 
-                alt={`${title} - Image ${idx + 1}`}
-                className="w-full h-auto object-cover"
-              />
-            </figure>
+            <ClickableImage 
+              key={idx}
+              src={img}
+              alt={`${title} - Image ${idx + 1}`}
+              onClick={() => onImageClick(idx, images)}
+            />
           ))}
         </div>
       )}
@@ -53,6 +86,11 @@ export function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
   
   const project = allProjects.find(p => p.id === id);
+  
+  // State pour le lightbox
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
+  const [lightboxInitialIndex, setLightboxInitialIndex] = useState(0);
   
   if (!project) {
     return (
@@ -73,9 +111,55 @@ export function ProjectDetail() {
 
   // Récupérer les données de la solution
   const solutionData = getSectionData(project.solution);
+  
+  // Collecter toutes les images du projet pour le lightbox global
+  const allProjectImages = useMemo(() => {
+    const images: string[] = [];
+    
+    // Ajouter l'image principale
+    images.push(project.imageUrl);
+    
+    // Ajouter les images du process
+    if (project.process) {
+      Object.values(project.process).forEach(section => {
+        if (section) {
+          const { images: sectionImages } = getSectionData(section);
+          images.push(...sectionImages);
+        }
+      });
+    }
+    
+    // Ajouter les images de la solution
+    images.push(...solutionData.images);
+    
+    return images;
+  }, [project, solutionData.images]);
+
+  // Fonction pour ouvrir le lightbox avec une image spécifique
+  const openLightbox = (index: number, images: string[]) => {
+    setLightboxImages(images);
+    setLightboxInitialIndex(index);
+    setLightboxOpen(true);
+  };
+  
+  // Fonction pour ouvrir le lightbox avec toutes les images du projet
+  const openProjectLightbox = (clickedImage: string) => {
+    const index = allProjectImages.indexOf(clickedImage);
+    setLightboxImages(allProjectImages);
+    setLightboxInitialIndex(index >= 0 ? index : 0);
+    setLightboxOpen(true);
+  };
 
   return (
     <div className="min-h-screen">
+      {/* Lightbox */}
+      <Lightbox 
+        images={lightboxImages}
+        initialIndex={lightboxInitialIndex}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
+
       {/* Header */}
       <header className="w-full px-6 sm:px-10 py-6 sm:py-8">
         <div className="flex items-center justify-between">
@@ -91,11 +175,14 @@ export function ProjectDetail() {
       </header>
 
       {/* Hero Image */}
-      <div className="w-full h-[50vh] sm:h-[60vh] lg:h-[70vh]">
+      <div 
+        className="w-full h-[50vh] sm:h-[60vh] lg:h-[70vh] cursor-pointer"
+        onClick={() => openProjectLightbox(project.imageUrl)}
+      >
         <img
           src={project.imageUrl}
           alt={project.name}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover hover:opacity-95 transition-opacity"
         />
       </div>
 
@@ -237,27 +324,51 @@ export function ProjectDetail() {
             
             <div className="space-y-12">
               {project.process.discovery && (
-                <SectionWithImages title="Discovery" section={project.process.discovery} />
+                <SectionWithImages 
+                  title="Discovery" 
+                  section={project.process.discovery}
+                  onImageClick={(idx, imgs) => openLightbox(idx, imgs)} 
+                />
               )}
               
               {project.process.define && (
-                <SectionWithImages title="Define" section={project.process.define} />
+                <SectionWithImages 
+                  title="Define" 
+                  section={project.process.define}
+                  onImageClick={(idx, imgs) => openLightbox(idx, imgs)} 
+                />
               )}
               
               {project.process.design && (
-                <SectionWithImages title="Design" section={project.process.design} />
+                <SectionWithImages 
+                  title="Design" 
+                  section={project.process.design}
+                  onImageClick={(idx, imgs) => openLightbox(idx, imgs)} 
+                />
               )}
               
               {project.process.prototyping && (
-                <SectionWithImages title="Prototyping" section={project.process.prototyping} />
+                <SectionWithImages 
+                  title="Prototyping" 
+                  section={project.process.prototyping}
+                  onImageClick={(idx, imgs) => openLightbox(idx, imgs)} 
+                />
               )}
               
               {project.process.testing && (
-                <SectionWithImages title="Testing" section={project.process.testing} />
+                <SectionWithImages 
+                  title="Testing" 
+                  section={project.process.testing}
+                  onImageClick={(idx, imgs) => openLightbox(idx, imgs)} 
+                />
               )}
               
               {project.process.delivery && (
-                <SectionWithImages title="Delivery" section={project.process.delivery} />
+                <SectionWithImages 
+                  title="Delivery" 
+                  section={project.process.delivery}
+                  onImageClick={(idx, imgs) => openLightbox(idx, imgs)} 
+                />
               )}
             </div>
           </div>
@@ -274,13 +385,12 @@ export function ProjectDetail() {
             {solutionData.images.length > 0 && (
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                 {solutionData.images.map((img, idx) => (
-                  <figure key={idx} className="overflow-hidden rounded-lg">
-                    <img 
-                      src={img} 
-                      alt={`Solution - Image ${idx + 1}`}
-                      className="w-full h-auto object-cover"
-                    />
-                  </figure>
+                  <ClickableImage 
+                    key={idx}
+                    src={img}
+                    alt={`Solution - Image ${idx + 1}`}
+                    onClick={() => openLightbox(idx, solutionData.images)}
+                  />
                 ))}
               </div>
             )}
