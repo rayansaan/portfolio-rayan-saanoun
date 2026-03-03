@@ -11,7 +11,7 @@ export const uxUiProjects: Project[] = [
     duration: '16 mois',
     location: 'Pépinière 27 - Paris',
     tags: ['B2B', 'Mobile App', 'Prototyping', 'SaaS', 'UX Research', 'UX/UI Design', 'Webapp'],
-    tools: ['Figma', 'Figjam', 'Maze', 'Notion', 'Papier & Crayon'],
+    tools: ['Figma', 'Figjam', 'Maze', 'Notion', 'Papier'],
     website: 'https://www.flymoove.com/',
     description: 'Moove est une solution tout-en-un dédiée au secteur de l\'aviation d\'affaires. C\'est une plateforme centralisée conçue pour simplifier et optimiser la gestion des déplacements professionnels par avion privé.',
     context: `Moove est une solution tout-en-un dédiée au secteur de l'aviation d'affaires. C'est une plateforme centralisée conçue pour simplifier et optimiser la gestion des déplacements professionnels par avion privé. Elle offre des outils et des services adaptés aux besoins des opérateurs aériens, des entreprises et des voyageurs.

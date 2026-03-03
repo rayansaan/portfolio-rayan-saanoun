@@ -252,7 +252,19 @@ export function ProjectDetail() {
             </div>
             <div>
               <h3 className="text-sm text-text-muted mb-2">Outils</h3>
-              <p className="text-base">{project.tools.join(', ')}</p>
+              <div className="flex flex-wrap gap-2">
+                {project.tools.map(tool => {
+                  const iconName = tool === 'Papier & Crayon' ? 'Papier' : tool;
+                  return (
+                    <img
+                      key={tool}
+                      src={`/icons/${iconName}.svg`}
+                      alt={tool}
+                      className="h-6 w-auto"
+                    />
+                  );
+                })}
+              </div>
             </div>
             <div>
               <h3 className="text-sm text-text-muted mb-2">Tags</h3>
