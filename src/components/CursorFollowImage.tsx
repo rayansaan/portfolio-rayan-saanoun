@@ -24,10 +24,10 @@ export function CursorFollowImage() {
   const skewX = useTransform(yVelocity, [-500, 500], [15, -15]);
   const skewY = useTransform(xVelocity, [-500, 500], [-15, 15]);
   
-  // Mise à jour de la position avec offset pour ne pas cacher le texte
+  // Mise à jour de la position avec offset pour positionner en bas à droite du curseur
   useEffect(() => {
-    const offsetX = 20;
-    const offsetY = 20;
+    const offsetX = 20; // Décalage à droite du curseur
+    const offsetY = 20; // Décalage en bas du curseur
     
     x.set(mouseX + offsetX);
     y.set(mouseY + offsetY);
@@ -52,8 +52,6 @@ export function CursorFollowImage() {
               y: ySpring,
               width: 350,
               height: 250,
-              marginLeft: -175, // Centrer horizontalement
-              marginTop: -125,  // Centrer verticalement
               willChange: 'transform',
             }}
           >
