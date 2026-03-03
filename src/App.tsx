@@ -4,7 +4,7 @@ import { Header } from '@/components/Header';
 import { ProjectSection } from '@/components/ProjectSection';
 import { InfoSection } from '@/components/InfoSection';
 import { Footer } from '@/components/Footer';
-import { HoverImage } from '@/components/HoverImage';
+import { CursorFollowImage } from '@/components/CursorFollowImage';
 import { HoverImageProvider } from '@/context/HoverImageContext';
 import { CustomCursor } from '@/components/CustomCursor';
 import { SmoothScroll } from '@/components/SmoothScroll';
@@ -14,8 +14,8 @@ import { uxUiProjects, otherProjects } from '@/data/projects';
 function HomePage() {
   return (
     <div className="min-h-screen">
-      {/* Full-screen hover image background */}
-      <HoverImage />
+      {/* Cursor follow image */}
+      <CursorFollowImage />
       
       {/* Header */}
       <Header />

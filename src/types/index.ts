@@ -39,6 +39,9 @@ export interface Project {
 export interface HoverImageState {
   currentImage: string | null;
   setCurrentImage: (image: string | null) => void;
+  mouseX: number;
+  mouseY: number;
+  setMousePosition: (x: number, y: number) => void;
 }
 
 export type Theme = 'light' | 'dark';
