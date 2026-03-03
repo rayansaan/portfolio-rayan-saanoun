@@ -1,43 +1,42 @@
 import { motion, useMotionValue, useSpring, useVelocity, useTransform, AnimatePresence } from 'framer-motion';
-import { useEffect, useRef } from 'react';
 import { useHoverImage } from '@/context/HoverImageContext';
 
 export function CursorFollowImage() {
   const { currentImage, mouseX, mouseY } = useHoverImage();
-  const containerRef = useRef<HTMLDivElement>(null);
   
-  // Motion values pour la position
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  // Motion values pour la position avec offset (bas à droite du curseur)
+  const x = useMotionValue(mouseX + 20);
+  const y = useMotionValue(mouseY + 20);
   
-  // Spring pour lisser le suivi du curseur
-  const springConfig = { stiffness: 150, damping: 15, mass: 0.1 };
+  // Mise à jour directe des motion values (pas de useEffect)
+  x.set(mouseX + 20);
+  y.set(mouseY + 20);
+  
+  // Spring optimisé pour plus de fluidité
+  const springConfig = { 
+    stiffness: 100, 
+    damping: 20, 
+    mass: 0.5,
+    restDelta: 0.001 
+  };
   const xSpring = useSpring(x, springConfig);
   const ySpring = useSpring(y, springConfig);
   
-  // Calcul de la vélocité (vitesse) du mouvement
+  // Calcul de la vélocité avec smoothing
   const xVelocity = useVelocity(xSpring);
   const yVelocity = useVelocity(ySpring);
   
-  // Transformation de la vélocité en skew (-15° à 15°)
-  // Plus on bouge vite, plus l'image se penche
-  const skewX = useTransform(yVelocity, [-500, 500], [15, -15]);
-  const skewY = useTransform(xVelocity, [-500, 500], [-15, 15]);
+  // Smooth velocity pour éviter les à-coups
+  const smoothXVelocity = useSpring(xVelocity, { stiffness: 50, damping: 30 });
+  const smoothYVelocity = useSpring(yVelocity, { stiffness: 50, damping: 30 });
   
-  // Mise à jour de la position avec offset pour positionner en bas à droite du curseur
-  useEffect(() => {
-    const offsetX = 20; // Décalage à droite du curseur
-    const offsetY = 20; // Décalage en bas du curseur
-    
-    x.set(mouseX + offsetX);
-    y.set(mouseY + offsetY);
-  }, [mouseX, mouseY, x, y]);
+  // Transformation de la vélocité en skew (-15° à 15°)
+  const skewX = useTransform(smoothYVelocity, [-500, 500], [15, -15]);
+  const skewY = useTransform(smoothXVelocity, [-500, 500], [-15, 15]);
   
   return (
     <div
-      ref={containerRef}
       className="fixed inset-0 z-[100] pointer-events-none overflow-hidden"
-      style={{ willChange: 'opacity' }}
     >
       <AnimatePresence>
         {currentImage && (
@@ -52,7 +51,6 @@ export function CursorFollowImage() {
               y: ySpring,
               width: 350,
               height: 250,
-              willChange: 'transform',
             }}
           >
             <motion.div
@@ -60,14 +58,12 @@ export function CursorFollowImage() {
               style={{
                 skewX,
                 skewY,
-                willChange: 'transform',
               }}
             >
               <img
                 src={currentImage}
                 alt=""
                 className="w-full h-full object-cover"
-                style={{ willChange: 'transform' }}
               />
             </motion.div>
           </motion.div>
