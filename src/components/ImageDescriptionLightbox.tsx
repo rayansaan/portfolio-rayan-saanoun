@@ -30,7 +30,6 @@ export function ImageDescriptionLightbox({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           className="fixed inset-0 z-50 flex items-center justify-center"
-          onClick={handleOverlayClick}
         >
           {/* Backdrop with blur */}
           <motion.div
@@ -38,10 +37,14 @@ export function ImageDescriptionLightbox({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="absolute inset-0 backdrop-blur-md bg-black/70"
+            onClick={handleOverlayClick}
           />
 
           {/* Content Container */}
-          <div className="relative z-10 w-full max-w-5xl mx-4 max-h-[90vh] overflow-y-auto">
+          <div 
+            className="relative z-10 w-full max-w-5xl mx-4 max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Image with animation */}
             <motion.div
               layoutId={`image-${image.id}`}
