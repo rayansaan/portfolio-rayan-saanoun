@@ -7,11 +7,11 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 pt-16 sm:pt-24 pb-8 sm:pb-10">
+    <footer className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 pt-16 sm:pt-24 pb-8 sm:pb-10">
       {/* Large Email */}
       <a 
         href="mailto:rayansaan.pro@gmail.com"
-        className="block text-footer-email-sm sm:text-footer-email font-medium mb-12 sm:mb-16 transition-opacity duration-200 hover:opacity-70 break-all"
+        className="block text-footer-email-sm sm:text-footer-email font-medium mb-12 sm:mb-16 transition-opacity duration-200 hover:opacity-70 break-words"
         style={{ 
           lineHeight: '1.1',
           letterSpacing: '-0.02em',

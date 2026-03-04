@@ -9,7 +9,7 @@ interface ProjectSectionProps {
 
 export function ProjectSection({ title, projects, className = '' }: ProjectSectionProps) {
   return (
-    <section className={`w-full px-16 sm:px-20 lg:px-32 xl:px-48 py-16 sm:py-24 ${className}`}>
+    <section className={`w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-16 sm:py-24 ${className}`}>
       <div className="max-w-none mx-auto">
         {/* Section Label */}
         <h2 className="text-sm sm:text-base mb-8 sm:mb-12">
@@ -17,7 +17,7 @@ export function ProjectSection({ title, projects, className = '' }: ProjectSecti
         </h2>
         
         {/* Project List */}
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-8">
           {projects.map((project) => (
             <ProjectItem key={project.id} project={project} />
           ))}

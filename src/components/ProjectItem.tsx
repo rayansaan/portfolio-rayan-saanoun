@@ -30,6 +30,16 @@ export function ProjectItem({ project }: ProjectItemProps) {
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
+      {/* Image visible uniquement sur mobile */}
+      <div className="md:hidden aspect-[4/3] overflow-hidden rounded-lg mb-4">
+        <img
+          src={project.imageUrl}
+          alt={project.name}
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+      </div>
+      
+      {/* Nom du projet */}
       <span 
         className="text-project-sm sm:text-project-md lg:text-project-lg xl:text-project font-semibold transition-opacity duration-200 group-hover:opacity-70 block"
         style={{ 

@@ -249,7 +249,7 @@ export function ProjectDetail() {
       </div>
 
       {/* Header */}
-      <header className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 py-6 sm:py-8">
+      <header className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-6 sm:py-8">
         <div className="flex items-center justify-between">
           <Link 
             to="/" 
@@ -263,7 +263,7 @@ export function ProjectDetail() {
       </header>
 
       {/* Main Content - Two Column Layout */}
-      <section className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 py-12 sm:py-16">
+      <section className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-12 sm:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
           
           {/* LEFT COLUMN - Sticky (33%) */}
@@ -528,7 +528,7 @@ export function ProjectDetail() {
 
       {/* More Projects */}
       {otherProjects.length > 0 && (
-        <section className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 py-12 sm:py-16 border-t border-gray-300/30">
+        <section className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-12 sm:py-16 border-t border-gray-300/30">
           <h2 className="text-sm mb-8">Autres projets</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {otherProjects.map((p) => (
@@ -554,7 +554,7 @@ export function ProjectDetail() {
       )}
 
       {/* Footer */}
-      <footer className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 py-8 border-t border-gray-300/30">
+      <footer className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-8 border-t border-gray-300/30">
         <Link 
           to="/"
           className="text-sm hover:opacity-70 transition-opacity"
