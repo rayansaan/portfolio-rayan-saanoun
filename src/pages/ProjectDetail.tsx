@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { allProjects } from '@/data/projects';
 import { CircularReveal } from '@/components/CircularReveal';
-import { ImageWithPreload } from '@/components/ImageWithPreload';
+import { BorderedImage } from '@/components/BorderedImage';
 import type { ProjectSection } from '@/types';
 
 // Composant pour afficher du texte avec des sauts de ligne
@@ -46,7 +46,7 @@ function SectionWithImages({
       {images.length > 0 && (
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
           {images.map((img, idx) => (
-            <ImageWithPreload
+            <BorderedImage
               key={idx}
               src={img}
               alt={`${title} - Image ${idx + 1}`}
@@ -143,12 +143,14 @@ export function ProjectDetail() {
         originY={originPosition.y}
         onClose={() => setIsCircularOpen(false)}
       >
-        <div className="relative w-full h-full flex items-center justify-center">
-          <img
-            src={allImages[currentIndex] || currentImage}
-            alt="Image projet"
-            className="max-w-full max-h-full object-contain"
-          />
+        <div className="relative w-full h-full flex items-center justify-center p-8">
+          <div className="rounded-lg border border-[#110F0F]/5 overflow-hidden max-w-full max-h-full">
+            <img
+              src={allImages[currentIndex] || currentImage}
+              alt="Image projet"
+              className="max-w-full max-h-full object-contain"
+            />
+          </div>
           
           {/* Navigation */}
           {allImages.length > 1 && (
@@ -203,10 +205,9 @@ export function ProjectDetail() {
               
               {/* Hero Image - 300px height */}
               <div className="w-full h-[300px]">
-                <ImageWithPreload
+                <BorderedImage
                   src={project.imageUrl}
                   alt={project.name}
-                  className="w-full h-full object-cover rounded-lg"
                   onClick={(_, originX, originY) => openImageWithAnimation(project.imageUrl, originX, originY)}
                 />
               </div>
@@ -409,7 +410,7 @@ export function ProjectDetail() {
                 {solutionData.images.length > 0 && (
                   <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                     {solutionData.images.map((img, idx) => (
-                      <ImageWithPreload
+                      <BorderedImage
                         key={idx}
                         src={img}
                         alt={`Solution - Image ${idx + 1}`}
@@ -466,7 +467,7 @@ export function ProjectDetail() {
                 to={`/project/${p.id}`}
                 className="group"
               >
-                <div className="aspect-[16/10] overflow-hidden mb-4">
+                <div className="aspect-[16/10] rounded-lg border border-[#110F0F]/5 overflow-hidden mb-4">
                   <img
                     src={p.imageUrl}
                     alt={p.name}
