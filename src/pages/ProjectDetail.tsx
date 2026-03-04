@@ -193,273 +193,267 @@ export function ProjectDetail() {
         </div>
       </header>
 
-      {/* Hero Image */}
-      <div className="w-full h-[50vh] sm:h-[60vh] lg:h-[70vh]">
-        <ImageWithPreload
-          src={project.imageUrl}
-          alt={project.name}
-          className="w-full h-full"
-          onClick={(_, originX, originY) => openImageWithAnimation(project.imageUrl, originX, originY)}
-        />
-      </div>
-
-      {/* Project Info */}
+      {/* Main Content - Two Column Layout */}
       <section className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 py-12 sm:py-16">
-        <div className="max-w-2xl mx-auto">
-          {/* Category & Year */}
-          <div className="flex items-center gap-4 mb-6">
-            <span className="text-sm">UX/UI Design</span>
-            <span className="text-sm text-text-muted">{project.year}</span>
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+          
+          {/* LEFT COLUMN - Sticky (33%) */}
+          <div className="lg:col-span-1">
+            <div className="lg:sticky lg:top-24 space-y-6">
+              
+              {/* Hero Image - 300px height */}
+              <div className="w-full h-[300px]">
+                <ImageWithPreload
+                  src={project.imageUrl}
+                  alt={project.name}
+                  className="w-full h-full object-cover rounded-lg"
+                  onClick={(_, originX, originY) => openImageWithAnimation(project.imageUrl, originX, originY)}
+                />
+              </div>
+              
+              {/* Project Info */}
+              <div className="space-y-6">
+                {/* Category & Year */}
+                <div className="flex items-center gap-4">
+                  <span className="text-sm">UX/UI Design</span>
+                  <span className="text-sm text-text-muted">{project.year}</span>
+                </div>
 
-          {/* Title */}
-          <h1 
-            className="text-4xl sm:text-5xl lg:text-6xl font-semibold mb-8"
-            style={{ letterSpacing: '-0.02em', lineHeight: '1.1' }}
-          >
-            {project.name}
-          </h1>
+                {/* Title */}
+                <h1 
+                  className="text-3xl font-semibold"
+                  style={{ letterSpacing: '-0.02em', lineHeight: '1.1' }}
+                >
+                  {project.name}
+                </h1>
 
-          {/* Description */}
-          <div className="text-lg sm:text-xl leading-relaxed max-w-2xl mb-12">
-            <FormattedText text={project.description} />
-          </div>
+                {/* Description */}
+                <div className="text-base leading-relaxed">
+                  <FormattedText text={project.description} />
+                </div>
 
-          {/* Website Link */}
-          {project.website && (
-            <div className="mb-12">
-              <a 
-                href={project.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-base hover:opacity-70 transition-opacity"
-              >
-                Voir le site
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            </div>
-          )}
+                {/* Website Link */}
+                {project.website && (
+                  <div>
+                    <a 
+                      href={project.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-base hover:opacity-70 transition-opacity"
+                    >
+                      Voir le site
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </div>
+                )}
 
-          {/* Metadata Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 py-8 border-y border-gray-300/30">
-            <div>
-              <h3 className="text-sm text-text-muted mb-2">Durée</h3>
-              <p className="text-base">{project.duration}</p>
-            </div>
-            <div>
-              <h3 className="text-sm text-text-muted mb-2">Localisation</h3>
-              <p className="text-base">{project.location}</p>
-            </div>
-            <div>
-              <h3 className="text-sm text-text-muted mb-2">Outils</h3>
-              <div className="flex flex-wrap gap-2">
-                {project.tools.map(tool => (
-                  <img
-                    key={tool}
-                    src={`/icons/${tool}.svg`}
-                    alt={tool}
-                    className="h-8 w-auto"
-                  />
-                ))}
+                {/* Metadata */}
+                <div className="space-y-4 py-6 border-y border-gray-300/30">
+                  <div>
+                    <h3 className="text-sm text-text-muted mb-1">Durée</h3>
+                    <p className="text-base">{project.duration}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-sm text-text-muted mb-1">Localisation</h3>
+                    <p className="text-base">{project.location}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-sm text-text-muted mb-1">Outils</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tools.map(tool => (
+                        <img
+                          key={tool}
+                          src={`/icons/${tool}.svg`}
+                          alt={tool}
+                          className="h-8 w-auto"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-sm text-text-muted mb-1">Tags</h3>
+                    <p className="text-base">{project.tags.slice(0, 3).join(', ')}</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div>
-              <h3 className="text-sm text-text-muted mb-2">Tags</h3>
-              <p className="text-base">{project.tags.slice(0, 3).join(', ')}</p>
-            </div>
+          </div>
+          
+          {/* RIGHT COLUMN - Scrollable (67%) */}
+          <div className="lg:col-span-2 space-y-0">
+            
+            {/* Context */}
+            {project.context && (
+              <section className="py-8 border-t border-gray-300/30 first:border-t-0 first:pt-0">
+                <h2 className="text-sm mb-6">Contexte</h2>
+                <FormattedText text={project.context} />
+              </section>
+            )}
+
+            {/* Use Cases */}
+            {project.useCases && project.useCases.length > 0 && (
+              <section className="py-8 border-t border-gray-300/30">
+                <h2 className="text-sm mb-6">Use Cases</h2>
+                <ul className="list-disc list-inside space-y-2">
+                  {project.useCases.map((useCase, index) => (
+                    <li key={index} className="text-base">{useCase}</li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Rôle, équipe */}
+            {(project.role || project.team) && (
+              <section className="py-8 border-t border-gray-300/30">
+                <h2 className="text-sm mb-6">Rôle & Équipe</h2>
+                
+                {project.role && (
+                  <div className="mb-6">
+                    <h3 className="text-lg font-medium mb-3">Mon rôle</h3>
+                    <FormattedText text={project.role} />
+                  </div>
+                )}
+                
+                {project.team && project.team.length > 0 && (
+                  <div>
+                    <h3 className="text-lg font-medium mb-3">Équipe</h3>
+                    <ul className="list-disc list-inside space-y-2">
+                      {project.team.map((member, index) => (
+                        <li key={index} className="text-base">{member}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* Challenge */}
+            {project.challenge && (
+              <section className="py-8 border-t border-gray-300/30">
+                <h2 className="text-sm mb-6">Challenge</h2>
+                <FormattedText text={project.challenge} />
+              </section>
+            )}
+
+            {/* Status Quo */}
+            {project.statusQuo && (
+              <section className="py-8 border-t border-gray-300/30">
+                <h2 className="text-sm mb-6">Status Quo</h2>
+                <FormattedText text={project.statusQuo} />
+              </section>
+            )}
+
+            {/* Process */}
+            {project.process && Object.values(project.process).some(v => v) && (
+              <section className="py-8 border-t border-gray-300/30">
+                <h2 className="text-sm mb-6">Process</h2>
+                
+                <div className="space-y-8">
+                  {project.process.discovery && (
+                    <SectionWithImages 
+                      title="Discovery" 
+                      section={project.process.discovery}
+                      onImageClick={openImageWithAnimation} 
+                    />
+                  )}
+                  
+                  {project.process.define && (
+                    <SectionWithImages 
+                      title="Define" 
+                      section={project.process.define}
+                      onImageClick={openImageWithAnimation} 
+                    />
+                  )}
+                  
+                  {project.process.design && (
+                    <SectionWithImages 
+                      title="Design" 
+                      section={project.process.design}
+                      onImageClick={openImageWithAnimation} 
+                    />
+                  )}
+                  
+                  {project.process.prototyping && (
+                    <SectionWithImages 
+                      title="Prototyping" 
+                      section={project.process.prototyping}
+                      onImageClick={openImageWithAnimation} 
+                    />
+                  )}
+                  
+                  {project.process.testing && (
+                    <SectionWithImages 
+                      title="Testing" 
+                      section={project.process.testing}
+                      onImageClick={openImageWithAnimation} 
+                    />
+                  )}
+                  
+                  {project.process.delivery && (
+                    <SectionWithImages 
+                      title="Delivery" 
+                      section={project.process.delivery}
+                      onImageClick={openImageWithAnimation} 
+                    />
+                  )}
+                </div>
+              </section>
+            )}
+
+            {/* Solution */}
+            {solutionData.content && (
+              <section className="py-8 border-t border-gray-300/30">
+                <h2 className="text-sm mb-6">Solution</h2>
+                <FormattedText text={solutionData.content} />
+                
+                {solutionData.images.length > 0 && (
+                  <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {solutionData.images.map((img, idx) => (
+                      <ImageWithPreload
+                        key={idx}
+                        src={img}
+                        alt={`Solution - Image ${idx + 1}`}
+                        onClick={(_, originX, originY) => openImageWithAnimation(img, originX, originY)}
+                      />
+                    ))}
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* Impact */}
+            {project.impact && (
+              <section className="py-8 border-t border-gray-300/30">
+                <h2 className="text-sm mb-6">Impact</h2>
+                <FormattedText text={project.impact} />
+              </section>
+            )}
+
+            {/* Learnings */}
+            {project.learnings && (
+              <section className="py-8 border-t border-gray-300/30">
+                <h2 className="text-sm mb-6">Learnings</h2>
+                <FormattedText text={project.learnings} />
+              </section>
+            )}
+
+            {/* Prototype CTA */}
+            {project.prototypeUrl && (
+              <section className="py-8 border-t border-gray-300/30">
+                <a 
+                  href={project.prototypeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-lg hover:opacity-70 transition-opacity"
+                >
+                  Voir le prototype
+                  <ExternalLink className="w-5 h-5" />
+                </a>
+              </section>
+            )}
           </div>
         </div>
       </section>
-
-      {/* Context */}
-      {project.context && (
-        <section className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-sm mb-8">Contexte</h2>
-            <FormattedText text={project.context} />
-          </div>
-        </section>
-      )}
-
-      {/* Use Cases */}
-      {project.useCases && project.useCases.length > 0 && (
-        <section className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-sm mb-8">Use Cases</h2>
-            <ul className="list-disc list-inside space-y-2">
-              {project.useCases.map((useCase, index) => (
-                <li key={index} className="text-base">{useCase}</li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      )}
-
-      {/* Rôle, équipe, année, durée */}
-      {(project.role || project.team) && (
-        <section className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-sm mb-8">Rôle & Équipe</h2>
-            
-            {project.role && (
-              <div className="mb-8">
-                <h3 className="text-lg font-medium mb-4">Mon rôle</h3>
-                <FormattedText text={project.role} />
-              </div>
-            )}
-            
-            {project.team && project.team.length > 0 && (
-              <div>
-                <h3 className="text-lg font-medium mb-4">Équipe</h3>
-                <ul className="list-disc list-inside space-y-2">
-                  {project.team.map((member, index) => (
-                    <li key={index} className="text-base">{member}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* Challenge */}
-      {project.challenge && (
-        <section className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-sm mb-8">Challenge</h2>
-            <FormattedText text={project.challenge} />
-          </div>
-        </section>
-      )}
-
-      {/* Status Quo */}
-      {project.statusQuo && (
-        <section className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-sm mb-8">Status Quo</h2>
-            <FormattedText text={project.statusQuo} />
-          </div>
-        </section>
-      )}
-
-      {/* Process */}
-      {project.process && Object.values(project.process).some(v => v) && (
-        <section className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-sm mb-8">Process</h2>
-            
-            <div className="space-y-12">
-              {project.process.discovery && (
-                <SectionWithImages 
-                  title="Discovery" 
-                  section={project.process.discovery}
-                  onImageClick={openImageWithAnimation} 
-                />
-              )}
-              
-              {project.process.define && (
-                <SectionWithImages 
-                  title="Define" 
-                  section={project.process.define}
-                  onImageClick={openImageWithAnimation} 
-                />
-              )}
-              
-              {project.process.design && (
-                <SectionWithImages 
-                  title="Design" 
-                  section={project.process.design}
-                  onImageClick={openImageWithAnimation} 
-                />
-              )}
-              
-              {project.process.prototyping && (
-                <SectionWithImages 
-                  title="Prototyping" 
-                  section={project.process.prototyping}
-                  onImageClick={openImageWithAnimation} 
-                />
-              )}
-              
-              {project.process.testing && (
-                <SectionWithImages 
-                  title="Testing" 
-                  section={project.process.testing}
-                  onImageClick={openImageWithAnimation} 
-                />
-              )}
-              
-              {project.process.delivery && (
-                <SectionWithImages 
-                  title="Delivery" 
-                  section={project.process.delivery}
-                  onImageClick={openImageWithAnimation} 
-                />
-              )}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Solution */}
-      {solutionData.content && (
-        <section className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-sm mb-8">Solution</h2>
-            <FormattedText text={solutionData.content} />
-            
-            {solutionData.images.length > 0 && (
-              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-                {solutionData.images.map((img, idx) => (
-                  <ImageWithPreload
-                    key={idx}
-                    src={img}
-                    alt={`Solution - Image ${idx + 1}`}
-                    onClick={(_, originX, originY) => openImageWithAnimation(img, originX, originY)}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* Impact */}
-      {project.impact && (
-        <section className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-sm mb-8">Impact</h2>
-            <FormattedText text={project.impact} />
-          </div>
-        </section>
-      )}
-
-      {/* Learnings */}
-      {project.learnings && (
-        <section className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-sm mb-8">Learnings</h2>
-            <FormattedText text={project.learnings} />
-          </div>
-        </section>
-      )}
-
-      {/* Prototype CTA */}
-      {project.prototypeUrl && (
-        <section className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 py-12 sm:py-16 border-t border-gray-300/30">
-          <div className="max-w-2xl mx-auto">
-            <a 
-              href={project.prototypeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-lg hover:opacity-70 transition-opacity"
-            >
-              Voir le prototype
-              <ExternalLink className="w-5 h-5" />
-            </a>
-          </div>
-        </section>
-      )}
 
       {/* More Projects */}
       {otherProjects.length > 0 && (
