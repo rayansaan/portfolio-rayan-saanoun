@@ -260,7 +260,7 @@ export function ProjectDetail() {
                       key={tool}
                       src={`/icons/${iconName}.svg`}
                       alt={tool}
-                      className="h-6 w-auto"
+                      className="h-8 w-auto"
                     />
                   );
                 })}
