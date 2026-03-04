@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import type { ImageDescription } from '@/types';
 
 interface ImageDescriptionCardProps {
@@ -17,16 +18,20 @@ export function ImageDescriptionCard({ image, onClick }: ImageDescriptionCardPro
   };
 
   return (
-    <div
+    <motion.div
       ref={imageRef}
+      layoutId={`image-${image.id}`}
+      layout
       onClick={handleClick}
       className="relative overflow-hidden rounded-lg cursor-pointer group max-h-80"
+      style={{ willChange: 'transform' }}
     >
-      <img
+      <motion.img
+        layout="position"
         src={image.src}
         alt={image.alt}
-        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+        className="w-full h-full object-cover"
       />
-    </div>
+    </motion.div>
   );
 }

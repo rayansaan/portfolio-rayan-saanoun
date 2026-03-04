@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useRef, type RefObject } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
+import { LayoutGroup } from 'framer-motion';
 import { allProjects } from '@/data/projects';
 import { useLenis } from '@/context/LenisContext';
 import { CircularReveal } from '@/components/CircularReveal';
@@ -549,13 +550,15 @@ export function ProjectDetail() {
 
             {/* ImageDescription Gallery - Flexible placement */}
             {project.imageDescriptions && project.imageDescriptions.length > 0 && (
-              <section className="py-8 border-t border-gray-300/30">
-                <h2 className="text-sm mb-6">Galerie</h2>
-                <ImageDescriptionGrid 
-                  images={project.imageDescriptions}
-                  onImageClick={handleImageDescriptionClick}
-                />
-              </section>
+              <LayoutGroup>
+                <section className="py-8 border-t border-gray-300/30">
+                  <h2 className="text-sm mb-6">Galerie</h2>
+                  <ImageDescriptionGrid 
+                    images={project.imageDescriptions}
+                    onImageClick={handleImageDescriptionClick}
+                  />
+                </section>
+              </LayoutGroup>
             )}
           </div>
         </div>

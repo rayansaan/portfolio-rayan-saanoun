@@ -48,24 +48,12 @@ export function ImageDescriptionLightbox({
             {/* Image with animation */}
             <motion.div
               layoutId={`image-${image.id}`}
-              initial={{
-                x: originRect.left,
-                y: originRect.top,
-                width: originRect.width,
-                height: originRect.height,
-              }}
-              animate={{
-                x: 0,
-                y: 0,
-                width: '100%',
-                height: 'auto',
-              }}
+              layout
               transition={{
-                type: 'spring',
-                stiffness: 300,
-                damping: 30,
+                layout: { duration: 0.5, ease: [0.4, 0, 0.2, 1] }
               }}
               className="rounded-lg overflow-hidden"
+              style={{ willChange: 'transform' }}
             >
               <img
                 src={image.src}
