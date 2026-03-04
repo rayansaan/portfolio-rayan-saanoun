@@ -106,7 +106,7 @@ export function ProjectDetail() {
   
   // Remonter en haut de la page quand on change de projet
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [id]);
   
   const project = allProjects.find(p => p.id === id);
