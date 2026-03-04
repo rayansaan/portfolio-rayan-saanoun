@@ -22,6 +22,7 @@ export function ImageDescriptionCard({ image, onClick }: ImageDescriptionCardPro
       ref={imageRef}
       layoutId={`image-${image.id}`}
       layout
+      transition={{ layout: { duration: 0.5, ease: [0.4, 0, 0.2, 0.4] } }}
       onClick={handleClick}
       className="relative overflow-hidden rounded-lg cursor-pointer group max-h-80"
       style={{ willChange: 'transform' }}
