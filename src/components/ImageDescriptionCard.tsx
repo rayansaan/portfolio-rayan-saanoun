@@ -18,21 +18,20 @@ export function ImageDescriptionCard({ image, onClick }: ImageDescriptionCardPro
   };
 
   return (
-    <motion.div
+    <div
       ref={imageRef}
-      layoutId={`image-${image.id}`}
-      layout
-      transition={{ layout: { duration: 0.35, ease: [0.4, 0, 0.2, 0.4] } }}
       onClick={handleClick}
       className="relative overflow-hidden rounded-lg cursor-pointer group max-h-80"
-      style={{ willChange: 'transform' }}
     >
       <motion.img
-        layout="position"
+        layoutId={`image-${image.id}`}
+        layout
+        transition={{ layout: { duration: 0.4, ease: [0.32, 0.72, 0, 1] } }}
         src={image.src}
         alt={image.alt}
         className="w-full h-full object-cover"
+        style={{ willChange: 'transform' }}
       />
-    </motion.div>
+    </div>
   );
 }

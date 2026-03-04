@@ -46,21 +46,19 @@ export function ImageDescriptionLightbox({
             onClick={(e) => e.stopPropagation()}
           >
             {/* Image with animation */}
-            <motion.div
-              layoutId={`image-${image.id}`}
-              layout
-              transition={{
-                layout: { duration: 0.35, ease: [0.4, 0, 0.2, 0.4] }
-              }}
-              className="rounded-lg overflow-hidden"
-              style={{ willChange: 'transform' }}
-            >
-              <img
+            <div className="rounded-lg overflow-hidden max-h-[70vh]">
+              <motion.img
+                layoutId={`image-${image.id}`}
+                layout
+                transition={{
+                  layout: { duration: 0.4, ease: [0.32, 0.72, 0, 1] }
+                }}
                 src={image.src}
                 alt={image.alt}
-                className="w-full h-auto object-contain"
+                className="w-full h-full object-cover"
+                style={{ willChange: 'transform' }}
               />
-            </motion.div>
+            </div>
 
             {/* Description */}
             <motion.div
