@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef, type RefObject } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { allProjects } from '@/data/projects';
@@ -26,22 +26,43 @@ function getSectionData(section: string | ProjectSection | undefined): { content
   return { content: section.content, images: section.images || [] };
 }
 
-// Hook pour tracker la progression du scroll
-function useScrollProgress() {
+// Hook pour tracker la progression du scroll sur un élément cible
+function useScrollProgress(targetRef: RefObject<HTMLElement | null>) {
   const [progress, setProgress] = useState(0);
   
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollProgress = (scrollTop / docHeight) * 100;
+      if (!targetRef.current) return;
+      
+      const target = targetRef.current;
+      const targetRect = target.getBoundingClientRect();
+      const targetTop = targetRect.top + window.scrollY;
+      const targetHeight = targetRect.height;
+      const windowHeight = window.innerHeight;
+      
+      // Calculate how much of the target element has been scrolled
+      // Progress starts when target comes into view and ends when target bottom reaches viewport bottom
+      const scrollStart = targetTop;
+      const scrollEnd = targetTop + targetHeight - windowHeight;
+      const scrollRange = scrollEnd - scrollStart;
+      
+      if (scrollRange <= 0) {
+        // Target is smaller than viewport, show full progress
+        setProgress(100);
+        return;
+      }
+      
+      const currentScroll = window.scrollY;
+      const relativeScroll = currentScroll - scrollStart;
+      const scrollProgress = (relativeScroll / scrollRange) * 100;
+      
       setProgress(Math.min(100, Math.max(0, scrollProgress)));
     };
     
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [targetRef]);
   
   return progress;
 }
@@ -92,8 +113,11 @@ export function ProjectDetail() {
   const [allImages, setAllImages] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   
-  // Progression du scroll
-  const scrollProgress = useScrollProgress();
+  // Ref pour la colonne de droite (contenu du projet)
+  const contentRef = useRef<HTMLDivElement>(null);
+  
+  // Progression du scroll basée sur le contenu du projet
+  const scrollProgress = useScrollProgress(contentRef);
   
   if (!project) {
     return (
@@ -316,7 +340,7 @@ export function ProjectDetail() {
           </div>
           
           {/* RIGHT COLUMN - Scrollable (67%) */}
-          <div className="lg:col-span-2 space-y-0">
+          <div ref={contentRef} className="lg:col-span-2 space-y-0">
             
             {/* Context */}
             {project.context && (
