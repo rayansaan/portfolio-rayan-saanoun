@@ -104,6 +104,11 @@ function SectionWithImages({
 export function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
   
+  // Remonter en haut de la page quand on change de projet
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+  
   const project = allProjects.find(p => p.id === id);
   
   // State pour l'animation circulaire
