@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { allProjects } from '@/data/projects';
@@ -23,6 +23,26 @@ function getSectionData(section: string | ProjectSection | undefined): { content
     return { content: section, images: [] };
   }
   return { content: section.content, images: section.images || [] };
+}
+
+// Hook pour tracker la progression du scroll
+function useScrollProgress() {
+  const [progress, setProgress] = useState(0);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollProgress = (scrollTop / docHeight) * 100;
+      setProgress(Math.min(100, Math.max(0, scrollProgress)));
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
+  return progress;
 }
 
 // Composant pour afficher une section avec ses images cliquables
@@ -70,6 +90,9 @@ export function ProjectDetail() {
   const [currentImage, setCurrentImage] = useState('');
   const [allImages, setAllImages] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  
+  // Progression du scroll
+  const scrollProgress = useScrollProgress();
   
   if (!project) {
     return (
@@ -181,6 +204,14 @@ export function ProjectDetail() {
         </div>
       </CircularReveal>
 
+      {/* Barre de progression - Mobile (fixe en bas) */}
+      <div className="fixed bottom-0 left-0 right-0 h-1 bg-[#110F0F]/5 z-50 lg:hidden">
+        <div 
+          className="h-full bg-[#110F0F]" 
+          style={{ width: `${scrollProgress}%` }} 
+        />
+      </div>
+
       {/* Header */}
       <header className="w-full px-16 sm:px-20 lg:px-32 xl:px-48 py-6 sm:py-8">
         <div className="flex items-center justify-between">
@@ -209,6 +240,14 @@ export function ProjectDetail() {
                   src={project.imageUrl}
                   alt={project.name}
                   onClick={(_, originX, originY) => openImageWithAnimation(project.imageUrl, originX, originY)}
+                />
+              </div>
+              
+              {/* Barre de progression - Desktop */}
+              <div className="hidden lg:block w-full h-1 bg-[#110F0F]/5 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-[#110F0F]" 
+                  style={{ width: `${scrollProgress}%` }} 
                 />
               </div>
               

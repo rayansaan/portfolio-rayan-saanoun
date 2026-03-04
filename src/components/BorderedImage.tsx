@@ -30,7 +30,7 @@ export function BorderedImage({
   );
 
   return (
-    <div className="rounded-lg border border-[#110F0F]/5 overflow-hidden">
+    <div className="rounded-lg border border-[#110F0F]/5 overflow-hidden h-full">
       {content}
     </div>
   );
