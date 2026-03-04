@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect, useRef, type RefObject } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { allProjects } from '@/data/projects';
+import { useLenis } from '@/context/LenisContext';
 import { CircularReveal } from '@/components/CircularReveal';
 import { BorderedImage } from '@/components/BorderedImage';
 import { ToolIcon } from '@/components/ToolIcon';
@@ -103,11 +104,16 @@ function SectionWithImages({
 
 export function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
+  const { lenis } = useLenis();
   
   // Remonter en haut de la page quand on change de projet
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  }, [id]);
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+  }, [id, lenis]);
   
   const project = allProjects.find(p => p.id === id);
   

@@ -7,7 +7,7 @@ import { Footer } from '@/components/Footer';
 import { CursorFollowImage } from '@/components/CursorFollowImage';
 import { HoverImageProvider } from '@/context/HoverImageContext';
 import { CustomCursor } from '@/components/CustomCursor';
-import { SmoothScroll } from '@/components/SmoothScroll';
+import { LenisProvider } from '@/context/LenisContext';
 import { ProjectDetail } from '@/pages/ProjectDetail';
 import { uxUiProjects, otherProjects } from '@/data/projects';
 
@@ -47,14 +47,15 @@ function HomePage() {
 function App() {
   return (
     <HoverImageProvider>
-      <SmoothScroll />
-      <CustomCursor />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/project/:id" element={<ProjectDetail />} />
-        </Routes>
-      </BrowserRouter>
+      <LenisProvider>
+        <CustomCursor />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/project/:id" element={<ProjectDetail />} />
+          </Routes>
+        </BrowserRouter>
+      </LenisProvider>
     </HoverImageProvider>
   );
 }
