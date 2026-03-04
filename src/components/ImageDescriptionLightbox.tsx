@@ -50,7 +50,7 @@ export function ImageDescriptionLightbox({
               layoutId={`image-${image.id}`}
               layout
               transition={{
-                layout: { duration: 0.5, ease: [0.4, 0, 0.2, 0.4] }
+                layout: { duration: 0.35, ease: [0.4, 0, 0.2, 0.4] }
               }}
               className="rounded-lg overflow-hidden"
               style={{ willChange: 'transform' }}
