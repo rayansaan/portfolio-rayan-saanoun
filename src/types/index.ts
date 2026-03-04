@@ -1,3 +1,10 @@
+export interface ImageDescription {
+  id: string;
+  src: string;
+  alt: string;
+  description: string;
+}
+
 export interface ProjectSection {
   content: string;
   images?: string[];
@@ -34,6 +41,7 @@ export interface Project {
   impact?: string;
   learnings?: string;
   prototypeUrl?: string;
+  imageDescriptions?: ImageDescription[];
 }
 
 export interface HoverImageState {

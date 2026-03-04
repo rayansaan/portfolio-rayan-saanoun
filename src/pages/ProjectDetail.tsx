@@ -6,7 +6,9 @@ import { useLenis } from '@/context/LenisContext';
 import { CircularReveal } from '@/components/CircularReveal';
 import { BorderedImage } from '@/components/BorderedImage';
 import { ToolIcon } from '@/components/ToolIcon';
-import type { ProjectSection } from '@/types';
+import { ImageDescriptionGrid } from '@/components/ImageDescriptionGrid';
+import { ImageDescriptionLightbox } from '@/components/ImageDescriptionLightbox';
+import type { ProjectSection, ImageDescription } from '@/types';
 
 // Composant pour afficher du texte avec des sauts de ligne
 function FormattedText({ text }: { text: string }) {
@@ -124,6 +126,10 @@ export function ProjectDetail() {
   const [allImages, setAllImages] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   
+  // State pour ImageDescription
+  const [selectedImageDescription, setSelectedImageDescription] = useState<ImageDescription | null>(null);
+  const [imageDescriptionRect, setImageDescriptionRect] = useState<DOMRect | null>(null);
+  
   // Ref pour la colonne de droite (contenu du projet)
   const contentRef = useRef<HTMLDivElement>(null);
   
@@ -193,6 +199,17 @@ export function ProjectDetail() {
     setCurrentImage(allImages[currentIndex]);
   };
 
+  // Handler pour ImageDescription
+  const handleImageDescriptionClick = (image: ImageDescription, rect: DOMRect) => {
+    setSelectedImageDescription(image);
+    setImageDescriptionRect(rect);
+  };
+
+  const handleCloseImageDescription = () => {
+    setSelectedImageDescription(null);
+    setImageDescriptionRect(null);
+  };
+
   return (
     <div className="min-h-screen">
       {/* Animation Circulaire */}
@@ -239,6 +256,13 @@ export function ProjectDetail() {
           )}
         </div>
       </CircularReveal>
+
+      {/* ImageDescription Lightbox */}
+      <ImageDescriptionLightbox
+        image={selectedImageDescription}
+        originRect={imageDescriptionRect}
+        onClose={handleCloseImageDescription}
+      />
 
       {/* Barre de progression - Mobile (fixe en bas) */}
       <div className="fixed bottom-0 left-0 right-0 h-1 bg-[#110F0F]/5 z-50 lg:hidden">
@@ -520,6 +544,17 @@ export function ProjectDetail() {
                   Voir le prototype
                   <ExternalLink className="w-5 h-5" />
                 </a>
+              </section>
+            )}
+
+            {/* ImageDescription Gallery - Flexible placement */}
+            {project.imageDescriptions && project.imageDescriptions.length > 0 && (
+              <section className="py-8 border-t border-gray-300/30">
+                <h2 className="text-sm mb-6">Galerie</h2>
+                <ImageDescriptionGrid 
+                  images={project.imageDescriptions}
+                  onImageClick={handleImageDescriptionClick}
+                />
               </section>
             )}
           </div>
