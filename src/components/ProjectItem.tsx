@@ -30,18 +30,32 @@ export function ProjectItem({ project }: ProjectItemProps) {
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      {/* Image visible uniquement sur mobile */}
-      <div className="md:hidden aspect-[4/3] overflow-hidden rounded-lg mb-4">
-        <img
-          src={project.imageUrl}
-          alt={project.name}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-        />
+      {/* Card wrapper - visible uniquement sur mobile */}
+      <div className="md:hidden bg-black/5 border border-black/5 rounded-lg overflow-hidden transition-all duration-300">
+        {/* Image avec padding */}
+        <div className="aspect-[4/3] overflow-hidden rounded-lg p-4 mb-2">
+          <img
+            src={project.imageUrl}
+            alt={project.name}
+            className="w-full h-full object-cover transition-transform duration-300 md:group-hover:scale-105"
+          />
+        </div>
+        
+        {/* Nom du projet avec padding */}
+        <span 
+          className="text-project-sm sm:text-project-md font-semibold transition-opacity duration-200 group-hover:opacity-70 block px-4 pb-4"
+          style={{ 
+            lineHeight: '1.05',
+            letterSpacing: '-0.03em',
+          }}
+        >
+          {project.name}
+        </span>
       </div>
       
-      {/* Nom du projet */}
+      {/* Desktop - Texte uniquement avec hover */}
       <span 
-        className="text-project-sm sm:text-project-md lg:text-project-lg xl:text-project font-semibold transition-opacity duration-200 group-hover:opacity-70 block"
+        className="hidden md:block text-project-sm sm:text-project-md lg:text-project-lg xl:text-project font-semibold transition-opacity duration-200 group-hover:opacity-70"
         style={{ 
           lineHeight: '1.05',
           letterSpacing: '-0.03em',
