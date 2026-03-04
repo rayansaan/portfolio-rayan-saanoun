@@ -45,8 +45,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        serif: ['Playfair Display', 'Georgia', 'serif'],
+        sans: ['Switzer', 'system-ui', '-apple-system', 'sans-serif'],
       },
       fontSize: {
         'project': ['92px', { lineHeight: '1', letterSpacing: '-3px' }],
