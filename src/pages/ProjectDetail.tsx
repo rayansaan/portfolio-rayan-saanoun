@@ -4,6 +4,7 @@ import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { allProjects } from '@/data/projects';
 import { CircularReveal } from '@/components/CircularReveal';
 import { BorderedImage } from '@/components/BorderedImage';
+import { ToolIcon } from '@/components/ToolIcon';
 import type { ProjectSection } from '@/types';
 
 // Composant pour afficher du texte avec des sauts de ligne
@@ -301,12 +302,7 @@ export function ProjectDetail() {
                     <h3 className="text-sm text-text-muted mb-1">Outils</h3>
                     <div className="flex flex-wrap gap-2">
                       {project.tools.map(tool => (
-                        <img
-                          key={tool}
-                          src={`/icons/${tool}.svg`}
-                          alt={tool}
-                          className="h-8 w-auto"
-                        />
+                        <ToolIcon key={tool} name={tool} className="h-8 w-auto" />
                       ))}
                     </div>
                   </div>
