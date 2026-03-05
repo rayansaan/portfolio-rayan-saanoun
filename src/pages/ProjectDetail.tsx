@@ -1,14 +1,15 @@
-import { useState, useMemo, useEffect, useRef, type RefObject } from 'react';
+import { useState, useEffect, useRef, type RefObject } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { LayoutGroup } from 'framer-motion';
 import { allProjects } from '@/data/projects';
 import { useLenis } from '@/context/LenisContext';
-import { CircularReveal } from '@/components/CircularReveal';
 import { BorderedImage } from '@/components/BorderedImage';
 import { ToolIcon } from '@/components/ToolIcon';
 import { ImageDescriptionGrid } from '@/components/ImageDescriptionGrid';
 import { ImageDescriptionLightbox } from '@/components/ImageDescriptionLightbox';
+import { StandardImageLightbox } from '@/components/StandardImageLightbox';
+import { generateStandardImageId } from '@/utils/generateId';
 import type { ProjectSection, ImageDescription } from '@/types';
 
 // Composant pour afficher du texte avec des sauts de ligne
@@ -75,11 +76,15 @@ function useScrollProgress(targetRef: RefObject<HTMLElement | null>) {
 function SectionWithImages({ 
   title, 
   section, 
+  projectId,
+  sectionIndex,
   onImageClick 
 }: { 
   title: string; 
   section: string | ProjectSection | undefined;
-  onImageClick: (image: string, originX: number, originY: number) => void;
+  projectId: string;
+  sectionIndex: number;
+  onImageClick: (src: string, alt: string, layoutId: string, rect: DOMRect) => void;
 }) {
   const { content, images } = getSectionData(section);
   if (!content) return null;
@@ -91,14 +96,18 @@ function SectionWithImages({
       
       {images.length > 0 && (
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-          {images.map((img, idx) => (
-            <BorderedImage
-              key={idx}
-              src={img}
-              alt={`${title} - Image ${idx + 1}`}
-              onClick={(_, originX, originY) => onImageClick(img, originX, originY)}
-            />
-          ))}
+          {images.map((img, idx) => {
+            const layoutId = generateStandardImageId(projectId, sectionIndex * 100 + idx + 200);
+            return (
+              <BorderedImage
+                key={idx}
+                src={img}
+                alt={`${title} - Image ${idx + 1}`}
+                layoutId={layoutId}
+                onClick={(rect) => onImageClick(img, `${title} - Image ${idx + 1}`, layoutId, rect)}
+              />
+            );
+          })}
         </div>
       )}
     </div>
@@ -120,16 +129,13 @@ export function ProjectDetail() {
   
   const project = allProjects.find(p => p.id === id);
   
-  // State pour l'animation circulaire
-  const [isCircularOpen, setIsCircularOpen] = useState(false);
-  const [originPosition, setOriginPosition] = useState({ x: 0, y: 0 });
-  const [currentImage, setCurrentImage] = useState('');
-  const [allImages, setAllImages] = useState<string[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  
   // State pour ImageDescription
   const [selectedImageDescription, setSelectedImageDescription] = useState<ImageDescription | null>(null);
   const [imageDescriptionRect, setImageDescriptionRect] = useState<DOMRect | null>(null);
+  
+  // State pour StandardImage
+  const [selectedStandardImage, setSelectedStandardImage] = useState<ImageDescription | null>(null);
+  const [standardImageRect, setStandardImageRect] = useState<DOMRect | null>(null);
   
   // Ref pour la colonne de droite (contenu du projet)
   const contentRef = useRef<HTMLDivElement>(null);
@@ -156,49 +162,6 @@ export function ProjectDetail() {
 
   // Récupérer les données de la solution
   const solutionData = getSectionData(project.solution);
-  
-  // Collecter toutes les images du projet
-  const allProjectImages = useMemo(() => {
-    const images: string[] = [];
-    
-    // Ajouter l'image principale
-    images.push(project.imageUrl);
-    
-    // Ajouter les images du process
-    if (project.process) {
-      Object.values(project.process).forEach(section => {
-        if (section) {
-          const { images: sectionImages } = getSectionData(section);
-          images.push(...sectionImages);
-        }
-      });
-    }
-    
-    // Ajouter les images de la solution
-    images.push(...solutionData.images);
-    
-    return images;
-  }, [project, solutionData.images]);
-
-  // Fonction pour ouvrir l'image avec animation circulaire
-  const openImageWithAnimation = (image: string, originX: number, originY: number) => {
-    const index = allProjectImages.indexOf(image);
-    setCurrentImage(image);
-    setAllImages(allProjectImages);
-    setCurrentIndex(index >= 0 ? index : 0);
-    setOriginPosition({ x: originX, y: originY });
-    setIsCircularOpen(true);
-  };
-  
-  // Navigation dans le lightbox
-  const navigateImage = (direction: 'prev' | 'next') => {
-    if (direction === 'prev') {
-      setCurrentIndex(prev => (prev === 0 ? allImages.length - 1 : prev - 1));
-    } else {
-      setCurrentIndex(prev => (prev === allImages.length - 1 ? 0 : prev + 1));
-    }
-    setCurrentImage(allImages[currentIndex]);
-  };
 
   // Handler pour ImageDescription
   const handleImageDescriptionClick = (image: ImageDescription, rect: DOMRect) => {
@@ -211,58 +174,31 @@ export function ProjectDetail() {
     setImageDescriptionRect(null);
   };
 
+  // Handler pour StandardImage
+  const handleStandardImageClick = (src: string, alt: string, layoutId: string, rect: DOMRect) => {
+    setSelectedStandardImage({ id: layoutId, src, alt, description: '' });
+    setStandardImageRect(rect);
+  };
+
+  const handleCloseStandardImage = () => {
+    setSelectedStandardImage(null);
+    setStandardImageRect(null);
+  };
+
   return (
     <div className="min-h-screen">
-      {/* Animation Circulaire */}
-      <CircularReveal
-        isOpen={isCircularOpen}
-        originX={originPosition.x}
-        originY={originPosition.y}
-        onClose={() => setIsCircularOpen(false)}
-      >
-        <div className="relative w-full h-full flex items-center justify-center p-8">
-          <div className="rounded-lg border border-[#110F0F]/5 overflow-hidden max-w-full max-h-full">
-            <img
-              src={allImages[currentIndex] || currentImage}
-              alt="Image projet"
-              className="max-w-full max-h-full object-contain"
-            />
-          </div>
-          
-          {/* Navigation */}
-          {allImages.length > 1 && (
-            <>
-              <button
-                onClick={() => navigateImage('prev')}
-                className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center text-white hover:bg-white/10 rounded-full transition-colors"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M15 18l-6-6 6-6" />
-                </svg>
-              </button>
-              <button
-                onClick={() => navigateImage('next')}
-                className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center text-white hover:bg-white/10 rounded-full transition-colors"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M9 18l6-6-6-6" />
-                </svg>
-              </button>
-              
-              {/* Compteur */}
-              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white text-sm">
-                {currentIndex + 1} / {allImages.length}
-              </div>
-            </>
-          )}
-        </div>
-      </CircularReveal>
-
       {/* ImageDescription Lightbox */}
       <ImageDescriptionLightbox
         image={selectedImageDescription}
         originRect={imageDescriptionRect}
         onClose={handleCloseImageDescription}
+      />
+
+      {/* StandardImage Lightbox */}
+      <StandardImageLightbox
+        image={selectedStandardImage}
+        originRect={standardImageRect}
+        onClose={handleCloseStandardImage}
       />
 
       {/* Barre de progression - Mobile (fixe en bas) */}
@@ -300,7 +236,8 @@ export function ProjectDetail() {
                 <BorderedImage
                   src={project.imageUrl}
                   alt={project.name}
-                  onClick={(_, originX, originY) => openImageWithAnimation(project.imageUrl, originX, originY)}
+                  layoutId={generateStandardImageId(project.id, 0)}
+                  onClick={(rect) => handleStandardImageClick(project.imageUrl, project.name, generateStandardImageId(project.id, 0), rect)}
                 />
               </div>
               
@@ -449,7 +386,9 @@ export function ProjectDetail() {
                     <SectionWithImages 
                       title="Discovery" 
                       section={project.process.discovery}
-                      onImageClick={openImageWithAnimation} 
+                      projectId={project.id}
+                      sectionIndex={0}
+                      onImageClick={handleStandardImageClick} 
                     />
                   )}
                   
@@ -457,7 +396,9 @@ export function ProjectDetail() {
                     <SectionWithImages 
                       title="Define" 
                       section={project.process.define}
-                      onImageClick={openImageWithAnimation} 
+                      projectId={project.id}
+                      sectionIndex={1}
+                      onImageClick={handleStandardImageClick} 
                     />
                   )}
                   
@@ -465,7 +406,9 @@ export function ProjectDetail() {
                     <SectionWithImages 
                       title="Design" 
                       section={project.process.design}
-                      onImageClick={openImageWithAnimation} 
+                      projectId={project.id}
+                      sectionIndex={2}
+                      onImageClick={handleStandardImageClick} 
                     />
                   )}
                   
@@ -473,7 +416,9 @@ export function ProjectDetail() {
                     <SectionWithImages 
                       title="Prototyping" 
                       section={project.process.prototyping}
-                      onImageClick={openImageWithAnimation} 
+                      projectId={project.id}
+                      sectionIndex={3}
+                      onImageClick={handleStandardImageClick} 
                     />
                   )}
                   
@@ -481,7 +426,9 @@ export function ProjectDetail() {
                     <SectionWithImages 
                       title="Testing" 
                       section={project.process.testing}
-                      onImageClick={openImageWithAnimation} 
+                      projectId={project.id}
+                      sectionIndex={4}
+                      onImageClick={handleStandardImageClick} 
                     />
                   )}
                   
@@ -489,7 +436,9 @@ export function ProjectDetail() {
                     <SectionWithImages 
                       title="Delivery" 
                       section={project.process.delivery}
-                      onImageClick={openImageWithAnimation} 
+                      projectId={project.id}
+                      sectionIndex={5}
+                      onImageClick={handleStandardImageClick} 
                     />
                   )}
                 </div>
@@ -509,7 +458,8 @@ export function ProjectDetail() {
                         key={idx}
                         src={img}
                         alt={`Solution - Image ${idx + 1}`}
-                        onClick={(_, originX, originY) => openImageWithAnimation(img, originX, originY)}
+                        layoutId={generateStandardImageId(project.id, idx + 100)}
+                        onClick={(rect) => handleStandardImageClick(img, `Solution - Image ${idx + 1}`, generateStandardImageId(project.id, idx + 100), rect)}
                       />
                     ))}
                   </div>
