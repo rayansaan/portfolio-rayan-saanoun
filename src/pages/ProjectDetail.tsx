@@ -1,14 +1,12 @@
 import { useState, useEffect, useRef, type RefObject } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
-import { LayoutGroup } from 'framer-motion';
 import { allProjects } from '@/data/projects';
 import { useLenis } from '@/context/LenisContext';
 import { BorderedImage } from '@/components/BorderedImage';
 import { ToolIcon } from '@/components/ToolIcon';
 import { ImageDescriptionGrid } from '@/components/ImageDescriptionGrid';
-import { ImageDescriptionLightbox } from '@/components/ImageDescriptionLightbox';
-import { StandardImageLightbox } from '@/components/StandardImageLightbox';
+import { GSAPFlipLightbox } from '@/components/GSAPFlipLightbox';
 import { generateStandardImageId } from '@/utils/generateId';
 import type { ProjectSection, ImageDescription } from '@/types';
 
@@ -103,7 +101,6 @@ function SectionWithImages({
                 key={idx}
                 src={img}
                 alt={`${title} - Image ${idx + 1}`}
-                layoutId={layoutId}
                 onClick={(rect) => onImageClick(img, `${title} - Image ${idx + 1}`, layoutId, rect)}
               />
             );
@@ -188,17 +185,21 @@ export function ProjectDetail() {
   return (
     <div className="min-h-screen">
       {/* ImageDescription Lightbox */}
-      <ImageDescriptionLightbox
+      <GSAPFlipLightbox
         image={selectedImageDescription}
         originRect={imageDescriptionRect}
+        isOpen={!!selectedImageDescription}
         onClose={handleCloseImageDescription}
+        showDescription={true}
       />
 
       {/* StandardImage Lightbox */}
-      <StandardImageLightbox
+      <GSAPFlipLightbox
         image={selectedStandardImage}
         originRect={standardImageRect}
+        isOpen={!!selectedStandardImage}
         onClose={handleCloseStandardImage}
+        showDescription={false}
       />
 
       {/* Barre de progression - Mobile (fixe en bas) */}
@@ -236,7 +237,6 @@ export function ProjectDetail() {
                 <BorderedImage
                   src={project.imageUrl}
                   alt={project.name}
-                  layoutId={generateStandardImageId(project.id, 0)}
                   onClick={(rect) => handleStandardImageClick(project.imageUrl, project.name, generateStandardImageId(project.id, 0), rect)}
                 />
               </div>
@@ -458,7 +458,6 @@ export function ProjectDetail() {
                         key={idx}
                         src={img}
                         alt={`Solution - Image ${idx + 1}`}
-                        layoutId={generateStandardImageId(project.id, idx + 100)}
                         onClick={(rect) => handleStandardImageClick(img, `Solution - Image ${idx + 1}`, generateStandardImageId(project.id, idx + 100), rect)}
                       />
                     ))}
@@ -500,15 +499,13 @@ export function ProjectDetail() {
 
             {/* ImageDescription Gallery - Flexible placement */}
             {project.imageDescriptions && project.imageDescriptions.length > 0 && (
-              <LayoutGroup>
-                <section className="py-8 border-t border-gray-300/30">
-                  <h2 className="text-sm mb-6">Galerie</h2>
-                  <ImageDescriptionGrid 
-                    images={project.imageDescriptions}
-                    onImageClick={handleImageDescriptionClick}
-                  />
-                </section>
-              </LayoutGroup>
+              <section className="py-8 border-t border-gray-300/30">
+                <h2 className="text-sm mb-6">Galerie</h2>
+                <ImageDescriptionGrid 
+                  images={project.imageDescriptions}
+                  onImageClick={handleImageDescriptionClick}
+                />
+              </section>
             )}
           </div>
         </div>

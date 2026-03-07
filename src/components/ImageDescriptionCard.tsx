@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-import { motion } from 'framer-motion';
 import type { ImageDescription } from '@/types';
 
 interface ImageDescriptionCardProps {
@@ -23,14 +22,10 @@ export function ImageDescriptionCard({ image, onClick }: ImageDescriptionCardPro
       onClick={handleClick}
       className="relative overflow-hidden rounded-lg cursor-pointer group max-h-80"
     >
-      <motion.img
-        layoutId={`image-${image.id}`}
-        layout
-        transition={{ layout: { duration: 0.4, ease: [0.32, 0.72, 0, 1] } }}
+      <img
         src={image.src}
         alt={image.alt}
         className="w-full h-full object-cover"
-        style={{ willChange: 'transform' }}
       />
     </div>
   );
