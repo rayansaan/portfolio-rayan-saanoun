@@ -39,25 +39,29 @@ export function GSAPFlipLightbox({
     // Store the original rect for closing animation
     imageStartRectRef.current = originRect;
 
-    // Calculate target dimensions (90% of viewport with max constraints)
+    // Calculate target dimensions
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
-    const maxWidth = Math.min(viewportWidth * 0.9, 1200);
-    const maxHeight = viewportHeight * 0.7;
-
+    const maxModalWidth = Math.min(viewportWidth * 0.9, 1200);
+    
+    // Reserve space for description (if shown)
+    const descriptionHeight = showDescription ? 150 : 0;
+    const availableHeight = viewportHeight * 0.85 - descriptionHeight - 80; // 80px for padding
+    
     // Calculate aspect ratio to maintain
     const imgAspectRatio = originRect.width / originRect.height;
-    let targetWidth = maxWidth;
+    let targetWidth = maxModalWidth;
     let targetHeight = targetWidth / imgAspectRatio;
 
-    if (targetHeight > maxHeight) {
-      targetHeight = maxHeight;
+    if (targetHeight > availableHeight) {
+      targetHeight = availableHeight;
       targetWidth = targetHeight * imgAspectRatio;
     }
 
-    // Calculate target position (centered)
+    // Calculate target position (centered with space for description)
     const targetLeft = (viewportWidth - targetWidth) / 2;
-    const targetTop = (viewportHeight - targetHeight) / 2;
+    const modalTotalHeight = targetHeight + (showDescription ? descriptionHeight + 24 : 0);
+    const targetTop = (viewportHeight - modalTotalHeight) / 2;
 
     // Set initial position (matching the clicked image)
     gsap.set(img, {
@@ -81,7 +85,11 @@ export function GSAPFlipLightbox({
     if (content) {
       gsap.set(content, {
         opacity: 0,
-        y: 30,
+        y: 20,
+        position: 'fixed',
+        left: targetLeft,
+        top: targetTop + targetHeight + 16,
+        width: targetWidth,
       });
     }
 
@@ -130,9 +138,8 @@ export function GSAPFlipLightbox({
           y: 0,
           duration: 0.4,
           ease: 'power2.out',
-          delay: 0.2,
         },
-        0
+        0.3
       );
     }
   }, [originRect, image, showDescription]);
@@ -293,13 +300,14 @@ export function GSAPFlipLightbox({
       {showDescription && (
         <div
           ref={contentRef}
-          className="fixed left-1/2 -translate-x-1/2 z-[99] w-full max-w-3xl px-6"
+          className="z-[99] rounded-xl border border-[#110F0F]/5 bg-white shadow-2xl overflow-hidden"
           style={{
-            top: 'calc(50% + 40vh)',
-            marginTop: '24px',
+            position: 'fixed',
+            maxHeight: '25vh',
+            overflowY: 'auto',
           }}
         >
-          <div className="bg-white rounded-xl p-6 shadow-2xl">
+          <div className="p-6">
             <div className="prose prose-sm max-w-none">
               <ReactMarkdown>{image.description}</ReactMarkdown>
             </div>
