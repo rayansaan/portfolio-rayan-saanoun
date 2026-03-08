@@ -25,7 +25,7 @@ export function ImageDescriptionCard({ image, onClick }: ImageDescriptionCardPro
       <img
         src={image.src}
         alt={image.alt}
-        className="w-full h-full object-contain"
+        className="w-full h-full object-cover"
       />
     </div>
   );

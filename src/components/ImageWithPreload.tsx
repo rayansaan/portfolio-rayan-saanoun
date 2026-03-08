@@ -52,7 +52,7 @@ export function ImageWithPreload({ src, alt, className = '', onClick }: ImageWit
         ref={imgRef}
         src={src} 
         alt={alt}
-        className="w-full h-auto object-contain transition-transform duration-300 hover:scale-105"
+        className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
       />
       
       {/* Indicateur de préchargement (optionnel, très discret) */}
