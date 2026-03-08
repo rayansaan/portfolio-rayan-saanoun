@@ -23,7 +23,7 @@ export function BorderedImage({
       <img
         src={src}
         alt={alt}
-        className={`w-full h-full object-cover ${className}`}
+        className={`w-full h-full object-contain ${className}`}
         onClick={handleClick}
       />
     </div>
