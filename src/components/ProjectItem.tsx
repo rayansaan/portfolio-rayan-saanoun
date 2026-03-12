@@ -25,7 +25,7 @@ export function ProjectItem({ project }: ProjectItemProps) {
   return (
     <Link
       to={project.href || '#'}
-      className="block group cursor-pointer border border-black/25 rounded-lg overflow-hidden transition-all duration-300 hover:border-black/40"
+      className="block group cursor-pointer border border-black/25 rounded-lg overflow-hidden transition-all duration-300 hover:border-black/40 bg-[#E3E3E3]"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
