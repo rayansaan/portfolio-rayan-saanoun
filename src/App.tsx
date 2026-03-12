@@ -1,6 +1,7 @@
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Header } from '@/components/Header';
+import { HeroSection } from '@/components/HeroSection';
 import { ProjectSection } from '@/components/ProjectSection';
 import { InfoSection } from '@/components/InfoSection';
 import { Footer } from '@/components/Footer';
@@ -22,7 +23,11 @@ function HomePage() {
       
       {/* Main Content */}
       <main>
+        {/* Hero Section */}
+        <HeroSection />
+        
         {/* UX/UI Design Section */}
+        <div id="projects">
         <ProjectSection 
           title="UX/UI Design" 
           projects={uxUiProjects} 
@@ -33,6 +38,7 @@ function HomePage() {
           title="Autres Projets" 
           projects={otherProjects}
         />
+        </div>
         
         {/* Info Section */}
         <InfoSection />
