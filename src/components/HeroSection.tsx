@@ -1,11 +1,21 @@
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import { useLenis } from '@/context/LenisContext';
 
 export function HeroSection() {
+  const { lenis } = useLenis();
+
   const scrollToProjects = () => {
-    const projectsSection = document.getElementById('projects');
-    if (projectsSection) {
-      projectsSection.scrollIntoView({ behavior: 'smooth' });
+    if (lenis) {
+      lenis.scrollTo('#projects', {
+        offset: -100,
+        duration: 1.5,
+      });
+    } else {
+      const projectsSection = document.getElementById('projects');
+      if (projectsSection) {
+        projectsSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
