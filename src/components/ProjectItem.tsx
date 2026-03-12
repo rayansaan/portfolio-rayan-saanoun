@@ -30,34 +30,35 @@ export function ProjectItem({ project }: ProjectItemProps) {
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      {/* Image container with padding */}
-      <div className="p-4">
-        <div className="aspect-[4/3] overflow-hidden rounded-lg">
+      {/* Inner div with white background and border */}
+      <div className="bg-[#F0F0F0] border border-black/5 overflow-hidden">
+        {/* Image */}
+        <div className="aspect-[4/3] overflow-hidden">
           <img
             src={project.imageUrl}
             alt={project.name}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>
-      </div>
-      
-      {/* Content */}
-      <div className="p-4">
-        {/* Nom du projet */}
-        <h3 
-          className="text-lg font-semibold mb-1 transition-opacity duration-200 group-hover:opacity-70"
-          style={{ 
-            lineHeight: '1.2',
-            letterSpacing: '-0.02em',
-          }}
-        >
-          {project.name}
-        </h3>
         
-        {/* Description courte - 1 ligne max */}
-        <p className="text-sm text-muted-foreground truncate">
-          {project.description}
-        </p>
+        {/* Content */}
+        <div className="p-4">
+          {/* Nom du projet */}
+          <h3 
+            className="text-lg font-semibold mb-1 transition-opacity duration-200 group-hover:opacity-70"
+            style={{ 
+              lineHeight: '1.2',
+              letterSpacing: '-0.02em',
+            }}
+          >
+            {project.name}
+          </h3>
+          
+          {/* Description courte - 1 ligne max */}
+          <p className="text-sm text-muted-foreground truncate">
+            {project.description}
+          </p>
+        </div>
       </div>
     </Link>
   );
