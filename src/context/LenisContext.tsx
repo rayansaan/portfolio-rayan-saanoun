@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useRef, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import Lenis from 'lenis';
 
 type LenisContextType = {
@@ -8,6 +8,7 @@ type LenisContextType = {
 const LenisContext = createContext<LenisContextType>({ lenis: null });
 
 export function LenisProvider({ children }: { children: ReactNode }) {
+  const [lenis, setLenis] = useState<Lenis | null>(null);
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
@@ -18,7 +19,7 @@ export function LenisProvider({ children }: { children: ReactNode }) {
         lenisRef.current.destroy();
       }
 
-      lenisRef.current = new Lenis({
+      const lenisInstance = new Lenis({
         duration: 1.8,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         orientation: 'vertical',
@@ -28,6 +29,9 @@ export function LenisProvider({ children }: { children: ReactNode }) {
         touchMultiplier: isTouchDevice ? 1.8 : 1.2,
         infinite: false,
       });
+
+      lenisRef.current = lenisInstance;
+      setLenis(lenisInstance);
 
       function raf(time: number) {
         lenisRef.current?.raf(time);
@@ -51,7 +55,7 @@ export function LenisProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <LenisContext.Provider value={{ lenis: lenisRef.current }}>
+    <LenisContext.Provider value={{ lenis }}>
       {children}
     </LenisContext.Provider>
   );
