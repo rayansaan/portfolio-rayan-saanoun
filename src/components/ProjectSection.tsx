@@ -10,14 +10,14 @@ interface ProjectSectionProps {
 export function ProjectSection({ title, projects, className = '' }: ProjectSectionProps) {
   return (
     <section className={`w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-16 sm:py-24 ${className}`}>
-      <div className="max-w-none mx-auto">
+      <div className="max-w-4xl mx-auto">
         {/* Section Label */}
         <h2 className="text-sm sm:text-base mb-8 sm:mb-12">
           {title}
         </h2>
         
         {/* Project Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
           {projects.map((project) => (
             <ProjectItem key={project.id} project={project} />
           ))}
