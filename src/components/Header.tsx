@@ -22,9 +22,16 @@ export function Header() {
   return (
     <header className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-6 sm:py-8">
       <div className="flex items-center justify-between">
-        {/* Name - Always visible */}
-        <Link to="/" className="text-sm sm:text-base font-medium">
-          Rayan Saanoun
+        {/* Logo - Always visible */}
+        <Link 
+          to="/" 
+          className="transition-transform duration-300 hover:scale-105"
+        >
+          <img 
+            src="/icons/Logo Rayan.saan.svg" 
+            alt="Rayan Saanoun" 
+            className="h-6 w-auto"
+          />
         </Link>
         
         {/* Desktop Navigation */}
