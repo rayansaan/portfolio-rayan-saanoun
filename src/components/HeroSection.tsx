@@ -23,32 +23,32 @@ export function HeroSection() {
     <section className="w-full h-[70vh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-32 xl:px-48">
       <div className="flex flex-col items-center text-center gap-6 sm:gap-8">
         {/* Name */}
-        <motion.h1 
+        <motion.h1
           className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-medium tracking-tight"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 20, filter: "blur(15px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           Rayan Saanoun
         </motion.h1>
         
         {/* Tagline */}
-        <motion.p 
+        <motion.p
           className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-xl leading-relaxed"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 20, filter: "blur(15px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
         >
           Concevoir des expériences digitales où la complexité s'efface pour laisser place à l'intuitif.
         </motion.p>
         
         {/* Scroll indicator */}
-        <motion.button 
+        <motion.button
           onClick={scrollToProjects}
           className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300 group mt-4"
           aria-label="Voir mes projets"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 20, filter: "blur(15px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
         >
           <span>Découvrir mes projets</span>
