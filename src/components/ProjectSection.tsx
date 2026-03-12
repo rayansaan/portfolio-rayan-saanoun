@@ -16,8 +16,8 @@ export function ProjectSection({ title, projects, className = '' }: ProjectSecti
           {title}
         </h2>
         
-        {/* Project List */}
-        <div className="flex flex-col gap-8">
+        {/* Project Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {projects.map((project) => (
             <ProjectItem key={project.id} project={project} />
           ))}

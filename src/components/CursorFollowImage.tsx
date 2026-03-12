@@ -49,8 +49,8 @@ export function CursorFollowImage() {
             style={{
               x: xSpring,
               y: ySpring,
-              width: 350,
-              height: 250,
+              width: 280,
+              height: 200,
             }}
           >
             <motion.div
