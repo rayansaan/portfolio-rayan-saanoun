@@ -25,18 +25,20 @@ export function ProjectItem({ project }: ProjectItemProps) {
   return (
     <Link
       to={project.href || '#'}
-      className="block group cursor-pointer border border-black/25 rounded-lg overflow-hidden transition-all duration-300 hover:border-black/40 bg-[#E3E3E3]"
+      className="block group cursor-pointer border border-black/5 rounded-lg overflow-hidden transition-all duration-300 hover:border-black/20 bg-[#E3E3E3]"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      {/* Image container - ratio 4:3 */}
-      <div className="aspect-[4/3] overflow-hidden bg-gray-50">
-        <img
-          src={project.imageUrl}
-          alt={project.name}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
+      {/* Image container with padding */}
+      <div className="p-4">
+        <div className="aspect-[4/3] overflow-hidden rounded-lg">
+          <img
+            src={project.imageUrl}
+            alt={project.name}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
       </div>
       
       {/* Content */}
