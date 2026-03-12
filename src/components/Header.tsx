@@ -28,7 +28,7 @@ export function Header() {
           className="transition-transform duration-300 hover:scale-105"
         >
           <img 
-            src="/icons/Logo Rayan.saan.svg" 
+            src="/icons/logo-rayan-saan.svg" 
             alt="Rayan Saanoun" 
             className="h-6 w-auto"
           />
