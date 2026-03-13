@@ -1,20 +1,29 @@
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { useLenis } from '@/context/LenisContext';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export function HeroSection() {
   const { lenis } = useLenis();
+  const isMobile = useIsMobile();
 
   const scrollToProjects = () => {
     if (lenis) {
       lenis.scrollTo('#projects', {
-        offset: -100,
+        offset: isMobile ? -50 : -100,
         duration: 1.5,
       });
     } else {
       const projectsSection = document.getElementById('projects');
       if (projectsSection) {
-        projectsSection.scrollIntoView({ behavior: 'smooth' });
+        const offset = isMobile ? 50 : 100;
+        const elementPosition = projectsSection.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
       }
     }
   };

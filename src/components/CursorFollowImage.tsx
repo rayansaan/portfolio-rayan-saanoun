@@ -4,6 +4,10 @@ import { useHoverImage } from '@/context/HoverImageContext';
 export function CursorFollowImage() {
   const { currentImage, mouseX, mouseY } = useHoverImage();
   
+  // Ne pas rendre sur les appareils tactiles
+  const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+  if (isTouchDevice) return null;
+  
   // Motion values pour la position avec offset (bas à droite du curseur)
   const x = useMotionValue(mouseX + 20);
   const y = useMotionValue(mouseY + 20);

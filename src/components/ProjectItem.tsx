@@ -10,16 +10,25 @@ interface ProjectItemProps {
 export function ProjectItem({ project }: ProjectItemProps) {
   const { setCurrentImage, setMousePosition } = useHoverImage();
 
+  // Détecter si l'appareil est tactile (mobile/tablette)
+  const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+
   const handleMouseEnter = () => {
-    setCurrentImage(project.imageUrl);
+    if (!isTouchDevice) {
+      setCurrentImage(project.imageUrl);
+    }
   };
 
   const handleMouseLeave = () => {
-    setCurrentImage(null);
+    if (!isTouchDevice) {
+      setCurrentImage(null);
+    }
   };
 
   const handleMouseMove = (e: MouseEvent<HTMLAnchorElement>) => {
-    setMousePosition(e.clientX, e.clientY);
+    if (!isTouchDevice) {
+      setMousePosition(e.clientX, e.clientY);
+    }
   };
 
   return (
