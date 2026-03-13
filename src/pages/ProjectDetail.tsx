@@ -304,8 +304,17 @@ export function ProjectDetail() {
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-sm text-text-muted mb-1">Tags</h3>
-                    <p className="text-base">{project.tags.slice(0, 3).join(', ')}</p>
+                    <h3 className="text-sm text-text-muted mb-2">Tags</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="inline-flex items-center px-2.5 py-1 rounded-full text-sm bg-[#110F0F]/5 text-[#110F0F]/70"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
