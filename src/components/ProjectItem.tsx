@@ -54,7 +54,7 @@ export function ProjectItem({ project }: ProjectItemProps) {
         <div className="p-4">
           {/* Nom du projet */}
           <h3 
-            className="text-lg font-semibold mb-1 transition-opacity duration-200 group-hover:opacity-70"
+            className="text-xl font-semibold mb-1 transition-opacity duration-200 group-hover:opacity-70"
             style={{ 
               lineHeight: '1.2',
               letterSpacing: '-0.02em',
@@ -64,7 +64,7 @@ export function ProjectItem({ project }: ProjectItemProps) {
           </h3>
           
           {/* Description courte - 1 ligne max */}
-          <p className="text-sm text-muted-foreground truncate mb-3">
+          <p className="text-base text-muted-foreground truncate mb-3">
             {project.description}
           </p>
           
@@ -74,7 +74,7 @@ export function ProjectItem({ project }: ProjectItemProps) {
               {project.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}
-                  className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-[#110F0F]/5 text-[#110F0F]/70"
+                  className="inline-flex items-center px-2 py-0.5 rounded-full text-sm bg-[#110F0F]/5 text-[#110F0F]/70"
                 >
                   {tag}
                 </span>

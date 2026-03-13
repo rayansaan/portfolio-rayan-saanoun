@@ -14,7 +14,7 @@ import type { ProjectSection, ImageDescription } from '@/types';
 function FormattedText({ text }: { text: string }) {
   if (!text) return null;
   return (
-    <div className="whitespace-pre-wrap text-base leading-relaxed">
+    <div className="whitespace-pre-wrap text-lg leading-relaxed">
       {text}
     </div>
   );
@@ -144,8 +144,8 @@ export function ProjectDetail() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl mb-4">Projet non trouvé</h1>
-          <Link to="/" className="text-sm hover:opacity-70 transition-opacity">
+          <h1 className="text-3xl mb-4">Projet non trouvé</h1>
+          <Link to="/" className="text-base hover:opacity-70 transition-opacity">
             ← Retour à l'accueil
           </Link>
         </div>
@@ -253,20 +253,20 @@ export function ProjectDetail() {
               <div className="space-y-6">
                 {/* Category & Year */}
                 <div className="flex items-center gap-4">
-                  <span className="text-sm">UX/UI Design</span>
-                  <span className="text-sm text-text-muted">{project.year}</span>
+                  <span className="text-base">UX/UI Design</span>
+                  <span className="text-base text-text-muted">{project.year}</span>
                 </div>
 
                 {/* Title */}
                 <h1 
-                  className="text-3xl font-semibold"
+                  className="text-4xl md:text-5xl font-semibold"
                   style={{ letterSpacing: '-0.02em', lineHeight: '1.1' }}
                 >
                   {project.name}
                 </h1>
 
                 {/* Description */}
-                <div className="text-base leading-relaxed">
+                <div className="text-lg leading-relaxed">
                   <FormattedText text={project.description} />
                 </div>
 
@@ -277,7 +277,7 @@ export function ProjectDetail() {
                       href={project.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-base hover:opacity-70 transition-opacity"
+                      className="inline-flex items-center gap-2 text-lg hover:opacity-70 transition-opacity"
                     >
                       Voir le site
                       <ExternalLink className="w-4 h-4" />
@@ -288,15 +288,15 @@ export function ProjectDetail() {
                 {/* Metadata */}
                 <div className="space-y-4 py-6 border-y border-gray-300/30">
                   <div>
-                    <h3 className="text-sm text-text-muted mb-1">Durée</h3>
-                    <p className="text-base">{project.duration}</p>
+                    <h3 className="text-base text-text-muted mb-1">Durée</h3>
+                    <p className="text-lg">{project.duration}</p>
                   </div>
                   <div>
-                    <h3 className="text-sm text-text-muted mb-1">Localisation</h3>
-                    <p className="text-base">{project.location}</p>
+                    <h3 className="text-base text-text-muted mb-1">Localisation</h3>
+                    <p className="text-lg">{project.location}</p>
                   </div>
                   <div>
-                    <h3 className="text-sm text-text-muted mb-1">Outils</h3>
+                    <h3 className="text-base text-text-muted mb-1">Outils</h3>
                     <div className="flex flex-wrap gap-2">
                       {project.tools.map(tool => (
                         <ToolIcon key={tool} name={tool} className="h-8 w-auto" />
@@ -304,12 +304,12 @@ export function ProjectDetail() {
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-sm text-text-muted mb-2">Tags</h3>
+                    <h3 className="text-base text-text-muted mb-2">Tags</h3>
                     <div className="flex flex-wrap gap-2">
                       {project.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="inline-flex items-center px-2.5 py-1 rounded-full text-sm bg-[#110F0F]/5 text-[#110F0F]/70"
+                          className="inline-flex items-center px-2.5 py-1 rounded-full text-base bg-[#110F0F]/5 text-[#110F0F]/70"
                         >
                           {tag}
                         </span>
@@ -324,44 +324,24 @@ export function ProjectDetail() {
           {/* RIGHT COLUMN - Scrollable (67%) */}
           <div ref={contentRef} className="lg:col-span-2 space-y-0">
             
-            {/* Context */}
-            {project.context && (
-              <section className="py-8 border-t border-gray-300/30 first:border-t-0 first:pt-0">
-                <h2 className="text-sm mb-6">Contexte</h2>
-                <FormattedText text={project.context} />
-              </section>
-            )}
-
-            {/* Use Cases */}
-            {project.useCases && project.useCases.length > 0 && (
-              <section className="py-8 border-t border-gray-300/30">
-                <h2 className="text-sm mb-6">Use Cases</h2>
-                <ul className="list-disc list-inside space-y-2">
-                  {project.useCases.map((useCase, index) => (
-                    <li key={index} className="text-base">{useCase}</li>
-                  ))}
-                </ul>
-              </section>
-            )}
-
             {/* Rôle, équipe */}
             {(project.role || project.team) && (
-              <section className="py-8 border-t border-gray-300/30">
-                <h2 className="text-sm mb-6">Rôle & Équipe</h2>
+              <section className="py-8 border-t border-gray-300/30 first:border-t-0 first:pt-0">
+                <h2 className="text-lg mb-6">Rôle & Équipe</h2>
                 
                 {project.role && (
                   <div className="mb-6">
-                    <h3 className="text-lg font-medium mb-3">Mon rôle</h3>
+                    <h3 className="text-xl font-medium mb-3">Mon rôle</h3>
                     <FormattedText text={project.role} />
                   </div>
                 )}
                 
                 {project.team && project.team.length > 0 && (
                   <div>
-                    <h3 className="text-lg font-medium mb-3">Équipe</h3>
+                    <h3 className="text-xl font-medium mb-3">Équipe</h3>
                     <ul className="list-disc list-inside space-y-2">
                       {project.team.map((member, index) => (
-                        <li key={index} className="text-base">{member}</li>
+                        <li key={index} className="text-lg">{member}</li>
                       ))}
                     </ul>
                   </div>
@@ -372,7 +352,7 @@ export function ProjectDetail() {
             {/* Challenge */}
             {project.challenge && (
               <section className="py-8 border-t border-gray-300/30">
-                <h2 className="text-sm mb-6">Challenge</h2>
+                <h2 className="text-lg mb-6">Challenge</h2>
                 <FormattedText text={project.challenge} />
               </section>
             )}
@@ -380,7 +360,7 @@ export function ProjectDetail() {
             {/* Status Quo */}
             {project.statusQuo && (
               <section className="py-8 border-t border-gray-300/30">
-                <h2 className="text-sm mb-6">Status Quo</h2>
+                <h2 className="text-lg mb-6">Status Quo</h2>
                 <FormattedText text={project.statusQuo} />
               </section>
             )}
@@ -388,7 +368,7 @@ export function ProjectDetail() {
             {/* Process */}
             {project.process && Object.values(project.process).some(v => v) && (
               <section className="py-8 border-t border-gray-300/30">
-                <h2 className="text-sm mb-6">Process</h2>
+                <h2 className="text-lg mb-6">Process</h2>
                 
                 <div className="space-y-8">
                   {project.process.discovery && (
@@ -457,7 +437,7 @@ export function ProjectDetail() {
             {/* Solution */}
             {solutionData.content && (
               <section className="py-8 border-t border-gray-300/30">
-                <h2 className="text-sm mb-6">Solution</h2>
+                <h2 className="text-lg mb-6">Solution</h2>
                 <FormattedText text={solutionData.content} />
                 
                 {solutionData.images.length > 0 && (
@@ -478,7 +458,7 @@ export function ProjectDetail() {
             {/* Impact */}
             {project.impact && (
               <section className="py-8 border-t border-gray-300/30">
-                <h2 className="text-sm mb-6">Impact</h2>
+                <h2 className="text-lg mb-6">Impact</h2>
                 <FormattedText text={project.impact} />
               </section>
             )}
@@ -486,7 +466,7 @@ export function ProjectDetail() {
             {/* Learnings */}
             {project.learnings && (
               <section className="py-8 border-t border-gray-300/30">
-                <h2 className="text-sm mb-6">Learnings</h2>
+                <h2 className="text-lg mb-6">Learnings</h2>
                 <FormattedText text={project.learnings} />
               </section>
             )}
@@ -523,7 +503,7 @@ export function ProjectDetail() {
       {/* More Projects */}
       {otherProjects.length > 0 && (
         <section className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-12 sm:py-16 border-t border-gray-300/30">
-          <h2 className="text-sm mb-8">Autres projets</h2>
+          <h2 className="text-lg mb-8">Autres projets</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {otherProjects.map((p) => (
               <Link
@@ -538,7 +518,7 @@ export function ProjectDetail() {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
-                <h3 className="text-lg font-medium group-hover:opacity-70 transition-opacity">
+                <h3 className="text-xl font-medium group-hover:opacity-70 transition-opacity">
                   {p.name}
                 </h3>
               </Link>
@@ -551,7 +531,7 @@ export function ProjectDetail() {
       <footer className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-8 border-t border-gray-300/30">
         <Link 
           to="/"
-          className="text-sm hover:opacity-70 transition-opacity"
+          className="text-base hover:opacity-70 transition-opacity"
         >
           ← Retour aux projets
         </Link>

@@ -12,7 +12,7 @@ export function ProjectSection({ title, projects, className = '' }: ProjectSecti
     <section className={`w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-16 sm:py-24 ${className}`}>
       <div className="max-w-4xl mx-auto">
         {/* Section Label */}
-        <h2 className="text-sm sm:text-base mb-8 sm:mb-12">
+        <h2 className="text-base sm:text-lg mb-8 sm:mb-12">
           {title}
         </h2>
         

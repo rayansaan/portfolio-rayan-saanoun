@@ -31,7 +31,7 @@ export function Footer() {
               target={link.download ? undefined : "_blank"}
               rel={link.download ? undefined : "noopener noreferrer"}
               download={link.download}
-              className="text-sm sm:text-base transition-opacity duration-200 hover:opacity-70"
+              className="text-base sm:text-lg transition-opacity duration-200 hover:opacity-70"
             >
               {link.name}
             </a>
@@ -39,12 +39,12 @@ export function Footer() {
         </div>
         
         {/* Location */}
-        <div className="text-sm sm:text-base">
+        <div className="text-base sm:text-lg">
           Bordeaux, France
         </div>
         
         {/* Copyright */}
-        <div className="text-sm sm:text-base">
+        <div className="text-base sm:text-lg">
           © {currentYear}
         </div>
       </div>

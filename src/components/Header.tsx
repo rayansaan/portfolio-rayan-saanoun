@@ -36,16 +36,16 @@ export function Header() {
         
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
-          <div className="text-sm sm:text-base">
+          <div className="text-base sm:text-lg">
             Product Designer à Bordeaux
           </div>
           <a 
             href="mailto:rayansaan.pro@gmail.com"
-            className="text-sm sm:text-base transition-opacity duration-200 hover:opacity-70"
+            className="text-base sm:text-lg transition-opacity duration-200 hover:opacity-70"
           >
             rayansaan.pro@gmail.com
           </a>
-          <div className="text-sm sm:text-base text-right">
+          <div className="text-base sm:text-lg text-right">
             Disponible pour projets
           </div>
         </div>
