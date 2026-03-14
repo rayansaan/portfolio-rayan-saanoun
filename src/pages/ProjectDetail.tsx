@@ -5,10 +5,10 @@ import { allProjects } from '@/data/projects';
 import { useLenis } from '@/context/LenisContext';
 import { BorderedImage } from '@/components/BorderedImage';
 import { ToolIcon } from '@/components/ToolIcon';
-import { ImageDescriptionGrid } from '@/components/ImageDescriptionGrid';
+import { ImageWithCaption } from '@/components/ImageWithCaption';
 import { GSAPFlipLightbox } from '@/components/GSAPFlipLightbox';
 import { generateStandardImageId } from '@/utils/generateId';
-import type { ProjectSection, ImageDescription } from '@/types';
+import type { ProjectSection, ImageWithDescription, ImageDescription } from '@/types';
 
 // Composant pour afficher du texte avec des sauts de ligne
 function FormattedText({ text }: { text: string }) {
@@ -21,7 +21,7 @@ function FormattedText({ text }: { text: string }) {
 }
 
 // Helper pour extraire le contenu et les images d'une section
-function getSectionData(section: string | ProjectSection | undefined): { content: string; images: string[] } {
+function getSectionData(section: string | ProjectSection | undefined): { content: string; images: (string | ImageWithDescription)[] } {
   if (!section) return { content: '', images: [] };
   if (typeof section === 'string') {
     return { content: section, images: [] };
@@ -82,7 +82,7 @@ function SectionWithImages({
   section: string | ProjectSection | undefined;
   projectId: string;
   sectionIndex: number;
-  onImageClick: (src: string, alt: string, layoutId: string, rect: DOMRect) => void;
+  onImageClick: (src: string, alt: string, layoutId: string, rect: DOMRect, description?: string) => void;
 }) {
   const { content, images } = getSectionData(section);
   if (!content) return null;
@@ -104,6 +104,20 @@ function SectionWithImages({
         }`}>
           {images.map((img, idx) => {
             const layoutId = generateStandardImageId(projectId, sectionIndex * 100 + idx + 200);
+            
+            // Check if img is an object with description
+            if (typeof img === 'object' && 'src' in img) {
+              const imageWithDesc = img as ImageWithDescription;
+              return (
+                <ImageWithCaption
+                  key={idx}
+                  image={imageWithDesc}
+                  onClick={(rect) => onImageClick(imageWithDesc.src, imageWithDesc.alt || `${title} - Image ${idx + 1}`, layoutId, rect)}
+                />
+              );
+            }
+            
+            // Simple string path
             return (
               <BorderedImage
                 key={idx}
@@ -134,13 +148,9 @@ export function ProjectDetail() {
   
   const project = allProjects.find(p => p.id === id);
   
-  // State pour ImageDescription
-  const [selectedImageDescription, setSelectedImageDescription] = useState<ImageDescription | null>(null);
-  const [imageDescriptionRect, setImageDescriptionRect] = useState<DOMRect | null>(null);
-  
-  // State pour StandardImage
-  const [selectedStandardImage, setSelectedStandardImage] = useState<ImageDescription | null>(null);
-  const [standardImageRect, setStandardImageRect] = useState<DOMRect | null>(null);
+  // State pour les images (lightbox)
+  const [selectedImage, setSelectedImage] = useState<ImageDescription | null>(null);
+  const [imageRect, setImageRect] = useState<DOMRect | null>(null);
   
   // Ref pour la colonne de droite (contenu du projet)
   const contentRef = useRef<HTMLDivElement>(null);
@@ -168,46 +178,26 @@ export function ProjectDetail() {
   // Récupérer les données de la solution
   const solutionData = getSectionData(project.solution);
 
-  // Handler pour ImageDescription
-  const handleImageDescriptionClick = (image: ImageDescription, rect: DOMRect) => {
-    setSelectedImageDescription(image);
-    setImageDescriptionRect(rect);
+  // Handler pour les images
+  const handleImageClick = (src: string, alt: string, layoutId: string, rect: DOMRect, description?: string) => {
+    setSelectedImage({ id: layoutId, src, alt, description: description || '' });
+    setImageRect(rect);
   };
 
-  const handleCloseImageDescription = () => {
-    setSelectedImageDescription(null);
-    setImageDescriptionRect(null);
-  };
-
-  // Handler pour StandardImage
-  const handleStandardImageClick = (src: string, alt: string, layoutId: string, rect: DOMRect) => {
-    setSelectedStandardImage({ id: layoutId, src, alt, description: '' });
-    setStandardImageRect(rect);
-  };
-
-  const handleCloseStandardImage = () => {
-    setSelectedStandardImage(null);
-    setStandardImageRect(null);
+  const handleCloseImage = () => {
+    setSelectedImage(null);
+    setImageRect(null);
   };
 
   return (
     <div className="min-h-screen">
-      {/* ImageDescription Lightbox */}
+      {/* Lightbox pour les images */}
       <GSAPFlipLightbox
-        image={selectedImageDescription}
-        originRect={imageDescriptionRect}
-        isOpen={!!selectedImageDescription}
-        onClose={handleCloseImageDescription}
-        showDescription={true}
-      />
-
-      {/* StandardImage Lightbox */}
-      <GSAPFlipLightbox
-        image={selectedStandardImage}
-        originRect={standardImageRect}
-        isOpen={!!selectedStandardImage}
-        onClose={handleCloseStandardImage}
-        showDescription={false}
+        image={selectedImage}
+        originRect={imageRect}
+        isOpen={!!selectedImage}
+        onClose={handleCloseImage}
+        showDescription={!!selectedImage?.description}
       />
 
       {/* Barre de progression - Mobile (fixe en bas) */}
@@ -245,7 +235,7 @@ export function ProjectDetail() {
                 <BorderedImage
                   src={project.imageUrl}
                   alt={project.name}
-                  onClick={(rect) => handleStandardImageClick(project.imageUrl, project.name, generateStandardImageId(project.id, 0), rect)}
+                  onClick={(rect) => handleImageClick(project.imageUrl, project.name, generateStandardImageId(project.id, 0), rect)}
                 />
               </div>
               
@@ -399,7 +389,7 @@ export function ProjectDetail() {
                       section={project.process.discovery}
                       projectId={project.id}
                       sectionIndex={0}
-                      onImageClick={handleStandardImageClick} 
+                      onImageClick={handleImageClick} 
                     />
                   )}
                   
@@ -409,7 +399,7 @@ export function ProjectDetail() {
                       section={project.process.define}
                       projectId={project.id}
                       sectionIndex={1}
-                      onImageClick={handleStandardImageClick} 
+                      onImageClick={handleImageClick} 
                     />
                   )}
                   
@@ -419,7 +409,7 @@ export function ProjectDetail() {
                       section={project.process.design}
                       projectId={project.id}
                       sectionIndex={2}
-                      onImageClick={handleStandardImageClick} 
+                      onImageClick={handleImageClick} 
                     />
                   )}
                   
@@ -429,7 +419,7 @@ export function ProjectDetail() {
                       section={project.process.prototyping}
                       projectId={project.id}
                       sectionIndex={3}
-                      onImageClick={handleStandardImageClick} 
+                      onImageClick={handleImageClick} 
                     />
                   )}
                   
@@ -439,7 +429,7 @@ export function ProjectDetail() {
                       section={project.process.testing}
                       projectId={project.id}
                       sectionIndex={4}
-                      onImageClick={handleStandardImageClick} 
+                      onImageClick={handleImageClick} 
                     />
                   )}
                   
@@ -449,7 +439,7 @@ export function ProjectDetail() {
                       section={project.process.delivery}
                       projectId={project.id}
                       sectionIndex={5}
-                      onImageClick={handleStandardImageClick} 
+                      onImageClick={handleImageClick} 
                     />
                   )}
                 </div>
@@ -472,14 +462,31 @@ export function ProjectDetail() {
                       ? 'max-w-2xl mx-auto'
                       : 'grid grid-cols-1 md:grid-cols-2 gap-4'
                   }`}>
-                    {solutionData.images.map((img, idx) => (
-                      <BorderedImage
-                        key={idx}
-                        src={img}
-                        alt={`Solution - Image ${idx + 1}`}
-                        onClick={(rect) => handleStandardImageClick(img, `Solution - Image ${idx + 1}`, generateStandardImageId(project.id, idx + 100), rect)}
-                      />
-                    ))}
+                    {solutionData.images.map((img, idx) => {
+                      const layoutId = generateStandardImageId(project.id, idx + 100);
+                      
+                      // Check if img is an object with description
+                      if (typeof img === 'object' && 'src' in img) {
+                        const imageWithDesc = img as ImageWithDescription;
+                        return (
+                          <ImageWithCaption
+                            key={idx}
+                            image={imageWithDesc}
+                            onClick={(rect) => handleImageClick(imageWithDesc.src, imageWithDesc.alt || `Solution - Image ${idx + 1}`, layoutId, rect)}
+                          />
+                        );
+                      }
+                      
+                      // Simple string path
+                      return (
+                        <BorderedImage
+                          key={idx}
+                          src={img}
+                          alt={`Solution - Image ${idx + 1}`}
+                          onClick={(rect) => handleImageClick(img, `Solution - Image ${idx + 1}`, layoutId, rect)}
+                        />
+                      );
+                    })}
                   </div>
                 )}
               </section>
@@ -523,19 +530,6 @@ export function ProjectDetail() {
                     <ExternalLink className="w-5 h-5" />
                   </a>
                 </div>
-              </section>
-            )}
-
-            {/* ImageDescription Gallery - Flexible placement */}
-            {project.imageDescriptions && project.imageDescriptions.length > 0 && (
-              <section className="py-8 border-t border-gray-300/30">
-                <div className="max-w-4xl mx-auto">
-                  <h2 className="text-sm mb-6">Galerie</h2>
-                </div>
-                <ImageDescriptionGrid 
-                  images={project.imageDescriptions}
-                  onImageClick={handleImageDescriptionClick}
-                />
               </section>
             )}
           </div>

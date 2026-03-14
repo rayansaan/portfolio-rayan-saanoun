@@ -5,9 +5,15 @@ export interface ImageDescription {
   description: string;
 }
 
+export interface ImageWithDescription {
+  src: string;
+  alt?: string;
+  description?: string;
+}
+
 export interface ProjectSection {
   content: string;
-  images?: string[];
+  images?: (string | ImageWithDescription)[];
 }
 
 export interface Project {

@@ -1,5 +1,4 @@
 import type { Project } from '@/types';
-import { generateImageId } from '@/utils/generateId';
 
 export const uxUiProjects: Project[] = [
   {
@@ -38,11 +37,24 @@ Mon objectif était :
     process: {
       discovery: {
         content: 'Avant de se lancer dans la conception, nous avons mené des sessions d\'interviews avec différents profils d\'utilisateurs (familiers avec l\'outil et d\'autres non) afin d\'identifier les principaux problèmes et d\'orienter le projet dans la bonne direction. J\'ai collaboré avec les fondateurs et les développeurs pour mener à bien ce projet, en prenant en charge la conception UX et l\'interface UI.',
-        images: ['/images/projects/moove/search/golden_nuggets.png', '/images/projects/moove/search/Bastien__scapin.png']
+        images: [
+          {
+            src: '/images/projects/moove/search/golden_nuggets.png',
+            alt: 'Recherche utilisateur - Golden Nuggets',
+            description: '**Phase de Discovery** - Identification des insights clés utilisateurs lors des interviews.\n\nPoints marquants:\n- Besoin de comparaison claire entre modes de transport\n- Importance du temps "porte-à-porte"\n- Sensibilité environnementale croissante'
+          },
+          '/images/projects/moove/search/Bastien__scapin.png'
+        ]
       },
       define: {
         content: 'Définition des objectifs et prioritisation des fonctionnalités. Notre outil doit être adaptable à la fois aux clients qui recherchent un voyage adapté à leurs besoins et aux opérateurs qui souhaitent mettre en avant les avantages de leurs services.',
-        images: ['/images/projects/moove/search/User_map_B2C.png']
+        images: [
+          {
+            src: '/images/projects/moove/search/User_map_B2C.png',
+            alt: 'User Journey Map',
+            description: '**User Journey Map** - Cartographie complète du parcours utilisateur B2C.\n\nCette visualisation nous a permis d\'identifier les points de friction et les opportunités d\'amélioration dans l\'expérience de recherche de vols.'
+          }
+        ]
       },
       design: {
         content: 'Conception des interfaces et parcours utilisateurs en mettant l\'accent sur la comparaison multimodale complète.',
@@ -76,21 +88,7 @@ La page de recherche propose un calculateur multimodal complet qui évalue le te
     impact: '',
     learnings: '',
     useCases: ['Search page'],
-    prototypeUrl: '',
-    imageDescriptions: [
-      {
-        id: generateImageId('moove', 0),
-        src: '/images/projects/moove/search/golden_nuggets.png',
-        alt: 'Recherche utilisateur - Golden Nuggets',
-        description: '**Phase de Discovery** - Identification des insights clés utilisateurs lors des interviews.\n\nPoints marquants:\n- Besoin de comparaison claire entre modes de transport\n- Importance du temps "porte-à-porte"\n- Sensibilité environnementale croissante'
-      },
-      {
-        id: generateImageId('moove', 1),
-        src: '/images/projects/moove/search/User_map_B2C.png',
-        alt: 'User Journey Map',
-        description: '**User Journey Map** - Cartographie complète du parcours utilisateur B2C.\n\nCette visualisation nous a permis d\'identifier les points de friction et les opportunités d\'amélioration dans l\'expérience de recherche de vols.'
-      }
-    ]
+    prototypeUrl: ''
   },
   {
     id: 'nash',
