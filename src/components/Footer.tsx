@@ -1,51 +1,53 @@
 const socialLinks = [
-  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/rayan-saanoun-72baa4146/' },
-  { name: 'CV', href: '/cv/CV-Rayan_Saanoun-2025.pdf', download: true },
+  { name: 'Email', href: 'mailto:rayansaan.pro@gmail.com' },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/rayan-saanoun-72baa4146/', target: '_blank' },
+  // { name: 'Behance', href: '#', target: '_blank' }, // TODO: Ajouter l'URL Behance
 ];
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 pt-16 sm:pt-24 pb-8 sm:pb-10">
-      {/* Large Email */}
-      <a 
-        href="mailto:rayansaan.pro@gmail.com"
-        className="block text-footer-email-sm sm:text-footer-email font-medium mb-12 sm:mb-16 transition-opacity duration-200 hover:opacity-70 break-words"
-        style={{ 
-          lineHeight: '1.1',
-          letterSpacing: '-0.02em',
-        }}
-      >
-        rayansaan.pro@gmail.com
-      </a>
-      
-      {/* Bottom Row */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-8">
-        {/* Social Links */}
-        <div className="flex items-center gap-4 sm:gap-6">
-          {socialLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              target={link.download ? undefined : "_blank"}
-              rel={link.download ? undefined : "noopener noreferrer"}
-              download={link.download}
-              className="text-base sm:text-lg transition-opacity duration-200 hover:opacity-70"
-            >
-              {link.name}
-            </a>
-          ))}
+    <footer className="w-full bg-[#110F0F] text-white">
+      <div className="px-4 sm:px-6 lg:px-32 xl:px-48 py-8 sm:py-12">
+        {/* Ligne 1 : Logo et liens sociaux */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 pb-8 border-b border-white/10">
+          {/* Logo */}
+          <a href="/" className="transition-opacity duration-200 hover:opacity-70">
+            <img 
+              src="/icons/logo-rayan-saan.svg" 
+              alt="Rayan Saanoun" 
+              className="h-6 w-auto brightness-0 invert"
+            />
+          </a>
+          
+          {/* Liens sociaux */}
+          <div className="flex items-center gap-6 sm:gap-8">
+            {socialLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                target={link.target}
+                rel={link.target === '_blank' ? 'noopener noreferrer' : undefined}
+                className="text-base transition-opacity duration-200 hover:opacity-70"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
         </div>
         
-        {/* Location */}
-        <div className="text-base sm:text-lg">
-          Bordeaux, France
-        </div>
-        
-        {/* Copyright */}
-        <div className="text-base sm:text-lg">
-          © {currentYear}
+        {/* Ligne 2 : Copyright et localisation */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-6">
+          {/* Gauche - Copyright */}
+          <div className="text-base text-left">
+            Rayan Saanoun @{currentYear}
+          </div>
+          
+          {/* Droite - Localisation */}
+          <div className="text-base text-left sm:text-right">
+            Bordeaux et Paris
+          </div>
         </div>
       </div>
     </footer>

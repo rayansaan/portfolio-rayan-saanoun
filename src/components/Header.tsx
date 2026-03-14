@@ -13,10 +13,9 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
-    { name: 'Accueil', href: '/' },
-    { name: 'Projets', href: '/#projets' },
+    { name: 'Work', href: '/#projects' },
+    { name: 'About', href: '/#about' },
     { name: 'Contact', href: 'mailto:rayansaan.pro@gmail.com' },
-    { name: 'À propos', href: '/#about' },
   ];
 
   return (
@@ -36,18 +35,23 @@ export function Header() {
         
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
-          <div className="text-base sm:text-lg">
-            Product Designer à Bordeaux
-          </div>
-          <a 
-            href="mailto:rayansaan.pro@gmail.com"
-            className="text-base sm:text-lg transition-opacity duration-200 hover:opacity-70"
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              className="text-base transition-opacity duration-200 hover:opacity-70"
+            >
+              {link.name}
+            </a>
+          ))}
+          <a
+            href="/cv/CV-Rayan_Saanoun-2025.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-3 bg-black text-white text-base rounded-lg transition-opacity duration-200 hover:opacity-90"
           >
-            rayansaan.pro@gmail.com
+            Mon CV
           </a>
-          <div className="text-base sm:text-lg text-right">
-            Disponible pour projets
-          </div>
         </div>
 
         {/* Mobile Menu Button */}
@@ -78,15 +82,24 @@ export function Header() {
           </DrawerHeader>
           <nav className="flex flex-col p-6">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.name}
-                to={link.href}
+                href={link.href}
                 onClick={() => setIsOpen(false)}
                 className="text-2xl font-medium py-4 transition-opacity duration-200 hover:opacity-70"
               >
                 {link.name}
-              </Link>
+              </a>
             ))}
+            <a
+              href="/cv/CV-Rayan_Saanoun-2025.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsOpen(false)}
+              className="mt-4 px-6 py-3 bg-black text-white text-center text-lg rounded-lg transition-opacity duration-200 hover:opacity-90"
+            >
+              Mon CV
+            </a>
           </nav>
         </DrawerContent>
       </Drawer>
