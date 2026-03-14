@@ -90,7 +90,9 @@ function SectionWithImages({
   return (
     <div>
       <h3 className="text-lg font-medium mb-4">{title}</h3>
-      <FormattedText text={content} />
+      <div className="max-w-3xl">
+        <FormattedText text={content} />
+      </div>
       
       {images.length > 0 && (
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -329,23 +331,25 @@ export function ProjectDetail() {
               <section className="py-8 border-t border-gray-300/30 first:border-t-0 first:pt-0">
                 <h2 className="text-lg mb-6">Rôle & Équipe</h2>
                 
-                {project.role && (
-                  <div className="mb-6">
-                    <h3 className="text-xl font-medium mb-3">Mon rôle</h3>
-                    <FormattedText text={project.role} />
-                  </div>
-                )}
-                
-                {project.team && project.team.length > 0 && (
-                  <div>
-                    <h3 className="text-xl font-medium mb-3">Équipe</h3>
-                    <ul className="list-disc list-inside space-y-2">
-                      {project.team.map((member, index) => (
-                        <li key={index} className="text-lg">{member}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                <div className="max-w-3xl">
+                  {project.role && (
+                    <div className="mb-6">
+                      <h3 className="text-xl font-medium mb-3">Mon rôle</h3>
+                      <FormattedText text={project.role} />
+                    </div>
+                  )}
+                  
+                  {project.team && project.team.length > 0 && (
+                    <div>
+                      <h3 className="text-xl font-medium mb-3">Équipe</h3>
+                      <ul className="list-disc list-inside space-y-2">
+                        {project.team.map((member, index) => (
+                          <li key={index} className="text-lg">{member}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </section>
             )}
 
@@ -353,7 +357,9 @@ export function ProjectDetail() {
             {project.challenge && (
               <section className="py-8 border-t border-gray-300/30">
                 <h2 className="text-lg mb-6">Challenge</h2>
-                <FormattedText text={project.challenge} />
+                <div className="max-w-3xl">
+                  <FormattedText text={project.challenge} />
+                </div>
               </section>
             )}
 
@@ -361,7 +367,9 @@ export function ProjectDetail() {
             {project.statusQuo && (
               <section className="py-8 border-t border-gray-300/30">
                 <h2 className="text-lg mb-6">Status Quo</h2>
-                <FormattedText text={project.statusQuo} />
+                <div className="max-w-3xl">
+                  <FormattedText text={project.statusQuo} />
+                </div>
               </section>
             )}
 
@@ -438,7 +446,9 @@ export function ProjectDetail() {
             {solutionData.content && (
               <section className="py-8 border-t border-gray-300/30">
                 <h2 className="text-lg mb-6">Solution</h2>
-                <FormattedText text={solutionData.content} />
+                <div className="max-w-3xl">
+                  <FormattedText text={solutionData.content} />
+                </div>
                 
                 {solutionData.images.length > 0 && (
                   <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -459,7 +469,9 @@ export function ProjectDetail() {
             {project.impact && (
               <section className="py-8 border-t border-gray-300/30">
                 <h2 className="text-lg mb-6">Impact</h2>
-                <FormattedText text={project.impact} />
+                <div className="max-w-3xl">
+                  <FormattedText text={project.impact} />
+                </div>
               </section>
             )}
 
@@ -467,7 +479,9 @@ export function ProjectDetail() {
             {project.learnings && (
               <section className="py-8 border-t border-gray-300/30">
                 <h2 className="text-lg mb-6">Learnings</h2>
-                <FormattedText text={project.learnings} />
+                <div className="max-w-3xl">
+                  <FormattedText text={project.learnings} />
+                </div>
               </section>
             )}
 
