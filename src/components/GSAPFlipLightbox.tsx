@@ -71,7 +71,7 @@ export function GSAPFlipLightbox({
       width: originRect.width,
       height: originRect.height,
       zIndex: 100,
-      objectFit: 'cover',
+      objectFit: 'contain',
       borderRadius: 8,
     });
 
@@ -289,7 +289,7 @@ export function GSAPFlipLightbox({
           left: originRect.left,
           width: originRect.width,
           height: originRect.height,
-          objectFit: 'cover',
+      objectFit: 'contain',
           borderRadius: 8,
           zIndex: 100,
           pointerEvents: 'none',
