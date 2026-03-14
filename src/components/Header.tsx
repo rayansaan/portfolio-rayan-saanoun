@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import {
@@ -11,6 +11,16 @@ import {
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navLinks = [
     { name: 'Work', href: '/#projects' },
@@ -19,7 +29,13 @@ export function Header() {
   ];
 
   return (
-    <header className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-6 sm:py-8">
+    <header 
+      className={`fixed top-0 left-0 right-0 z-50 w-full px-4 sm:px-6 lg:px-32 xl:px-48 transition-all duration-300 ease-in-out ${
+        isScrolled 
+          ? 'py-3 sm:py-4 bg-white/80 backdrop-blur-md shadow-sm border-b border-black/5' 
+          : 'py-6 sm:py-8 bg-transparent'
+      }`}
+    >
       <div className="flex items-center justify-between">
         {/* Logo - Always visible */}
         <Link 
@@ -29,7 +45,9 @@ export function Header() {
           <img 
             src="/icons/logo-rayan-saan.svg" 
             alt="Rayan Saanoun" 
-            className="h-6 w-auto"
+            className={`w-auto transition-all duration-300 ${
+              isScrolled ? 'h-5' : 'h-6'
+            }`}
           />
         </Link>
         
