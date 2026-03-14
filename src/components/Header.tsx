@@ -8,6 +8,7 @@ import {
   DrawerTitle,
   DrawerClose,
 } from '@/components/ui/drawer';
+import { ButtonShinyCursor } from './ButtonShinyCursor';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,8 +33,8 @@ export function Header() {
     <header 
       className={`fixed top-0 left-0 right-0 z-50 w-full px-4 sm:px-6 lg:px-32 xl:px-48 transition-all duration-300 ease-in-out ${
         isScrolled 
-          ? 'py-3 sm:py-4 bg-white/80 backdrop-blur-md shadow-sm border-b border-black/5' 
-          : 'py-6 sm:py-8 bg-transparent'
+          ? 'py-2 sm:py-3 bg-white/80 backdrop-blur-md shadow-sm border-b border-black/5' 
+          : 'py-4 sm:py-5 bg-transparent'
       }`}
     >
       <div className="flex items-center justify-between">
@@ -66,9 +67,10 @@ export function Header() {
             href="/cv/CV-Rayan_Saanoun-2025.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 bg-black text-white text-base rounded-lg transition-opacity duration-200 hover:opacity-90"
           >
-            Mon CV
+            <ButtonShinyCursor className="px-6 py-3 text-white text-base rounded-lg">
+              Mon CV
+            </ButtonShinyCursor>
           </a>
         </div>
 
@@ -114,9 +116,10 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsOpen(false)}
-              className="mt-4 px-6 py-3 bg-black text-white text-center text-lg rounded-lg transition-opacity duration-200 hover:opacity-90"
             >
-              Mon CV
+              <ButtonShinyCursor className="w-full mt-4 px-6 py-3 text-white text-center text-lg rounded-lg">
+                Mon CV
+              </ButtonShinyCursor>
             </a>
           </nav>
         </DrawerContent>
