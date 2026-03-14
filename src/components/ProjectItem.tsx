@@ -40,9 +40,9 @@ export function ProjectItem({ project }: ProjectItemProps) {
       onMouseMove={handleMouseMove}
     >
       {/* Frame principale avec padding 24px et radius 24px */}
-      <div className="rounded-[24px] p-6 bg-[#F0F0F0] border border-black/5 overflow-hidden transition-all duration-300 hover:border-black/20">
+      <div className="rounded-[24px] p-6 bg-white border border-black/5 overflow-hidden transition-all duration-300 hover:border-black/20">
         {/* Image avec radius 8px et margin bottom 16px */}
-        <div className="aspect-[4/3] rounded-[8px] overflow-hidden mb-4">
+        <div className="aspect-[4/3] md:aspect-[3/2] rounded-[8px] overflow-hidden mb-4">
           <img
             src={project.imageUrl}
             alt={project.name}
