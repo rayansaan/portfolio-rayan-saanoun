@@ -541,7 +541,7 @@ export function ProjectDetail() {
       {/* More Projects */}
       {otherProjects.length > 0 && (
         <section className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-12 sm:py-16 border-t border-gray-300/30">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-12 sm:mb-16">Autres projets</h2>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight mb-12 sm:mb-16">Autres projets</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {otherProjects.map((p) => (
               <Link
