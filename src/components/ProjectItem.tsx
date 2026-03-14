@@ -34,15 +34,15 @@ export function ProjectItem({ project }: ProjectItemProps) {
   return (
     <Link
       to={project.href || '#'}
-      className="block group cursor-pointer border border-black/5 rounded-[24px] overflow-hidden transition-all duration-300 hover:border-black/20 bg-[#E3E3E3]"
+      className="block group cursor-pointer transition-all duration-300"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      {/* Inner div with white background and border */}
-      <div className="bg-[#F0F0F0] border border-black/5 overflow-hidden">
-        {/* Image */}
-        <div className="aspect-[4/3] overflow-hidden">
+      {/* Frame principale avec padding 24px et radius 24px */}
+      <div className="rounded-[24px] p-6 bg-[#F0F0F0] border border-black/5 overflow-hidden transition-all duration-300 hover:border-black/20">
+        {/* Image avec radius 8px et margin bottom 16px */}
+        <div className="aspect-[4/3] rounded-[8px] overflow-hidden mb-4">
           <img
             src={project.imageUrl}
             alt={project.name}
@@ -51,7 +51,7 @@ export function ProjectItem({ project }: ProjectItemProps) {
         </div>
         
         {/* Content */}
-        <div className="p-4">
+        <div>
           {/* Nom du projet */}
           <h3 
             className="text-xl font-semibold mb-1 transition-opacity duration-200 group-hover:opacity-70"
