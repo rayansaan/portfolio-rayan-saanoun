@@ -19,11 +19,11 @@ export function BorderedImage({
   };
 
   return (
-    <div className="h-[400px] rounded-lg border border-[#110F0F]/5 overflow-hidden bg-[#110F0F]/[0.02] flex items-center justify-center">
+    <div className="rounded-lg border border-[#110F0F]/5 overflow-hidden h-full">
       <img
         src={src}
         alt={alt}
-        className={`w-full h-full object-contain ${className}`}
+        className={`w-full h-full object-cover ${className}`}
         onClick={handleClick}
       />
     </div>
