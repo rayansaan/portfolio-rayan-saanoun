@@ -48,8 +48,11 @@ export function GSAPFlipLightbox({
     const descriptionHeight = showDescription ? 150 : 0;
     const availableHeight = viewportHeight * 0.85 - descriptionHeight - 80; // 80px for padding
     
-    // Calculate aspect ratio to maintain
-    const imgAspectRatio = originRect.width / originRect.height;
+    // Calculate aspect ratio using natural dimensions of the actual image
+    const imgElement = imageRef.current;
+    const naturalWidth = imgElement?.naturalWidth || originRect.width;
+    const naturalHeight = imgElement?.naturalHeight || originRect.height;
+    const imgAspectRatio = naturalWidth / naturalHeight;
     let targetWidth = maxModalWidth;
     let targetHeight = targetWidth / imgAspectRatio;
 
