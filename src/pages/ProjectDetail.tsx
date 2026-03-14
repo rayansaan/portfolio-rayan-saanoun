@@ -4,6 +4,7 @@ import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { allProjects } from '@/data/projects';
 import { useLenis } from '@/context/LenisContext';
 import { BorderedImage } from '@/components/BorderedImage';
+import { ProjectImage } from '@/components/ProjectImage';
 import { ToolIcon } from '@/components/ToolIcon';
 import { GSAPFlipLightbox } from '@/components/GSAPFlipLightbox';
 import { generateStandardImageId } from '@/utils/generateId';
@@ -108,7 +109,7 @@ function SectionWithImages({
             if (typeof img === 'object' && 'src' in img) {
               const imageWithDesc = img as ImageWithDescription;
               return (
-                <BorderedImage
+                <ProjectImage
                   key={idx}
                   src={imageWithDesc.src}
                   alt={imageWithDesc.alt || `${title} - Image ${idx + 1}`}
@@ -119,7 +120,7 @@ function SectionWithImages({
             
             // Simple string path
             return (
-              <BorderedImage
+              <ProjectImage
                 key={idx}
                 src={img}
                 alt={`${title} - Image ${idx + 1}`}
@@ -469,7 +470,7 @@ export function ProjectDetail() {
                       if (typeof img === 'object' && 'src' in img) {
                         const imageWithDesc = img as ImageWithDescription;
                         return (
-                          <BorderedImage
+                          <ProjectImage
                             key={idx}
                             src={imageWithDesc.src}
                             alt={imageWithDesc.alt || `Solution - Image ${idx + 1}`}
@@ -480,7 +481,7 @@ export function ProjectDetail() {
                       
                       // Simple string path
                       return (
-                        <BorderedImage
+                        <ProjectImage
                           key={idx}
                           src={img}
                           alt={`Solution - Image ${idx + 1}`}
