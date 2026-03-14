@@ -5,7 +5,6 @@ import { allProjects } from '@/data/projects';
 import { useLenis } from '@/context/LenisContext';
 import { BorderedImage } from '@/components/BorderedImage';
 import { ToolIcon } from '@/components/ToolIcon';
-import { ImageWithCaption } from '@/components/ImageWithCaption';
 import { GSAPFlipLightbox } from '@/components/GSAPFlipLightbox';
 import { generateStandardImageId } from '@/utils/generateId';
 import type { ProjectSection, ImageWithDescription, ImageDescription } from '@/types';
@@ -109,10 +108,11 @@ function SectionWithImages({
             if (typeof img === 'object' && 'src' in img) {
               const imageWithDesc = img as ImageWithDescription;
               return (
-                <ImageWithCaption
+                <BorderedImage
                   key={idx}
-                  image={imageWithDesc}
-                  onClick={(rect) => onImageClick(imageWithDesc.src, imageWithDesc.alt || `${title} - Image ${idx + 1}`, layoutId, rect)}
+                  src={imageWithDesc.src}
+                  alt={imageWithDesc.alt || `${title} - Image ${idx + 1}`}
+                  onClick={(rect) => onImageClick(imageWithDesc.src, imageWithDesc.alt || `${title} - Image ${idx + 1}`, layoutId, rect, imageWithDesc.description)}
                 />
               );
             }
@@ -469,10 +469,11 @@ export function ProjectDetail() {
                       if (typeof img === 'object' && 'src' in img) {
                         const imageWithDesc = img as ImageWithDescription;
                         return (
-                          <ImageWithCaption
+                          <BorderedImage
                             key={idx}
-                            image={imageWithDesc}
-                            onClick={(rect) => handleImageClick(imageWithDesc.src, imageWithDesc.alt || `Solution - Image ${idx + 1}`, layoutId, rect)}
+                            src={imageWithDesc.src}
+                            alt={imageWithDesc.alt || `Solution - Image ${idx + 1}`}
+                            onClick={(rect) => handleImageClick(imageWithDesc.src, imageWithDesc.alt || `Solution - Image ${idx + 1}`, layoutId, rect, imageWithDesc.description)}
                           />
                         );
                       }
