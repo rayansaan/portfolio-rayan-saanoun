@@ -88,10 +88,12 @@ function SectionWithImages({
   if (!content) return null;
   
   return (
-    <div>
-      <h3 className="text-lg font-medium mb-4">{title}</h3>
-      <div className="max-w-3xl">
-        <FormattedText text={content} />
+    <>
+      <div className="max-w-4xl mx-auto">
+        <h3 className="text-lg font-medium mb-4">{title}</h3>
+        <div className="max-w-3xl">
+          <FormattedText text={content} />
+        </div>
       </div>
       
       {images.length > 0 && (
@@ -109,7 +111,7 @@ function SectionWithImages({
           })}
         </div>
       )}
-    </div>
+    </>
   );
 }
 
@@ -324,32 +326,33 @@ export function ProjectDetail() {
           </div>
           
           {/* RIGHT COLUMN - Scrollable (67%) */}
-          <div ref={contentRef} className="lg:col-span-2">
-            <div className="max-w-4xl mx-auto space-y-0">
+          <div ref={contentRef} className="lg:col-span-2 space-y-0">
             
             {/* Rôle, équipe */}
             {(project.role || project.team) && (
               <section className="py-8 border-t border-gray-300/30 first:border-t-0 first:pt-0">
-                <h2 className="text-lg mb-6">Rôle & Équipe</h2>
-                
-                <div className="max-w-3xl">
-                  {project.role && (
-                    <div className="mb-6">
-                      <h3 className="text-xl font-medium mb-3">Mon rôle</h3>
-                      <FormattedText text={project.role} />
-                    </div>
-                  )}
+                <div className="max-w-4xl mx-auto">
+                  <h2 className="text-lg mb-6">Rôle & Équipe</h2>
                   
-                  {project.team && project.team.length > 0 && (
-                    <div>
-                      <h3 className="text-xl font-medium mb-3">Équipe</h3>
-                      <ul className="list-disc list-inside space-y-2">
-                        {project.team.map((member, index) => (
-                          <li key={index} className="text-lg">{member}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                  <div className="max-w-3xl">
+                    {project.role && (
+                      <div className="mb-6">
+                        <h3 className="text-xl font-medium mb-3">Mon rôle</h3>
+                        <FormattedText text={project.role} />
+                      </div>
+                    )}
+                    
+                    {project.team && project.team.length > 0 && (
+                      <div>
+                        <h3 className="text-xl font-medium mb-3">Équipe</h3>
+                        <ul className="list-disc list-inside space-y-2">
+                          {project.team.map((member, index) => (
+                            <li key={index} className="text-lg">{member}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </section>
             )}
@@ -357,9 +360,11 @@ export function ProjectDetail() {
             {/* Challenge */}
             {project.challenge && (
               <section className="py-8 border-t border-gray-300/30">
-                <h2 className="text-lg mb-6">Challenge</h2>
-                <div className="max-w-3xl">
-                  <FormattedText text={project.challenge} />
+                <div className="max-w-4xl mx-auto">
+                  <h2 className="text-lg mb-6">Challenge</h2>
+                  <div className="max-w-3xl">
+                    <FormattedText text={project.challenge} />
+                  </div>
                 </div>
               </section>
             )}
@@ -367,9 +372,11 @@ export function ProjectDetail() {
             {/* Status Quo */}
             {project.statusQuo && (
               <section className="py-8 border-t border-gray-300/30">
-                <h2 className="text-lg mb-6">Status Quo</h2>
-                <div className="max-w-3xl">
-                  <FormattedText text={project.statusQuo} />
+                <div className="max-w-4xl mx-auto">
+                  <h2 className="text-lg mb-6">Status Quo</h2>
+                  <div className="max-w-3xl">
+                    <FormattedText text={project.statusQuo} />
+                  </div>
                 </div>
               </section>
             )}
@@ -377,7 +384,9 @@ export function ProjectDetail() {
             {/* Process */}
             {project.process && Object.values(project.process).some(v => v) && (
               <section className="py-8 border-t border-gray-300/30">
-                <h2 className="text-lg mb-6">Process</h2>
+                <div className="max-w-4xl mx-auto mb-6">
+                  <h2 className="text-lg">Process</h2>
+                </div>
                 
                 <div className="space-y-8">
                   {project.process.discovery && (
@@ -446,9 +455,11 @@ export function ProjectDetail() {
             {/* Solution */}
             {solutionData.content && (
               <section className="py-8 border-t border-gray-300/30">
-                <h2 className="text-lg mb-6">Solution</h2>
-                <div className="max-w-3xl">
-                  <FormattedText text={solutionData.content} />
+                <div className="max-w-4xl mx-auto">
+                  <h2 className="text-lg mb-6">Solution</h2>
+                  <div className="max-w-3xl">
+                    <FormattedText text={solutionData.content} />
+                  </div>
                 </div>
                 
                 {solutionData.images.length > 0 && (
@@ -469,9 +480,11 @@ export function ProjectDetail() {
             {/* Impact */}
             {project.impact && (
               <section className="py-8 border-t border-gray-300/30">
-                <h2 className="text-lg mb-6">Impact</h2>
-                <div className="max-w-3xl">
-                  <FormattedText text={project.impact} />
+                <div className="max-w-4xl mx-auto">
+                  <h2 className="text-lg mb-6">Impact</h2>
+                  <div className="max-w-3xl">
+                    <FormattedText text={project.impact} />
+                  </div>
                 </div>
               </section>
             )}
@@ -479,9 +492,11 @@ export function ProjectDetail() {
             {/* Learnings */}
             {project.learnings && (
               <section className="py-8 border-t border-gray-300/30">
-                <h2 className="text-lg mb-6">Learnings</h2>
-                <div className="max-w-3xl">
-                  <FormattedText text={project.learnings} />
+                <div className="max-w-4xl mx-auto">
+                  <h2 className="text-lg mb-6">Learnings</h2>
+                  <div className="max-w-3xl">
+                    <FormattedText text={project.learnings} />
+                  </div>
                 </div>
               </section>
             )}
@@ -489,29 +504,32 @@ export function ProjectDetail() {
             {/* Prototype CTA */}
             {project.prototypeUrl && (
               <section className="py-8 border-t border-gray-300/30">
-                <a 
-                  href={project.prototypeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-lg hover:opacity-70 transition-opacity"
-                >
-                  Voir le prototype
-                  <ExternalLink className="w-5 h-5" />
-                </a>
+                <div className="max-w-4xl mx-auto">
+                  <a 
+                    href={project.prototypeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-lg hover:opacity-70 transition-opacity"
+                  >
+                    Voir le prototype
+                    <ExternalLink className="w-5 h-5" />
+                  </a>
+                </div>
               </section>
             )}
 
             {/* ImageDescription Gallery - Flexible placement */}
             {project.imageDescriptions && project.imageDescriptions.length > 0 && (
               <section className="py-8 border-t border-gray-300/30">
-                <h2 className="text-sm mb-6">Galerie</h2>
+                <div className="max-w-4xl mx-auto">
+                  <h2 className="text-sm mb-6">Galerie</h2>
+                </div>
                 <ImageDescriptionGrid 
                   images={project.imageDescriptions}
                   onImageClick={handleImageDescriptionClick}
                 />
               </section>
             )}
-            </div>
           </div>
         </div>
       </section>
