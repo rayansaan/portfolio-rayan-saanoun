@@ -97,7 +97,11 @@ function SectionWithImages({
       </div>
       
       {images.length > 0 && (
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className={`mt-6 ${
+          images.length === 1
+            ? 'max-w-2xl mx-auto'
+            : 'grid grid-cols-1 md:grid-cols-2 gap-4'
+        }`}>
           {images.map((img, idx) => {
             const layoutId = generateStandardImageId(projectId, sectionIndex * 100 + idx + 200);
             return (
@@ -463,7 +467,11 @@ export function ProjectDetail() {
                 </div>
                 
                 {solutionData.images.length > 0 && (
-                  <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className={`mt-6 ${
+                    solutionData.images.length === 1
+                      ? 'max-w-2xl mx-auto'
+                      : 'grid grid-cols-1 md:grid-cols-2 gap-4'
+                  }`}>
                     {solutionData.images.map((img, idx) => (
                       <BorderedImage
                         key={idx}
