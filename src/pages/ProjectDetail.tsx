@@ -324,7 +324,8 @@ export function ProjectDetail() {
           </div>
           
           {/* RIGHT COLUMN - Scrollable (67%) */}
-          <div ref={contentRef} className="lg:col-span-2 space-y-0">
+          <div ref={contentRef} className="lg:col-span-2">
+            <div className="max-w-4xl mx-auto space-y-0">
             
             {/* Rôle, équipe */}
             {(project.role || project.team) && (
@@ -510,6 +511,7 @@ export function ProjectDetail() {
                 />
               </section>
             )}
+            </div>
           </div>
         </div>
       </section>
