@@ -49,7 +49,7 @@ export function ProjectItem({ project }: ProjectItemProps) {
       </div>
       
       {/* Content */}
-      <div>
+      <div className="mx-1">
         {/* Nom du projet */}
         <h3 
           className="text-xl font-semibold mb-1 transition-opacity duration-200 group-hover:opacity-70"
