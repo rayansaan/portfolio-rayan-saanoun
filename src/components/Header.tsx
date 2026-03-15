@@ -8,7 +8,7 @@ import {
   DrawerTitle,
   DrawerClose,
 } from '@/components/ui/drawer';
-import { ButtonLiquidGlass } from './ButtonLiquidGlass';
+import { ButtonClassic } from './ButtonClassic';
 
 
 export function Header() {
@@ -69,9 +69,9 @@ export function Header() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <ButtonLiquidGlass>
+            <ButtonClassic>
               Mon CV
-            </ButtonLiquidGlass>
+            </ButtonClassic>
           </a>
         </div>
 
@@ -119,9 +119,9 @@ export function Header() {
               onClick={() => setIsOpen(false)}
               className="block mt-4"
             >
-              <ButtonLiquidGlass className="w-full">
+              <ButtonClassic className="w-full">
                 Mon CV
-              </ButtonLiquidGlass>
+              </ButtonClassic>
             </a>
           </nav>
         </DrawerContent>
