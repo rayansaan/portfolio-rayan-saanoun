@@ -8,6 +8,7 @@ import {
   DrawerTitle,
   DrawerClose,
 } from '@/components/ui/drawer';
+import { ButtonLiquidGlass } from './ButtonLiquidGlass';
 
 
 export function Header() {
@@ -67,9 +68,10 @@ export function Header() {
             href="/cv/CV-Rayan_Saanoun-2025.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 bg-black text-white text-base rounded-lg"
           >
-            Mon CV
+            <ButtonLiquidGlass>
+              Mon CV
+            </ButtonLiquidGlass>
           </a>
         </div>
 
@@ -115,9 +117,11 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsOpen(false)}
-              className="block mt-4 px-6 py-3 bg-black text-white text-center text-lg rounded-lg"
+              className="block mt-4"
             >
-              Mon CV
+              <ButtonLiquidGlass className="w-full">
+                Mon CV
+              </ButtonLiquidGlass>
             </a>
           </nav>
         </DrawerContent>
