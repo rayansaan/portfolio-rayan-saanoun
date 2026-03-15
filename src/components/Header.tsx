@@ -8,7 +8,7 @@ import {
   DrawerTitle,
   DrawerClose,
 } from '@/components/ui/drawer';
-import { ButtonShinyCursor } from './ButtonShinyCursor';
+import { ButtonLiquidGlass } from './ButtonLiquidGlass';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -68,9 +68,9 @@ export function Header() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <ButtonShinyCursor>
+            <ButtonLiquidGlass>
               Mon CV
-            </ButtonShinyCursor>
+            </ButtonLiquidGlass>
           </a>
         </div>
 
@@ -118,9 +118,9 @@ export function Header() {
               onClick={() => setIsOpen(false)}
               className="block mt-4"
             >
-              <ButtonShinyCursor className="w-full">
+              <ButtonLiquidGlass className="w-full">
                 Mon CV
-              </ButtonShinyCursor>
+              </ButtonLiquidGlass>
             </a>
           </nav>
         </DrawerContent>
