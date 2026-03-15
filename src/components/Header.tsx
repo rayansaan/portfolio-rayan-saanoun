@@ -68,7 +68,7 @@ export function Header() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <ButtonShinyCursor className="px-6 py-3 text-white text-base rounded-lg">
+            <ButtonShinyCursor>
               Mon CV
             </ButtonShinyCursor>
           </a>
@@ -116,8 +116,9 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsOpen(false)}
+              className="block mt-4"
             >
-              <ButtonShinyCursor className="w-full mt-4 px-6 py-3 text-white text-center text-lg rounded-lg">
+              <ButtonShinyCursor className="w-full">
                 Mon CV
               </ButtonShinyCursor>
             </a>

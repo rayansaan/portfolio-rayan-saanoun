@@ -16,19 +16,21 @@ export function ButtonShinyCursor({ children, className = '', ...props }: Button
   };
 
   return (
-    <button
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className={`relative overflow-hidden transition-all duration-200 cursor-pointer ${className}`}
-      style={{
-        background: isHovered
-          ? `radial-gradient(circle 120px at ${mousePosition.x}% ${mousePosition.y}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.1) 40%, transparent 70%), #000`
-          : '#000',
-      }}
-      {...props}
-    >
-      {children}
-    </button>
+    <div className={`inline-block border-2 border-black rounded-lg ${className}`}>
+      <button
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="relative overflow-hidden transition-all duration-200 cursor-pointer px-6 py-3 text-white text-base rounded-[6px] w-full"
+        style={{
+          background: isHovered
+            ? `radial-gradient(circle 180px at ${mousePosition.x}% ${mousePosition.y}%, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.3) 30%, rgba(255,255,255,0.1) 50%, transparent 70%), #000`
+            : '#000',
+        }}
+        {...props}
+      >
+        {children}
+      </button>
+    </div>
   );
 }
