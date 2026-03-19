@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Header } from '@/components/Header';
 import { HeroSection } from '@/components/HeroSection';
 import { ProjectSection } from '@/components/ProjectSection';
@@ -45,27 +45,25 @@ function HomePage() {
         
         {/* Projects Sections - appear after first scroll */}
         <div id="projects">
-          <AnimatePresence>
-            {hasScrolled && (
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-              >
-                {/* UX/UI Design Section */}
-                <ProjectSection 
-                  title="UX/UI Design" 
-                  projects={uxUiProjects} 
-                />
-                
-                {/* Other Projects Section */}
-                <ProjectSection 
-                  title="Autres Projets" 
-                  projects={otherProjects}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <motion.div
+            animate={{ 
+              opacity: hasScrolled ? 1 : 0, 
+              y: hasScrolled ? 0 : 50 
+            }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            {/* UX/UI Design Section */}
+            <ProjectSection 
+              title="UX/UI Design" 
+              projects={uxUiProjects} 
+            />
+            
+            {/* Other Projects Section */}
+            <ProjectSection 
+              title="Autres Projets" 
+              projects={otherProjects}
+            />
+          </motion.div>
         </div>
         
         {/* Footer */}
