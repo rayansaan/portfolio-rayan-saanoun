@@ -1,13 +1,13 @@
 import { useRef } from 'react';
 
 const logos = [
-  { name: 'C discount', src: '/logos/C discount.png' },
-  { name: 'Michelin', src: '/logos/Michelin.png' },
-  { name: 'Moove', src: '/logos/moove.png' },
-  { name: 'Nash', src: '/logos/Nash.png' },
-  { name: 'Rakoono', src: '/logos/Rakoono.png' },
-  { name: 'Stooly', src: '/logos/Stooly.png' },
-  { name: 'Veeton', src: '/logos/Veeton.png' },
+  { name: 'C discount', src: '/logos/carousel/C discount.svg' },
+  { name: 'Michelin', src: '/logos/carousel/Michelin.svg' },
+  { name: 'Moove', src: '/logos/carousel/moove.svg' },
+  { name: 'Nash', src: '/logos/carousel/Nash.svg' },
+  { name: 'Rakoono', src: '/logos/carousel/Rakoono.svg' },
+  { name: 'Stooly', src: '/logos/carousel/Stooly.svg' },
+  { name: 'Veeton', src: '/logos/carousel/Veeton.svg' },
 ];
 
 export function LogoCarousel() {
