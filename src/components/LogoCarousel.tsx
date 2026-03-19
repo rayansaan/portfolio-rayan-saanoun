@@ -14,7 +14,7 @@ export function LogoCarousel() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-6">
+    <div className="w-full px-2 sm:px-6 lg:px-32 xl:px-48 py-4 sm:py-6 overflow-hidden">
       <div className="max-w-4xl mx-auto overflow-hidden mask-gradient-carousel">
         <div 
           ref={containerRef}
@@ -27,13 +27,13 @@ export function LogoCarousel() {
           {logos.map((logo, index) => (
             <div
               key={`logo-1-${index}`}
-              className="flex-shrink-0 flex items-center justify-center px-8"
-              style={{ width: '160px' }}
+              className="flex-shrink-0 flex items-center justify-center px-3 sm:px-8"
+              style={{ width: 'auto' }}
             >
               <img
                 src={logo.src}
                 alt={logo.name}
-                className="w-auto h-12 object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
+                className="w-auto h-8 sm:h-12 object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
               />
             </div>
           ))}
@@ -41,13 +41,13 @@ export function LogoCarousel() {
           {logos.map((logo, index) => (
             <div
               key={`logo-2-${index}`}
-              className="flex-shrink-0 flex items-center justify-center px-8"
-              style={{ width: '160px' }}
+              className="flex-shrink-0 flex items-center justify-center px-3 sm:px-8"
+              style={{ width: 'auto' }}
             >
               <img
                 src={logo.src}
                 alt={logo.name}
-                className="w-auto h-12 object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
+                className="w-auto h-8 sm:h-12 object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
               />
             </div>
           ))}

@@ -11,7 +11,7 @@ export const uxUiProjects: Project[] = [
     duration: '16 mois',
     location: 'Pépinière 27 - Paris',
     tags: ['B2B', 'Mobile App', 'Prototyping', 'SaaS', 'UX Research', 'UX/UI Design', 'Webapp'],
-    tools: ['Figma', 'Maze', 'Notion'],
+    tools: ['Figjam', 'Figma', 'Miro', 'Notion', 'Bubble.io'],
     website: 'https://www.flymoove.com/',
     description: 'Moove est une solution tout-en-un dédiée au secteur de l\'aviation d\'affaires. C\'est une plateforme centralisée conçue pour simplifier et optimiser la gestion des déplacements professionnels par avion privé.',
     context: `Moove est une solution tout-en-un dédiée au secteur de l'aviation d'affaires. C'est une plateforme centralisée conçue pour simplifier et optimiser la gestion des déplacements professionnels par avion privé. Elle offre des outils et des services adaptés aux besoins des opérateurs aériens, des entreprises et des voyageurs.
@@ -25,18 +25,28 @@ Aujourd'hui la solution se décline en 4 axes :
 **Empty Leg :** Moove propose des Empty Leg, c'est-à-dire des vols à prix réduits lorsqu'un avion privé doit retourner à vide vers sa base ou effectuer un vol sans passagers.
 
 **Services aux passagers :** La plateforme offre également des services aux passagers pour améliorer l'expérience de voyage, tels que la gestion des préférences de voyage, l'assistance 24/7 et d'autres services personnalisés.`,
-    role: `Chez Moove, j'étais responsable du Product Design SaaS, qui comprenait le comparateur de vols, les Empty Leg, et les Services Clients (CRM, billets d'avion, Gestion des Aéronefs).
-
-Mon objectif était :
-• Améliorer l'impact du comparateur de la page de recherche pour que les clients voient l'avantage de la solution porte-à-porte.
-• Créer un Tableau de bord pour les opérateurs et les pilotes.
-• Faciliter les échanges entre les clients et les opérateurs pendant le processus de devis.`,
+    role: `**Role:** Product Designer SaaS (UX/UI, UX Research)
+**Timeline:** Octobre 2022 - Février 2024 (16 mois)
+**Context:** B2B, SaaS, Webapp & Mobile App
+**Tools & Stack:** Figjam, Figma, Miro, Notion, Bubble.io`,
     team: ['Developer', 'CTO', 'Stakeholders'],
-    challenge: 'Bien que l\'analyse comparative soit exécutée rapidement, elle manque actuellement d\'une présentation claire des forces et des faiblesses de chaque option de voyage. Cette lacune ne permet pas de mettre en évidence les avantages ou les inconvénients comparatifs de manière efficace pour l\'utilisateur final.',
-    statusQuo: '',
+    challenge: `## Rendre l'aviation d'affaires transparente et accessible
+
+Moove est une start-up développant une plateforme SaaS B2B dédiée à l'optimisation des vols dans l'aviation d'affaires. L'ambition était claire : permettre aux opérateurs de valoriser leurs vols et aux passagers de comprendre le véritable impact économique et écologique de leur trajet. 
+
+Mon défi principal en tant que Product Designer était de repenser totalement le comparateur de la page de recherche. L'enjeu n'était pas seulement esthétique, il était double et hautement stratégique : il fallait concevoir un outil capable de démontrer instantanément aux clients finaux l'avantage d'un trajet "porte-à-porte", tout en offrant aux courtiers et opérateurs une vitrine performante pour vendre leurs solutions.`,
+    statusQuo: `## Une technologie puissante mais illisible
+
+Quand j'ai pris le projet en main, le constat était sans appel : l'ancienne page de recherche exécutait l'analyse comparative rapidement, mais elle manquait cruellement de clarté. 
+
+L'interface souffrait d'un manque d'uniformité et utilisait des mesures complexes que l'utilisateur moyen ne parvenait pas à déchiffrer. Résultat : l'outil échouait à mettre en évidence les forces et les faiblesses des différentes options de voyage (train, voiture, vols commerciaux) face à l'aviation d'affaires. Nous avions un moteur puissant sous le capot, mais une carrosserie qui n'inspirait ni confiance ni prise de décision.`,
     process: {
       discovery: {
-        content: 'Avant de se lancer dans la conception, nous avons mené des sessions d\'interviews avec différents profils d\'utilisateurs (familiers avec l\'outil et d\'autres non) afin d\'identifier les principaux problèmes et d\'orienter le projet dans la bonne direction. J\'ai collaboré avec les fondateurs et les développeurs pour mener à bien ce projet, en prenant en charge la conception UX et l\'interface UI.',
+        content: `## De l'incertitude à une vision claire - Partie 1
+
+Je n'ai pas commencé par ouvrir Figma. Pour concevoir un produit juste, j'ai d'abord animé des ateliers collaboratifs avec les parties prenantes pour clarifier notre vision, définir les KPIs et explorer nos propositions de valeur. 
+
+Ensuite, je suis allé chercher la vérité sur le terrain. J'ai interviewé des passagers, des opérateurs et des pilotes pour comprendre leurs véritables moteurs : le besoin de transparence sur les prix, l'importance du gain de temps porte-à-porte, et la préoccupation croissante pour l'impact écologique (notamment via la valorisation des vols à vide).`,
         images: [
           {
             src: '/images/projects/moove/search/golden_nuggets.png',
@@ -47,7 +57,9 @@ Mon objectif était :
         ]
       },
       define: {
-        content: 'Définition des objectifs et prioritisation des fonctionnalités. Notre outil doit être adaptable à la fois aux clients qui recherchent un voyage adapté à leurs besoins et aux opérateurs qui souhaitent mettre en avant les avantages de leurs services.',
+        content: `## De l'incertitude à une vision claire - Partie 2
+
+L'analyse de nos concurrents m'a révélé une opportunité clé : aucun d'entre eux ne proposait de "map" permettant de comparer clairement les trajets selon le coût, le temps et l'empreinte carbone. J'ai alors animé un atelier pour cartographier le parcours utilisateur et mis en place un "Impact mapping" centré sur les passagers. Cela a forcé l'équipe à faire des choix et à classer nos hypothèses stratégiques en trois catégories (gains rapides, évolutions significatives, paris ambitieux) pour créer une feuille de route réaliste.`,
         images: [
           {
             src: '/images/projects/moove/search/User_map_B2C.png',
@@ -67,26 +79,31 @@ Mon objectif était :
       testing: {
         content: 'Tests utilisateurs et itérations efficaces sur notre proposition de valeur.',
         images: ['/images/projects/moove/search/image 2.png', '/images/projects/moove/search/Frame_306.png']
-      },
-      delivery: {
-        content: 'Livraison des maquettes finales et accompagnement développement avec les équipes techniques.',
-        images: ['/images/projects/moove/Screen_prez_search.png']
       }
     },
     solution: {
-      content: `Nous avons donc cherché à facilité la comparaison entre les différents modes de transport en créant des fiches détaillées. Notre proposition de valeurs se décompose en 3 éléments distinct :
+      content: `## Un calculateur multimodal intelligent
 
-**Temps de trajet total** (y compris les temps d'attente en aéroport)
-**Budget** (coût total du voyage)
-**Empreinte carbone** (impact environnemental)
+[Insérer ici : Vidéo/GIF du prototype final de la Search Page]
+[Insérer ici : Maquette de l'agrégateur de vols à vide / Empty Legs]
 
-Cette approche permet aux utilisateurs de comparer facilement les différentes options de transport en avion privé, vols commerciaux, train et voiture, en mettant en avant la solution la plus adaptée à leurs besoins.
+Le résultat est un calculateur multimodal complet qui évalue trois piliers essentiels : le temps de trajet porte-à-porte, le coût total, et l'impact écologique. 
 
-La page de recherche propose un calculateur multimodal complet qui évalue le temps de trajet porte-à-porte, le coût total et l'impact écologique pour différents modes de transport.`,
+Pour transformer cette vision en réalité rapidement, j'ai collaboré étroitement avec les fondateurs et les développeurs pour implémenter l'interface via l'outil no-code Bubble. Mon rôle de Product Designer a été de m'assurer que chaque décision UI répondait aux objectifs stratégiques définis lors de la phase de recherche, tout en m'adaptant aux contraintes techniques de l'intégration.`,
       images: ['/images/projects/moove/image.png']
     },
-    impact: '',
-    learnings: '',
+    impact: `## Un déploiement validé par l'industrie
+
+Le véritable test d'un design reste son adoption sur le marché. Déployée avec succès le 07 octobre 2023, la nouvelle page de recherche a eu un impact business immédiat. 
+
+L'entreprise Michelin Air Services a non seulement validé notre solution, mais nous a confié un déploiement à grande échelle, incluant l'intégration directe de leur base de données. Vincent Tourlonias, Head of Operational Flows chez Michelin, a qualifié Moove de "game-changer pour l'aviation d'affaires", soulignant la simplification des processus et les gains de temps majeurs apportés par la plateforme. De plus, nos recherches et ce premier lancement ont confirmé auprès de Michelin la très forte valeur ajoutée d'intégrer une messagerie directe entre le pilote et le client.`,
+    learnings: `## Limites techniques et pivot stratégique
+
+Ce projet de 16 mois a été une immense source d'apprentissages. 
+
+Sur le plan technique, construire le produit sur Bubble.io nous a permis d'itérer vite, mais nous nous sommes heurtés à des limites de performances pour les calculs d'itinéraires complexes et à des difficultés pour maintenir une expérience front-end parfaitement fidèle aux maquettes. 
+
+Sur le plan produit, j'ai réalisé qu'un bon design fait parfois évoluer la trajectoire de l'entreprise : l'expérience a prouvé que la relation humaine était tout aussi vitale que la donnée, faisant du développement de la messagerie pilote-client notre nouvel objectif principal. J'en tire une conviction forte : la roadmap d'un produit complexe ne se devine pas, elle se priorise uniquement sur la base des retours issus de tests utilisateurs continus sur le terrain.`,
     useCases: ['Search page'],
     prototypeUrl: ''
   },
