@@ -46,11 +46,13 @@ function HomePage() {
         {/* Projects Sections - appear after first scroll */}
         <div id="projects">
           <motion.div
+            initial={{ opacity: 0, y: 20 }}
             animate={{ 
               opacity: hasScrolled ? 1 : 0, 
-              y: hasScrolled ? 0 : 50 
+              y: hasScrolled ? 0 : 20 
             }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 0.6 }}
+            style={{ visibility: hasScrolled ? 'visible' : 'hidden' }}
           >
             {/* UX/UI Design Section */}
             <ProjectSection 
