@@ -14,42 +14,44 @@ export function LogoCarousel() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="w-full max-w-md mx-auto overflow-hidden py-4">
-      <div 
-        ref={containerRef}
-        className="flex animate-scroll-logos"
-        style={{
-          width: 'fit-content',
-        }}
-      >
-        {/* First set of logos */}
-        {logos.map((logo, index) => (
-          <div
-            key={`logo-1-${index}`}
-            className="flex-shrink-0 flex items-center justify-center px-6"
-            style={{ width: '120px' }}
-          >
-            <img
-              src={logo.src}
-              alt={logo.name}
-              className="w-auto h-8 object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
-            />
-          </div>
-        ))}
-        {/* Duplicate set for infinite scroll */}
-        {logos.map((logo, index) => (
-          <div
-            key={`logo-2-${index}`}
-            className="flex-shrink-0 flex items-center justify-center px-6"
-            style={{ width: '120px' }}
-          >
-            <img
-              src={logo.src}
-              alt={logo.name}
-              className="w-auto h-8 object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
-            />
-          </div>
-        ))}
+    <div className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-6">
+      <div className="max-w-4xl mx-auto overflow-hidden mask-gradient-carousel">
+        <div 
+          ref={containerRef}
+          className="flex animate-scroll-logos"
+          style={{
+            width: 'fit-content',
+          }}
+        >
+          {/* First set of logos */}
+          {logos.map((logo, index) => (
+            <div
+              key={`logo-1-${index}`}
+              className="flex-shrink-0 flex items-center justify-center px-8"
+              style={{ width: '160px' }}
+            >
+              <img
+                src={logo.src}
+                alt={logo.name}
+                className="w-auto h-12 object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
+              />
+            </div>
+          ))}
+          {/* Duplicate set for infinite scroll */}
+          {logos.map((logo, index) => (
+            <div
+              key={`logo-2-${index}`}
+              className="flex-shrink-0 flex items-center justify-center px-8"
+              style={{ width: '160px' }}
+            >
+              <img
+                src={logo.src}
+                alt={logo.name}
+                className="w-auto h-12 object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
