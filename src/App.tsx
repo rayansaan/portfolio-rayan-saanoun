@@ -3,13 +3,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { HeroSection } from '@/components/HeroSection';
 import { ProjectSection } from '@/components/ProjectSection';
-import { InfoSection } from '@/components/InfoSection';
 import { Footer } from '@/components/Footer';
 import { CursorFollowImage } from '@/components/CursorFollowImage';
 import { HoverImageProvider } from '@/context/HoverImageContext';
 import { CustomCursor } from '@/components/CustomCursor';
 import { LenisProvider } from '@/context/LenisContext';
 import { ProjectDetail } from '@/pages/ProjectDetail';
+import { About } from '@/pages/About';
 import { uxUiProjects, otherProjects } from '@/data/projects';
 
 function HomePage() {
@@ -40,9 +40,6 @@ function HomePage() {
         />
         </div>
         
-        {/* Info Section */}
-        <InfoSection />
-        
         {/* Footer */}
         <Footer />
       </main>
@@ -58,6 +55,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<About />} />
             <Route path="/project/:id" element={<ProjectDetail />} />
           </Routes>
         </BrowserRouter>

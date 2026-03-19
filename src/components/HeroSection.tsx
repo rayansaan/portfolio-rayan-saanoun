@@ -30,7 +30,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="w-full h-[70vh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-32 xl:px-48">
+    <section className="w-full h-[85vh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-32 xl:px-48">
       <div className="flex flex-col items-center text-center gap-6 sm:gap-8">
         {/* Name */}
         <motion.h1

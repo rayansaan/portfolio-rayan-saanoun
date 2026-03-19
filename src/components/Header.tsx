@@ -26,7 +26,7 @@ export function Header() {
 
   const navLinks = [
     { name: 'Work', href: '/#projects' },
-    { name: 'About', href: '/#about' },
+    { name: 'About', href: '/about', isRoute: true },
     { name: 'Contact', href: 'mailto:rayansaan.pro@gmail.com' },
   ];
 
@@ -56,13 +56,23 @@ export function Header() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-base transition-opacity duration-200 hover:opacity-70"
-            >
-              {link.name}
-            </a>
+            link.isRoute ? (
+              <Link
+                key={link.name}
+                to={link.href}
+                className="text-base transition-opacity duration-200 hover:opacity-70"
+              >
+                {link.name}
+              </Link>
+            ) : (
+              <a
+                key={link.name}
+                href={link.href}
+                className="text-base transition-opacity duration-200 hover:opacity-70"
+              >
+                {link.name}
+              </a>
+            )
           ))}
           <a
             href="/cv/CV-Rayan_Saanoun-2025.pdf"
@@ -103,14 +113,25 @@ export function Header() {
           </DrawerHeader>
           <nav className="flex flex-col p-6">
             {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className="text-2xl font-medium py-4 transition-opacity duration-200 hover:opacity-70"
-              >
-                {link.name}
-              </a>
+              link.isRoute ? (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className="text-2xl font-medium py-4 transition-opacity duration-200 hover:opacity-70"
+                >
+                  {link.name}
+                </Link>
+              ) : (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className="text-2xl font-medium py-4 transition-opacity duration-200 hover:opacity-70"
+                >
+                  {link.name}
+                </a>
+              )
             ))}
             <a
               href="/cv/CV-Rayan_Saanoun-2025.pdf"
