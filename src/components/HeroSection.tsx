@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { useLenis } from '@/context/LenisContext';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { LogoCarousel } from './LogoCarousel';
 
 export function HeroSection() {
   const { lenis } = useLenis();
@@ -50,6 +51,16 @@ export function HeroSection() {
         >
           Concevoir des expériences digitales où la complexité s'efface pour laisser place à l'intuitif.
         </motion.p>
+        
+        {/* Logo Carousel */}
+        <motion.div
+          initial={{ opacity: 0, y: 20, filter: "blur(15px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+          className="w-full"
+        >
+          <LogoCarousel />
+        </motion.div>
         
         {/* Scroll indicator */}
         <motion.button
