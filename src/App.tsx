@@ -1,5 +1,6 @@
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Header } from '@/components/Header';
 import { HeroSection } from '@/components/HeroSection';
 import { ProjectSection } from '@/components/ProjectSection';
@@ -13,6 +14,22 @@ import { About } from '@/pages/About';
 import { uxUiProjects, otherProjects } from '@/data/projects';
 
 function HomePage() {
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0 && !hasScrolled) {
+        setHasScrolled(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [hasScrolled]);
+
   return (
     <div className="min-h-screen">
       {/* Cursor follow image */}
@@ -26,18 +43,28 @@ function HomePage() {
         {/* Hero Section */}
         <HeroSection />
         
-        {/* UX/UI Design Section */}
+        {/* UX/UI Design Section - appears after first scroll */}
         <div id="projects">
-        <ProjectSection 
-          title="UX/UI Design" 
-          projects={uxUiProjects} 
-        />
+          <AnimatePresence>
+            {hasScrolled && (
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+              >
+                <ProjectSection 
+                  title="UX/UI Design" 
+                  projects={uxUiProjects} 
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         
-        {/* Other Projects Section */}
-        <ProjectSection 
-          title="Autres Projets" 
-          projects={otherProjects}
-        />
+          {/* Other Projects Section */}
+          <ProjectSection 
+            title="Autres Projets" 
+            projects={otherProjects}
+          />
         </div>
         
         {/* Footer */}
