@@ -43,7 +43,7 @@ function HomePage() {
         {/* Hero Section */}
         <HeroSection />
         
-        {/* UX/UI Design Section - appears after first scroll */}
+        {/* Projects Sections - appear after first scroll */}
         <div id="projects">
           <AnimatePresence>
             {hasScrolled && (
@@ -52,19 +52,20 @@ function HomePage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
               >
+                {/* UX/UI Design Section */}
                 <ProjectSection 
                   title="UX/UI Design" 
                   projects={uxUiProjects} 
                 />
+                
+                {/* Other Projects Section */}
+                <ProjectSection 
+                  title="Autres Projets" 
+                  projects={otherProjects}
+                />
               </motion.div>
             )}
           </AnimatePresence>
-        
-          {/* Other Projects Section */}
-          <ProjectSection 
-            title="Autres Projets" 
-            projects={otherProjects}
-          />
         </div>
         
         {/* Footer */}
