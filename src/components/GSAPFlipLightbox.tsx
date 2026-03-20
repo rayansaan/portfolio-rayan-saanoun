@@ -259,7 +259,7 @@ export function GSAPFlipLightbox({
       {/* Backdrop */}
       <div
         ref={overlayRef}
-        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/80 glass-lightbox"
         onClick={() => {
           if (!isAnimatingRef.current) {
             animateClose();
