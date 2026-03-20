@@ -323,35 +323,6 @@ export function ProjectDetail() {
           {/* RIGHT COLUMN - Scrollable (67%) */}
           <div ref={contentRef} className="lg:col-span-2 space-y-0">
             
-            {/* Rôle, équipe */}
-            {(project.role || project.team) && (
-              <section className="py-8 border-t border-gray-300/30 first:border-t-0 first:pt-0">
-                <div className="max-w-4xl mx-auto">
-                  <h2 className="text-lg mb-6">Rôle & Équipe</h2>
-                  
-                  <div className="max-w-3xl">
-                    {project.role && (
-                      <div className="mb-6">
-                        <h3 className="text-xl font-medium mb-3">Mon rôle</h3>
-                        <FormattedText text={project.role} />
-                      </div>
-                    )}
-                    
-                    {project.team && project.team.length > 0 && (
-                      <div>
-                        <h3 className="text-xl font-medium mb-3">Équipe</h3>
-                        <ul className="list-disc list-inside space-y-2">
-                          {project.team.map((member, index) => (
-                            <li key={index} className="text-lg">{member}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </section>
-            )}
-
             {/* Challenge */}
             {project.challenge && (
               <section className="py-8 border-t border-gray-300/30">
