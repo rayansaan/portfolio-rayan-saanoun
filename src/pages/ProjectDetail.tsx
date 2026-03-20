@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, type RefObject } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 import { allProjects } from '@/data/projects';
 import { useLenis } from '@/context/LenisContext';
 import { BorderedImage } from '@/components/BorderedImage';
@@ -10,12 +11,22 @@ import { GSAPFlipLightbox } from '@/components/GSAPFlipLightbox';
 import { generateStandardImageId } from '@/utils/generateId';
 import type { ProjectSection, ImageWithDescription, ImageDescription } from '@/types';
 
-// Composant pour afficher du texte avec des sauts de ligne
+// Composant pour afficher du texte Markdown
 function FormattedText({ text }: { text: string }) {
   if (!text) return null;
   return (
-    <div className="whitespace-pre-wrap text-lg leading-relaxed">
-      {text}
+    <div className="text-lg leading-relaxed">
+      <ReactMarkdown 
+        components={{
+          h2: ({node, ...props}) => <h2 className="text-2xl font-semibold mt-8 mb-4" {...props} />,
+          h3: ({node, ...props}) => <h3 className="text-xl font-medium mt-6 mb-3" {...props} />,
+          p: ({node, ...props}) => <p className="mb-4" {...props} />,
+          ul: ({node, ...props}) => <ul className="list-disc list-inside mb-4" {...props} />,
+          li: ({node, ...props}) => <li className="mb-1" {...props} />,
+        }}
+      >
+        {text}
+      </ReactMarkdown>
     </div>
   );
 }
