@@ -77,7 +77,7 @@ L'analyse de nos concurrents m'a révélé une opportunité clé : aucun d'entre
         images: ['/images/projects/moove/search/voles__vide_agrgateur.png', '/images/projects/moove/search/image 2.png']
       },
       prototyping: {
-        content: 'Création de prototypes interactifs pour validation. Nous avons structuré les tests utilisateurs en étapes clés, de la définition des objectifs jusqu'à la phase pilote, afin d'obtenir des retours exploitables pour optimiser l'expérience de la search page.'
+        content: `Création de prototypes interactifs pour validation. Nous avons structuré les tests utilisateurs en étapes clés, de la définition des objectifs jusqu'à la phase pilote, afin d'obtenir des retours exploitables pour optimiser l'expérience de la search page.`
       },
       testing: {
         content: 'Tests utilisateurs et itérations efficaces sur notre proposition de valeur.',

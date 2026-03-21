@@ -349,12 +349,16 @@ export function ProjectDetail() {
             {/* Status Quo */}
             {project.statusQuo && (
               <section className="py-8 border-t border-gray-300/30">
-                <div className="max-w-4xl mx-auto">
-                  <h2 className="text-lg mb-6">Status Quo</h2>
-                  <div className="max-w-3xl">
-                    <FormattedText text={project.statusQuo} />
-                  </div>
+                <div className="max-w-4xl mx-auto mb-6">
+                  <h2 className="text-lg">Status Quo</h2>
                 </div>
+                <SectionWithImages 
+                  title="" 
+                  section={project.statusQuo} 
+                  projectId={project.id}
+                  sectionIndex={0}
+                  onImageClick={handleImageClick}
+                />
               </section>
             )}
 

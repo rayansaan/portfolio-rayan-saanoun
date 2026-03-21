@@ -34,7 +34,7 @@ export interface Project {
   role?: string;
   team?: string[];
   challenge?: string;
-  statusQuo?: string;
+  statusQuo?: string | ProjectSection;
   process?: {
     discovery?: string | ProjectSection;
     define?: string | ProjectSection;
