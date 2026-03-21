@@ -55,7 +55,8 @@ Ensuite, je suis allé chercher la vérité sur le terrain. J'ai interviewé des
             src: '/images/projects/moove/search/golden_nuggets.png',
             alt: 'Recherche utilisateur - Golden Nuggets',
             description: '**Phase de Discovery** - Identification des insights clés utilisateurs lors des interviews.\n\nPoints marquants:\n- Besoin de comparaison claire entre modes de transport\n- Importance du temps "porte-à-porte"\n- Sensibilité environnementale croissante'
-          }
+          },
+          '/images/projects/moove/search/image 1.png'
         ]
       },
       define: {
@@ -68,8 +69,7 @@ L'analyse de nos concurrents m'a révélé une opportunité clé : aucun d'entre
             alt: 'User Journey Map',
             description: '**User Journey Map** - Cartographie complète du parcours utilisateur B2C.\n\nCette visualisation nous a permis d\'identifier les points de friction et les opportunités d\'amélioration dans l\'expérience de recherche de vols.'
           },
-          '/images/projects/moove/search/image.png',
-          '/images/projects/moove/search/image 1.png'
+          '/images/projects/moove/search/image.png'
         ]
       },
       design: {
