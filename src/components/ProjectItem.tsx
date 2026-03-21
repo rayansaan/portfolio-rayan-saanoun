@@ -7,6 +7,14 @@ interface ProjectItemProps {
   project: Project;
 }
 
+// Mapping des projets vers leurs icônes de survol
+const projectIcons: Record<string, string> = {
+  'moove': '/logos/Hover/Moove.svg',
+  'nash': '/logos/Hover/Nash.svg',
+  'veeton': '/logos/Hover/Veeton.svg',
+  'rakoono': '/logos/Hover/Rakoono.svg',
+};
+
 export function ProjectItem({ project }: ProjectItemProps) {
   const { setCurrentImage, setMousePosition } = useHoverImage();
 
@@ -15,13 +23,19 @@ export function ProjectItem({ project }: ProjectItemProps) {
 
   const handleMouseEnter = () => {
     if (!isTouchDevice) {
-      setCurrentImage(project.imageUrl);
+      // Utiliser l'icône du projet si elle existe, sinon l'image du projet
+      const iconUrl = projectIcons[project.id];
+      if (iconUrl) {
+        setCurrentImage(iconUrl, 'icon');
+      } else {
+        setCurrentImage(project.imageUrl, 'image');
+      }
     }
   };
 
   const handleMouseLeave = () => {
     if (!isTouchDevice) {
-      setCurrentImage(null);
+      setCurrentImage(null, 'image');
     }
   };
 

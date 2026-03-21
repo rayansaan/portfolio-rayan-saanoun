@@ -2,19 +2,25 @@ import { motion, useMotionValue, useSpring, useVelocity, useTransform, AnimatePr
 import { useHoverImage } from '@/context/HoverImageContext';
 
 export function CursorFollowImage() {
-  const { currentImage, mouseX, mouseY } = useHoverImage();
+  const { currentImage, imageType, mouseX, mouseY } = useHoverImage();
   
   // Ne pas rendre sur les appareils tactiles
   const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
   if (isTouchDevice) return null;
   
+  // Dimensions selon le type d'image
+  const isIcon = imageType === 'icon';
+  const width = isIcon ? 40 : 280;
+  const height = isIcon ? 40 : 200;
+  const offset = isIcon ? 10 : 20;
+  
   // Motion values pour la position avec offset (bas à droite du curseur)
-  const x = useMotionValue(mouseX + 20);
-  const y = useMotionValue(mouseY + 20);
+  const x = useMotionValue(mouseX + offset);
+  const y = useMotionValue(mouseY + offset);
   
   // Mise à jour directe des motion values (pas de useEffect)
-  x.set(mouseX + 20);
-  y.set(mouseY + 20);
+  x.set(mouseX + offset);
+  y.set(mouseY + offset);
   
   // Spring optimisé pour plus de fluidité
   const springConfig = { 
@@ -53,12 +59,12 @@ export function CursorFollowImage() {
             style={{
               x: xSpring,
               y: ySpring,
-              width: 280,
-              height: 200,
+              width,
+              height,
             }}
           >
             <motion.div
-              className="w-full h-full rounded-lg overflow-hidden shadow-2xl"
+              className={`w-full h-full overflow-hidden ${isIcon ? '' : 'rounded-lg shadow-2xl'}`}
               style={{
                 skewX,
                 skewY,
@@ -67,7 +73,7 @@ export function CursorFollowImage() {
               <img
                 src={currentImage}
                 alt=""
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
             </motion.div>
           </motion.div>

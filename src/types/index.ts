@@ -52,7 +52,8 @@ export interface Project {
 
 export interface HoverImageState {
   currentImage: string | null;
-  setCurrentImage: (image: string | null) => void;
+  setCurrentImage: (image: string | null, type?: 'image' | 'icon') => void;
+  imageType: 'image' | 'icon';
   mouseX: number;
   mouseY: number;
   setMousePosition: (x: number, y: number) => void;
