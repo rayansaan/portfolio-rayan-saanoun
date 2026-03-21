@@ -35,11 +35,14 @@ Aujourd'hui la solution se décline en 4 axes :
 Moove est une start-up développant une plateforme SaaS B2B dédiée à l'optimisation des vols dans l'aviation d'affaires. L'ambition était claire : permettre aux opérateurs de valoriser leurs vols et aux passagers de comprendre le véritable impact économique et écologique de leur trajet. 
 
 Mon défi principal en tant que Product Designer était de repenser totalement le comparateur de la page de recherche. L'enjeu n'était pas seulement esthétique, il était double et hautement stratégique : il fallait concevoir un outil capable de démontrer instantanément aux clients finaux l'avantage d'un trajet "porte-à-porte", tout en offrant aux courtiers et opérateurs une vitrine performante pour vendre leurs solutions.`,
-    statusQuo: `## Une technologie puissante mais illisible
+    statusQuo: {
+      content: `## Une technologie puissante mais illisible
 
 Quand j'ai pris le projet en main, le constat était sans appel : l'ancienne page de recherche exécutait l'analyse comparative rapidement, mais elle manquait cruellement de clarté. 
 
 L'interface souffrait d'un manque d'uniformité et utilisait des mesures complexes que l'utilisateur moyen ne parvenait pas à déchiffrer. Résultat : l'outil échouait à mettre en évidence les forces et les faiblesses des différentes options de voyage (train, voiture, vols commerciaux) face à l'aviation d'affaires. Nous avions un moteur puissant sous le capot, mais une carrosserie qui n'inspirait ni confiance ni prise de décision.`,
+      images: ['/images/projects/moove/search/Bastien__scapin.png']
+    },
     process: {
       discovery: {
         content: `## De l'incertitude à une vision claire - Partie 1
@@ -52,8 +55,7 @@ Ensuite, je suis allé chercher la vérité sur le terrain. J'ai interviewé des
             src: '/images/projects/moove/search/golden_nuggets.png',
             alt: 'Recherche utilisateur - Golden Nuggets',
             description: '**Phase de Discovery** - Identification des insights clés utilisateurs lors des interviews.\n\nPoints marquants:\n- Besoin de comparaison claire entre modes de transport\n- Importance du temps "porte-à-porte"\n- Sensibilité environnementale croissante'
-          },
-          '/images/projects/moove/search/Bastien__scapin.png'
+          }
         ]
       },
       define: {
@@ -65,20 +67,21 @@ L'analyse de nos concurrents m'a révélé une opportunité clé : aucun d'entre
             src: '/images/projects/moove/search/User_map_B2C.png',
             alt: 'User Journey Map',
             description: '**User Journey Map** - Cartographie complète du parcours utilisateur B2C.\n\nCette visualisation nous a permis d\'identifier les points de friction et les opportunités d\'amélioration dans l\'expérience de recherche de vols.'
-          }
+          },
+          '/images/projects/moove/search/image.png',
+          '/images/projects/moove/search/image 1.png'
         ]
       },
       design: {
         content: 'Conception des interfaces et parcours utilisateurs en mettant l\'accent sur la comparaison multimodale complète.',
-        images: ['/images/projects/moove/search/voles__vide_agrgateur.png']
+        images: ['/images/projects/moove/search/voles__vide_agrgateur.png', '/images/projects/moove/search/image 2.png']
       },
       prototyping: {
-        content: 'Création de prototypes interactifs pour validation. Nous avons structuré les tests utilisateurs en étapes clés, de la définition des objectifs jusqu\'à la phase pilote, afin d\'obtenir des retours exploitables pour optimiser l\'expérience de la search page.',
-        images: ['/images/projects/moove/search/image.png', '/images/projects/moove/search/image 1.png']
+        content: 'Création de prototypes interactifs pour validation. Nous avons structuré les tests utilisateurs en étapes clés, de la définition des objectifs jusqu'à la phase pilote, afin d'obtenir des retours exploitables pour optimiser l'expérience de la search page.'
       },
       testing: {
         content: 'Tests utilisateurs et itérations efficaces sur notre proposition de valeur.',
-        images: ['/images/projects/moove/search/image 2.png', '/images/projects/moove/search/Frame_306.png']
+        images: ['/images/projects/moove/search/Frame_306.png']
       }
     },
     solution: {
