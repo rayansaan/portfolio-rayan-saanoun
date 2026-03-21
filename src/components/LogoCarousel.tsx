@@ -10,6 +10,9 @@ const logos = [
   { name: 'Veeton', src: '/logos/carousel/Veeton.svg' },
 ];
 
+// Duplicate logos 4 times for seamless infinite scroll
+const DUPLICATION_COUNT = 4;
+
 export function LogoCarousel() {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -21,35 +24,24 @@ export function LogoCarousel() {
           className="flex animate-scroll-logos"
           style={{
             width: 'fit-content',
+            willChange: 'transform',
           }}
         >
-          {/* First set of logos */}
-          {logos.map((logo, index) => (
-            <div
-              key={`logo-1-${index}`}
-              className="flex-shrink-0 flex items-center justify-center px-3 sm:px-8"
-              style={{ width: 'auto' }}
-            >
-              <img
-                src={logo.src}
-                alt={logo.name}
-                className="w-auto h-8 sm:h-12 object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
-              />
-            </div>
-          ))}
-          {/* Duplicate set for infinite scroll */}
-          {logos.map((logo, index) => (
-            <div
-              key={`logo-2-${index}`}
-              className="flex-shrink-0 flex items-center justify-center px-3 sm:px-8"
-              style={{ width: 'auto' }}
-            >
-              <img
-                src={logo.src}
-                alt={logo.name}
-                className="w-auto h-8 sm:h-12 object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
-              />
-            </div>
+          {/* Duplicate logos multiple times for smooth infinite loop */}
+          {Array.from({ length: DUPLICATION_COUNT }).map((_, setIndex) => (
+            logos.map((logo, index) => (
+              <div
+                key={`logo-${setIndex}-${index}`}
+                className="flex-shrink-0 flex items-center justify-center px-3 sm:px-8"
+                style={{ width: '120px' }}
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  className="w-full h-8 sm:h-12 object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
+                />
+              </div>
+            ))
           ))}
         </div>
       </div>
