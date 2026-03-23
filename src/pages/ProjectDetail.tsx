@@ -1,0 +1,565 @@
+import { useState, useEffect, useRef, type RefObject } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { ArrowLeft, ExternalLink } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import { allProjects } from '@/data/projects';
+import { useLenis } from '@/context/LenisContext';
+import { BorderedImage } from '@/components/BorderedImage';
+import { ProjectImage } from '@/components/ProjectImage';
+import { ToolIcon } from '@/components/ToolIcon';
+import { GSAPFlipLightbox } from '@/components/GSAPFlipLightbox';
+import { generateStandardImageId } from '@/utils/generateId';
+import type { ProjectSection, ImageWithDescription, ImageDescription } from '@/types';
+
+// Composant pour afficher du texte Markdown
+function FormattedText({ text }: { text: string }) {
+  if (!text) return null;
+  return (
+    <div className="text-lg leading-relaxed">
+      <ReactMarkdown 
+        components={{
+          h2: ({node, ...props}) => <h2 className="text-2xl font-semibold mt-8 mb-4" {...props} />,
+          h3: ({node, ...props}) => <h3 className="text-xl font-medium mt-6 mb-3" {...props} />,
+          p: ({node, ...props}) => <p className="mb-4" {...props} />,
+          ul: ({node, ...props}) => <ul className="list-disc list-inside mb-4" {...props} />,
+          li: ({node, ...props}) => <li className="mb-1" {...props} />,
+        }}
+      >
+        {text}
+      </ReactMarkdown>
+    </div>
+  );
+}
+
+// Helper pour extraire le contenu et les images d'une section
+function getSectionData(section: string | ProjectSection | undefined): { content: string; images: (string | ImageWithDescription)[] } {
+  if (!section) return { content: '', images: [] };
+  if (typeof section === 'string') {
+    return { content: section, images: [] };
+  }
+  return { content: section.content, images: section.images || [] };
+}
+
+// Hook pour tracker la progression du scroll sur un élément cible
+function useScrollProgress(targetRef: RefObject<HTMLElement | null>) {
+  const [progress, setProgress] = useState(0);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!targetRef.current) return;
+      
+      const target = targetRef.current;
+      const targetRect = target.getBoundingClientRect();
+      const targetTop = targetRect.top + window.scrollY;
+      const targetHeight = targetRect.height;
+      const windowHeight = window.innerHeight;
+      
+      // Calculate how much of the target element has been scrolled
+      // Progress starts when target comes into view and ends when target bottom reaches viewport bottom
+      const scrollStart = targetTop;
+      const scrollEnd = targetTop + targetHeight - windowHeight;
+      const scrollRange = scrollEnd - scrollStart;
+      
+      if (scrollRange <= 0) {
+        // Target is smaller than viewport, show full progress
+        setProgress(100);
+        return;
+      }
+      
+      const currentScroll = window.scrollY;
+      const relativeScroll = currentScroll - scrollStart;
+      const scrollProgress = (relativeScroll / scrollRange) * 100;
+      
+      setProgress(Math.min(100, Math.max(0, scrollProgress)));
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [targetRef]);
+  
+  return progress;
+}
+
+// Composant pour afficher une section avec ses images cliquables
+function SectionWithImages({ 
+  title, 
+  section, 
+  projectId,
+  sectionIndex,
+  onImageClick 
+}: { 
+  title: string; 
+  section: string | ProjectSection | undefined;
+  projectId: string;
+  sectionIndex: number;
+  onImageClick: (src: string, alt: string, layoutId: string, rect: DOMRect, description?: string) => void;
+}) {
+  const { content, images } = getSectionData(section);
+  if (!content) return null;
+  
+  return (
+    <>
+      <div className="max-w-4xl mx-auto">
+        <h3 className="text-lg font-medium mb-4">{title}</h3>
+        <div className="max-w-3xl">
+          <FormattedText text={content} />
+        </div>
+      </div>
+      
+      {images.length > 0 && (
+        <div className={`mt-6 ${
+          images.length === 1
+            ? 'max-w-2xl mx-auto'
+            : 'grid grid-cols-1 md:grid-cols-2 gap-4'
+        }`}>
+          {images.map((img, idx) => {
+            const layoutId = generateStandardImageId(projectId, sectionIndex * 100 + idx + 200);
+            
+            // Check if img is an object with description
+            if (typeof img === 'object' && 'src' in img) {
+              const imageWithDesc = img as ImageWithDescription;
+              return (
+                <ProjectImage
+                  key={idx}
+                  src={imageWithDesc.src}
+                  alt={imageWithDesc.alt || `${title} - Image ${idx + 1}`}
+                  onClick={(rect) => onImageClick(imageWithDesc.src, imageWithDesc.alt || `${title} - Image ${idx + 1}`, layoutId, rect, imageWithDesc.description)}
+                />
+              );
+            }
+            
+            // Simple string path
+            return (
+              <ProjectImage
+                key={idx}
+                src={img}
+                alt={`${title} - Image ${idx + 1}`}
+                onClick={(rect) => onImageClick(img, `${title} - Image ${idx + 1}`, layoutId, rect)}
+              />
+            );
+          })}
+        </div>
+      )}
+    </>
+  );
+}
+
+export function ProjectDetail() {
+  const { id } = useParams<{ id: string }>();
+  const { lenis } = useLenis();
+  
+  // Remonter en haut de la page quand on change de projet
+  useEffect(() => {
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+  }, [id, lenis]);
+  
+  const project = allProjects.find(p => p.id === id);
+  
+  // State pour les images (lightbox)
+  const [selectedImage, setSelectedImage] = useState<ImageDescription | null>(null);
+  const [imageRect, setImageRect] = useState<DOMRect | null>(null);
+  
+  // Ref pour la colonne de droite (contenu du projet)
+  const contentRef = useRef<HTMLDivElement>(null);
+  
+  // Progression du scroll basée sur le contenu du projet
+  const scrollProgress = useScrollProgress(contentRef);
+  
+  if (!project) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-3xl mb-4">Projet non trouvé</h1>
+          <Link to="/" className="text-base hover:opacity-70 transition-opacity">
+            ← Retour à l'accueil
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const otherProjects = allProjects
+    .filter(p => p.id !== id)
+    .slice(0, 3);
+
+  // Récupérer les données de la solution
+  const solutionData = getSectionData(project.solution);
+
+  // Handler pour les images
+  const handleImageClick = (src: string, alt: string, layoutId: string, rect: DOMRect, description?: string) => {
+    setSelectedImage({ id: layoutId, src, alt, description: description || '' });
+    setImageRect(rect);
+  };
+
+  const handleCloseImage = () => {
+    setSelectedImage(null);
+    setImageRect(null);
+  };
+
+  return (
+    <div className="min-h-screen">
+      {/* Lightbox pour les images */}
+      <GSAPFlipLightbox
+        image={selectedImage}
+        originRect={imageRect}
+        isOpen={!!selectedImage}
+        onClose={handleCloseImage}
+        showDescription={!!selectedImage?.description}
+      />
+
+      {/* Barre de progression - Mobile (fixe en bas) */}
+      <div className="fixed bottom-0 left-0 right-0 h-1 bg-[#110F0F]/5 z-50 lg:hidden">
+        <div 
+          className="h-full bg-[#110F0F]" 
+          style={{ width: `${scrollProgress}%` }} 
+        />
+      </div>
+
+      {/* Header */}
+      <header className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-6 sm:py-8">
+        <div className="flex items-center justify-between">
+          <Link 
+            to="/" 
+            className="flex items-center gap-2 text-sm hover:opacity-70 transition-opacity"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Retour
+          </Link>
+          <div className="text-sm font-medium">Rayan Saanoun</div>
+        </div>
+      </header>
+
+      {/* Main Content - Two Column Layout */}
+      <section className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-12 sm:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+          
+          {/* LEFT COLUMN - Sticky (33%) */}
+          <div className="lg:col-span-1">
+            <div className="lg:sticky lg:top-24 space-y-6">
+              
+              {/* Hero Image - 300px height */}
+              <div className="w-full h-[300px]">
+                <BorderedImage
+                  src={project.imageUrl}
+                  alt={project.name}
+                  onClick={(rect) => handleImageClick(project.imageUrl, project.name, generateStandardImageId(project.id, 0), rect)}
+                />
+              </div>
+              
+              {/* Barre de progression - Desktop */}
+              <div className="hidden lg:block w-full h-1 bg-[#110F0F]/5 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-[#110F0F]" 
+                  style={{ width: `${scrollProgress}%` }} 
+                />
+              </div>
+              
+              {/* Project Info */}
+              <div className="space-y-6">
+                {/* Category & Year */}
+                <div className="flex items-center gap-4">
+                  <span className="text-base">UX/UI Design</span>
+                  <span className="text-base text-text-muted">{project.year}</span>
+                </div>
+
+                {/* Title */}
+                <h1 
+                  className="text-4xl md:text-5xl font-semibold"
+                  style={{ letterSpacing: '-0.02em', lineHeight: '1.1' }}
+                >
+                  {project.name}
+                </h1>
+
+                {/* Description */}
+                <div className="text-lg leading-relaxed">
+                  <FormattedText text={project.description} />
+                </div>
+
+                {/* Website Link */}
+                {project.website && (
+                  <div>
+                    <a 
+                      href={project.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-lg hover:opacity-70 transition-opacity"
+                    >
+                      Voir le site
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </div>
+                )}
+
+                {/* Metadata */}
+                <div className="space-y-4 py-6 border-y border-gray-300/30">
+                  <div>
+                    <h3 className="text-base text-text-muted mb-1">Durée</h3>
+                    <p className="text-lg">{project.duration}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-base text-text-muted mb-1">Localisation</h3>
+                    <p className="text-lg">{project.location}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-base text-text-muted mb-1">Outils</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tools.map(tool => (
+                        <ToolIcon key={tool} name={tool} className="h-8 w-auto" />
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-base text-text-muted mb-2">Tags</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="inline-flex items-center px-2.5 py-1 rounded-full text-base bg-[#110F0F]/5 text-[#110F0F]/70"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* RIGHT COLUMN - Scrollable (67%) */}
+          <div ref={contentRef} className="lg:col-span-2 space-y-0">
+            
+            {/* Challenge */}
+            {project.challenge && (
+              <section className="py-8 border-t border-gray-300/30">
+                <div className="max-w-4xl mx-auto">
+                  <h2 className="text-lg mb-6">Challenge</h2>
+                  <div className="max-w-3xl">
+                    <FormattedText text={project.challenge} />
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {/* Status Quo */}
+            {project.statusQuo && (
+              <section className="py-8 border-t border-gray-300/30">
+                <div className="max-w-4xl mx-auto mb-6">
+                  <h2 className="text-lg">Status Quo</h2>
+                </div>
+                <SectionWithImages 
+                  title="" 
+                  section={project.statusQuo} 
+                  projectId={project.id}
+                  sectionIndex={0}
+                  onImageClick={handleImageClick}
+                />
+              </section>
+            )}
+
+            {/* Process */}
+            {project.process && Object.values(project.process).some(v => v) && (
+              <section className="py-8 border-t border-gray-300/30">
+                <div className="max-w-4xl mx-auto mb-6">
+                  <h2 className="text-lg">Process</h2>
+                </div>
+                
+                <div className="space-y-8">
+                  {project.process.discovery && (
+                    <SectionWithImages 
+                      title="Discovery" 
+                      section={project.process.discovery}
+                      projectId={project.id}
+                      sectionIndex={0}
+                      onImageClick={handleImageClick} 
+                    />
+                  )}
+                  
+                  {project.process.define && (
+                    <SectionWithImages 
+                      title="Define" 
+                      section={project.process.define}
+                      projectId={project.id}
+                      sectionIndex={1}
+                      onImageClick={handleImageClick} 
+                    />
+                  )}
+                  
+                  {project.process.design && (
+                    <SectionWithImages 
+                      title="Design" 
+                      section={project.process.design}
+                      projectId={project.id}
+                      sectionIndex={2}
+                      onImageClick={handleImageClick} 
+                    />
+                  )}
+                  
+                  {project.process.prototyping && (
+                    <SectionWithImages 
+                      title="Prototyping" 
+                      section={project.process.prototyping}
+                      projectId={project.id}
+                      sectionIndex={3}
+                      onImageClick={handleImageClick} 
+                    />
+                  )}
+                  
+                  {project.process.testing && (
+                    <SectionWithImages 
+                      title="Testing" 
+                      section={project.process.testing}
+                      projectId={project.id}
+                      sectionIndex={4}
+                      onImageClick={handleImageClick} 
+                    />
+                  )}
+                  
+                  {project.process.delivery && (
+                    <SectionWithImages 
+                      title="Delivery" 
+                      section={project.process.delivery}
+                      projectId={project.id}
+                      sectionIndex={5}
+                      onImageClick={handleImageClick} 
+                    />
+                  )}
+                </div>
+              </section>
+            )}
+
+            {/* Solution */}
+            {solutionData.content && (
+              <section className="py-8 border-t border-gray-300/30">
+                <div className="max-w-4xl mx-auto">
+                  <h2 className="text-lg mb-6">Solution</h2>
+                  <div className="max-w-3xl">
+                    <FormattedText text={solutionData.content} />
+                  </div>
+                </div>
+                
+                {solutionData.images.length > 0 && (
+                  <div className={`mt-6 ${
+                    solutionData.images.length === 1
+                      ? 'max-w-2xl mx-auto'
+                      : 'grid grid-cols-1 md:grid-cols-2 gap-4'
+                  }`}>
+                    {solutionData.images.map((img, idx) => {
+                      const layoutId = generateStandardImageId(project.id, idx + 100);
+                      
+                      // Check if img is an object with description
+                      if (typeof img === 'object' && 'src' in img) {
+                        const imageWithDesc = img as ImageWithDescription;
+                        return (
+                          <ProjectImage
+                            key={idx}
+                            src={imageWithDesc.src}
+                            alt={imageWithDesc.alt || `Solution - Image ${idx + 1}`}
+                            onClick={(rect) => handleImageClick(imageWithDesc.src, imageWithDesc.alt || `Solution - Image ${idx + 1}`, layoutId, rect, imageWithDesc.description)}
+                          />
+                        );
+                      }
+                      
+                      // Simple string path
+                      return (
+                        <ProjectImage
+                          key={idx}
+                          src={img}
+                          alt={`Solution - Image ${idx + 1}`}
+                          onClick={(rect) => handleImageClick(img, `Solution - Image ${idx + 1}`, layoutId, rect)}
+                        />
+                      );
+                    })}
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* Impact */}
+            {project.impact && (
+              <section className="py-8 border-t border-gray-300/30">
+                <div className="max-w-4xl mx-auto">
+                  <h2 className="text-lg mb-6">Impact</h2>
+                  <div className="max-w-3xl">
+                    <FormattedText text={project.impact} />
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {/* Learnings */}
+            {project.learnings && (
+              <section className="py-8 border-t border-gray-300/30">
+                <div className="max-w-4xl mx-auto">
+                  <h2 className="text-lg mb-6">Learnings</h2>
+                  <div className="max-w-3xl">
+                    <FormattedText text={project.learnings} />
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {/* Prototype CTA */}
+            {project.prototypeUrl && (
+              <section className="py-8 border-t border-gray-300/30">
+                <div className="max-w-4xl mx-auto">
+                  <a 
+                    href={project.prototypeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-lg hover:opacity-70 transition-opacity"
+                  >
+                    Voir le prototype
+                    <ExternalLink className="w-5 h-5" />
+                  </a>
+                </div>
+              </section>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* More Projects */}
+      {otherProjects.length > 0 && (
+        <section className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-12 sm:py-16 border-t border-gray-300/30">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight mb-12 sm:mb-16">Autres projets</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {otherProjects.map((p) => (
+              <Link
+                key={p.id}
+                to={`/project/${p.id}`}
+                className="group"
+              >
+                <div className="aspect-[16/10] rounded-lg border border-[#110F0F]/5 overflow-hidden mb-4">
+                  <img
+                    src={p.imageUrl}
+                    alt={p.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <h3 className="text-xl font-medium group-hover:opacity-70 transition-opacity">
+                  {p.name}
+                </h3>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Footer */}
+      <footer className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-8 border-t border-gray-300/30">
+        <Link 
+          to="/"
+          className="text-base hover:opacity-70 transition-opacity"
+        >
+          ← Retour aux projets
+        </Link>
+      </footer>
+    </div>
+  );
+}
