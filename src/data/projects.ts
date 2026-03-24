@@ -206,20 +206,90 @@ Cela prouve qu'une recherche ciblée, même lors d'un sprint extrêmement contra
     duration: '1 mois',
     location: 'Station F - Paris',
     tags: ['Prototyping', 'UX Research', 'UX/UI Design', 'website'],
-    tools: ['Figma'],
-    description: 'Plateforme de photographie de mode par IA pour marques de luxe',
-    context: `Veeton est une start-up qui propose une solution innovante pour la production de photos de mode à grande échelle grâce à l'intelligence artificielle. La plateforme permet aux marques de créer des images de mode réalistes et de haute qualité sans nécessiter de séances photo traditionnelles, réduisant ainsi les coûts et le temps de production.`,
-    role: 'UX/UI Design et Recherche pour plateforme de photographie de mode par IA',
+    tools: ['Figma', 'Figjam'],
+    description: 'Veeton utilise l\'intelligence artificielle pour permettre aux marques de mode de générer des shootings photo e-commerce de haute qualité à partir d\'une simple photo de vêtement posée à plat.',
+    context: `Veeton a développé une technologie d'intelligence artificielle exclusive permettant aux marques de mode de générer des shootings photo e-commerce de haute qualité à grande échelle, à partir d'une simple photo de vêtement posée à plat.`,
+    role: `**Role:** UX/UI Designer
+**Timeline:** 1 mois (10 avril - 10 mai 2024)
+**Context:** Webapp, Intelligence Artificielle, Fashion Tech, E-commerce
+**Location:** Station F - Paris
+**Tools:** Figma, Figjam`,
     team: [],
-    challenge: 'Explorer comment l\'IA de Veeton peut révolutionner la photographie de mode',
-    statusQuo: '',
-    process: {
-      discovery: `Cette phase a consisté en l'organisation de sessions de brainstorming pour explorer comment l'IA de Veeton peut révolutionner la photographie de mode. Nous avons mené des études de marché et démarqué les concurrents potentiels pour comprendre les besoins des marques de mode en matière de production d'images. Parallèlement, nous avons étudié les attentes des utilisateurs finaux concernant la qualité visuelle et la présentation dans le secteur du luxe.`,
-      define: `Cette phase a consisté à définir les fonctionnalités clés et l'architecture de l'information. Nous avons créé des user stories et des parcours utilisateurs pour guider le développement. Les ateliers de co-conception nous ont permis d'aligner les objectifs business avec les besoins utilisateurs.`
+    challenge: `## Démocratiser les shootings de mode par l'IA
+
+Veeton a développé une technologie d'intelligence artificielle exclusive permettant aux marques de mode de générer des shootings photo e-commerce de haute qualité à grande échelle, à partir d'une simple photo de vêtement posée à plat.
+
+Mon défi pendant ce mois passé à Station F était d'aider l'entreprise à mieux comprendre et intégrer les codes de la photographie de mode haut de gamme et du luxe. L'objectif était de concevoir une plateforme qui parle aux marques, en alliant la puissance de l'IA aux exigences visuelles très strictes du secteur.`,
+    statusQuo: {
+      content: `## Une technologie prometteuse, un positionnement à affiner
+
+L'audit initial a révélé que la présentation manquait de profondeur. Par exemple, les visuels de démonstration utilisés paraissaient parfois trop "rigides" pour le secteur du luxe.
+
+Il manquait également des informations cruciales pour l'utilisateur, notamment sur la possibilité d'alimenter le modèle d'IA avec de nouvelles poses ou de choisir différents mannequins. En bref, nous avions un produit au potentiel énorme, mais dont la communication et l'interface (MVP) ne rassuraient pas encore pleinement les clients cibles sur sa capacité à s'adapter à leur image de marque.`
     },
-    solution: '',
-    impact: '',
-    learnings: '',
+    process: {
+      discovery: {
+        content: `## Immersion dans les codes du luxe et de la "Fashion Tech"
+
+J'ai organisé des sessions de brainstorming pour explorer toutes les manières dont l'IA de Veeton pouvait révolutionner ce secteur.
+
+Ensuite, j'ai mené une analyse concurrentielle approfondie de solutions comme Lalaland, Vmake AI et Botika. J'ai observé que les sites de mode haut de gamme mettent systématiquement l'accent sur l'image, utilisent majoritairement le noir et blanc, et privilégient des typographies sans empattement. En parallèle, j'ai créé des profils types d'utilisateurs (comme "Camille, Directrice Artistique") pour comprendre leurs frustrations face à la lenteur des shootings traditionnels et leur besoin de solutions scalables et personnalisées.`,
+        images: [
+          '/images/projects/veeton/image 1.png',
+          '/images/projects/veeton/image 2.png'
+        ]
+      },
+      define: {
+        content: `## Définir une vision alignée sur le marché cible
+
+Fort de ces insights, j'ai restructuré l'architecture de l'information et le parcours utilisateur. L'idée était de concevoir une interface qui adopte un wording valorisant et une esthétique épurée, s'inspirant directement de l'univers du luxe.
+
+J'ai cartographié les parcours utilisateurs et établi des user stories pour guider le développement, en m'assurant que chaque fonctionnalité réponde aux besoins spécifiques des directeurs artistiques et responsables e-commerce.`,
+        images: [
+          '/images/projects/veeton/image 3.png',
+          '/images/projects/veeton/image 4.png'
+        ]
+      },
+      design: {
+        content: `## Conception d'une interface premium et rassurante
+
+J'ai réalisé des wireframes et des maquettes détaillées en m'inspirant des codes visuels du luxe : noir et blanc dominants, typographies sans empattement épurées, et mise en avant des visuels. L'objectif était de créer une interface qui démontre clairement la valeur, la flexibilité et la simplicité de la technologie Veeton.`,
+        images: [
+          '/images/projects/veeton/image 5.png'
+        ]
+      },
+      delivery: {
+        content: `## Prototype interactif final
+
+J'ai livré un prototype interactif complet sur Figma, pensé pour démontrer clairement la valeur, la flexibilité et la simplicité de la technologie Veeton. Le prototype met en avant la capacité de la plateforme à générer des visuels de mode de haute qualité tout en offrant une expérience utilisateur intuitive et professionnelle.`,
+        images: [
+          '/images/projects/veeton/image.png'
+        ]
+      }
+    },
+    solution: {
+      content: `## Une plateforme qui rassure et valorise
+
+Fort de ces insights, j'ai restructuré l'architecture de l'information et le parcours utilisateur. L'idée était de concevoir une interface qui adopte un wording valorisant et une esthétique épurée, s'inspirant directement de l'univers du luxe.
+
+J'ai cartographié les parcours utilisateurs et réalisé des wireframes aboutissant à un prototype final interactif sur Figma, pensé pour démontrer clairement la valeur, la flexibilité et la simplicité de la technologie Veeton.
+
+La plateforme propose une expérience utilisateur qui parle le langage des marques de mode, avec une esthétique minimaliste inspirée du luxe et une navigation intuitive qui met en valeur la puissance de l'IA générative.`,
+      images: [
+        '/images/projects/veeton/image 1.png',
+        '/images/projects/veeton/image 2.png'
+      ]
+    },
+    impact: `## Un alignement stratégique sur le marché cible
+
+Ce projet d'un mois a permis de définir une vision claire de la manière dont la technologie de Veeton doit être présentée pour convaincre les marques de mode.
+
+L'audit concurrentiel et la création des personas ont fourni à l'équipe fondatrice des arguments solides pour adapter leur discours et leur positionnement. Le prototype final pose les bases d'un outil non seulement puissant techniquement, mais aussi crédible esthétiquement dans l'univers très exigeant du e-commerce de mode.`,
+    learnings: `## La tech doit épouser les codes de son secteur
+
+Ce projet m'a enseigné que, quelle que soit la puissance d'une technologie (comme l'IA générative), son adoption dépend de sa capacité à rassurer son audience.
+
+J'ai appris que dans le domaine du luxe et de la mode, le design (les couleurs, la typographie, la souplesse des visuels) n'est pas qu'une question d'esthétique, c'est une question de confiance. Comprendre ces codes visuels subtils a été déterminant pour concevoir une interface pertinente et surmonter les réticences liées à l'utilisation de l'IA.`,
     prototypeUrl: 'https://www.figma.com/proto/b2qLP2nMYVHl4nqefW8KZn/Veeton---Rayan'
   },
   {
