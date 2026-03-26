@@ -264,7 +264,7 @@ export function ProjectDetail() {
       </div>
 
       {/* Header */}
-      <header className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-6 sm:py-8">
+      <header className="w-full px-4 sm:px-4 lg:px-16 xl:px-24 py-6 sm:py-8">
         <div className="flex items-center justify-between">
           <Link 
             to="/" 
@@ -278,11 +278,11 @@ export function ProjectDetail() {
       </header>
 
       {/* Main Content - Two Column Layout avec Info+Index côte à côte */}
-      <section className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-12 sm:py-16">
+      <section className="w-full px-4 sm:px-4 lg:px-16 xl:px-24 py-12 sm:py-16">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           
-          {/* LEFT COLUMN - Sticky (35%) */}
-          <div className="lg:w-[35%]">
+          {/* LEFT COLUMN - Sticky (30%) */}
+          <div className="lg:w-[30%]">
             <div className="lg:sticky lg:top-24 space-y-6">
               
               {/* Hero Image */}
@@ -303,7 +303,7 @@ export function ProjectDetail() {
               </div>
 
               {/* GRID Info + Index côte à côte */}
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Infos projet */}
                 <div className="space-y-4">
                   <div>
@@ -377,8 +377,8 @@ export function ProjectDetail() {
             </div>
           </div>
           
-          {/* RIGHT COLUMN - Content (65% avec contenu centré à 550px) */}
-          <div ref={contentRef} className="w-full lg:w-[65%] flex justify-center">
+          {/* RIGHT COLUMN - Content (70% avec contenu centré à 550px) */}
+          <div ref={contentRef} className="w-full lg:w-[70%] flex justify-center">
             <div className="w-full lg:w-[550px]">
             {hasMarkdown && project.markdownContent ? (
               <div className="prose prose-lg max-w-none">
@@ -398,7 +398,7 @@ export function ProjectDetail() {
 
       {/* More Projects */}
       {otherProjects.length > 0 && (
-        <section className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-12 sm:py-16 border-t border-gray-300/30">
+        <section className="w-full px-4 sm:px-4 lg:px-16 xl:px-24 py-12 sm:py-16 border-t border-gray-300/30">
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight mb-12 sm:mb-16">Autres projets</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {otherProjects.map((p) => (
@@ -424,7 +424,7 @@ export function ProjectDetail() {
       )}
 
       {/* Footer */}
-      <footer className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-8 border-t border-gray-300/30">
+      <footer className="w-full px-4 sm:px-4 lg:px-16 xl:px-24 py-8 border-t border-gray-300/30">
         <Link 
           to="/"
           className="text-base hover:opacity-70 transition-opacity"
