@@ -212,6 +212,14 @@ export function ProjectDetail() {
         showDescription={!!selectedImage?.description}
       />
 
+      {/* Gradient fixe blanc en haut */}
+      <div 
+        className="fixed top-0 left-0 right-0 h-32 z-40 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, white 0%, white 40%, transparent 100%)'
+        }}
+      />
+
       {/* Barre de progression - Mobile (fixe en bas) */}
       <div className="fixed bottom-0 left-0 right-0 h-1 bg-[#110F0F]/5 z-50 lg:hidden">
         <div 
