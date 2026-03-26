@@ -48,6 +48,8 @@ export interface Project {
   learnings?: string;
   prototypeUrl?: string;
   imageDescriptions?: ImageDescription[];
+  markdownContent?: string;
+  images?: string[];
 }
 
 export interface HoverImageState {

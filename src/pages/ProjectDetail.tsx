@@ -5,42 +5,84 @@ import ReactMarkdown from 'react-markdown';
 import { allProjects } from '@/data/projects';
 import { useLenis } from '@/context/LenisContext';
 import { BorderedImage } from '@/components/BorderedImage';
-import { ProjectImage } from '@/components/ProjectImage';
 import { ToolIcon } from '@/components/ToolIcon';
 import { GSAPFlipLightbox } from '@/components/GSAPFlipLightbox';
 import { generateStandardImageId } from '@/utils/generateId';
-import type { ProjectSection, ImageWithDescription, ImageDescription } from '@/types';
+import type { ImageDescription } from '@/types';
 
-// Composant pour afficher du texte Markdown
-function FormattedText({ text }: { text: string }) {
-  if (!text) return null;
+// Composant Table des matières
+function TableOfContents({ content }: { content: string }) {
+  const [activeId, setActiveId] = useState<string>('');
+  
+  // Extraire les titres H2 du markdown
+  const headings = content.split('\n')
+    .filter(line => line.startsWith('## '))
+    .map(line => {
+      const title = line.replace('## ', '').trim();
+      const id = title.toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      return { title, id };
+    });
+
+  // Observer les sections pour la mise en évidence
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: '-20% 0px -80% 0px' }
+    );
+
+    headings.forEach(({ id }) => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [headings]);
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  if (headings.length === 0) return null;
+
   return (
-    <div className="text-lg leading-relaxed">
-      <ReactMarkdown 
-        components={{
-          h2: ({node, ...props}) => <h2 className="text-2xl font-semibold mt-8 mb-4" {...props} />,
-          h3: ({node, ...props}) => <h3 className="text-xl font-medium mt-6 mb-3" {...props} />,
-          p: ({node, ...props}) => <p className="mb-4" {...props} />,
-          ul: ({node, ...props}) => <ul className="list-disc list-inside mb-4" {...props} />,
-          li: ({node, ...props}) => <li className="mb-1" {...props} />,
-        }}
-      >
-        {text}
-      </ReactMarkdown>
-    </div>
+    <nav className="space-y-2">
+      <h3 className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wider">
+        Index
+      </h3>
+      <ul className="space-y-1.5">
+        {headings.map(({ title, id }) => (
+          <li key={id}>
+            <button
+              onClick={() => scrollToSection(id)}
+              className={`text-left text-sm transition-colors duration-200 hover:text-foreground w-full ${
+                activeId === id 
+                  ? 'text-foreground font-medium' 
+                  : 'text-muted-foreground'
+              }`}
+            >
+              <span className="truncate block">{title}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }
 
-// Helper pour extraire le contenu et les images d'une section
-function getSectionData(section: string | ProjectSection | undefined): { content: string; images: (string | ImageWithDescription)[] } {
-  if (!section) return { content: '', images: [] };
-  if (typeof section === 'string') {
-    return { content: section, images: [] };
-  }
-  return { content: section.content, images: section.images || [] };
-}
-
-// Hook pour tracker la progression du scroll sur un élément cible
+// Hook pour tracker la progression du scroll
 function useScrollProgress(targetRef: RefObject<HTMLElement | null>) {
   const [progress, setProgress] = useState(0);
   
@@ -54,14 +96,11 @@ function useScrollProgress(targetRef: RefObject<HTMLElement | null>) {
       const targetHeight = targetRect.height;
       const windowHeight = window.innerHeight;
       
-      // Calculate how much of the target element has been scrolled
-      // Progress starts when target comes into view and ends when target bottom reaches viewport bottom
       const scrollStart = targetTop;
       const scrollEnd = targetTop + targetHeight - windowHeight;
       const scrollRange = scrollEnd - scrollStart;
       
       if (scrollRange <= 0) {
-        // Target is smaller than viewport, show full progress
         setProgress(100);
         return;
       }
@@ -81,67 +120,44 @@ function useScrollProgress(targetRef: RefObject<HTMLElement | null>) {
   return progress;
 }
 
-// Composant pour afficher une section avec ses images cliquables
-function SectionWithImages({ 
-  title, 
-  section, 
-  projectId,
-  sectionIndex,
-  onImageClick 
-}: { 
-  title: string; 
-  section: string | ProjectSection | undefined;
-  projectId: string;
-  sectionIndex: number;
-  onImageClick: (src: string, alt: string, layoutId: string, rect: DOMRect, description?: string) => void;
-}) {
-  const { content, images } = getSectionData(section);
-  if (!content) return null;
-  
+// Composant pour parser le markdown avec IDs
+function MarkdownContent({ content }: { content: string }) {
   return (
-    <>
-      <div className="max-w-4xl mx-auto">
-        <h3 className="text-lg font-medium mb-4">{title}</h3>
-        <div className="max-w-3xl">
-          <FormattedText text={content} />
-        </div>
-      </div>
-      
-      {images.length > 0 && (
-        <div className={`mt-6 ${
-          images.length === 1
-            ? 'max-w-2xl mx-auto'
-            : 'grid grid-cols-1 md:grid-cols-2 gap-4'
-        }`}>
-          {images.map((img, idx) => {
-            const layoutId = generateStandardImageId(projectId, sectionIndex * 100 + idx + 200);
-            
-            // Check if img is an object with description
-            if (typeof img === 'object' && 'src' in img) {
-              const imageWithDesc = img as ImageWithDescription;
-              return (
-                <ProjectImage
-                  key={idx}
-                  src={imageWithDesc.src}
-                  alt={imageWithDesc.alt || `${title} - Image ${idx + 1}`}
-                  onClick={(rect) => onImageClick(imageWithDesc.src, imageWithDesc.alt || `${title} - Image ${idx + 1}`, layoutId, rect, imageWithDesc.description)}
-                />
-              );
-            }
-            
-            // Simple string path
-            return (
-              <ProjectImage
-                key={idx}
-                src={img}
-                alt={`${title} - Image ${idx + 1}`}
-                onClick={(rect) => onImageClick(img, `${title} - Image ${idx + 1}`, layoutId, rect)}
-              />
-            );
-          })}
-        </div>
-      )}
-    </>
+    <ReactMarkdown
+      components={{
+        h2: ({ children }) => {
+          const text = String(children);
+          const id = text.toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+          return <h2 id={id} className="text-2xl font-semibold mt-12 mb-6 scroll-mt-24">{children}</h2>;
+        },
+        h3: ({ children }) => (
+          <h3 className="text-xl font-medium mt-8 mb-4">{children}</h3>
+        ),
+        p: ({ children }) => (
+          <p className="mb-4 text-muted-foreground leading-relaxed">{children}</p>
+        ),
+        ul: ({ children }) => (
+          <ul className="list-disc list-inside mb-4 space-y-2">{children}</ul>
+        ),
+        li: ({ children }) => (
+          <li className="text-muted-foreground">{children}</li>
+        ),
+        strong: ({ children }) => (
+          <strong className="font-semibold text-foreground">{children}</strong>
+        ),
+        blockquote: ({ children }) => (
+          <blockquote className="border-l-4 border-[#110F0F] pl-4 italic my-6 text-muted-foreground">
+            {children}
+          </blockquote>
+        ),
+      }}
+    >
+      {content}
+    </ReactMarkdown>
   );
 }
 
@@ -149,7 +165,6 @@ export function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
   const { lenis } = useLenis();
   
-  // Remonter en haut de la page quand on change de projet
   useEffect(() => {
     if (lenis) {
       lenis.scrollTo(0, { immediate: true });
@@ -160,14 +175,10 @@ export function ProjectDetail() {
   
   const project = allProjects.find(p => p.id === id);
   
-  // State pour les images (lightbox)
   const [selectedImage, setSelectedImage] = useState<ImageDescription | null>(null);
   const [imageRect, setImageRect] = useState<DOMRect | null>(null);
   
-  // Ref pour la colonne de droite (contenu du projet)
   const contentRef = useRef<HTMLDivElement>(null);
-  
-  // Progression du scroll basée sur le contenu du projet
   const scrollProgress = useScrollProgress(contentRef);
   
   if (!project) {
@@ -187,10 +198,6 @@ export function ProjectDetail() {
     .filter(p => p.id !== id)
     .slice(0, 3);
 
-  // Récupérer les données de la solution
-  const solutionData = getSectionData(project.solution);
-
-  // Handler pour les images
   const handleImageClick = (src: string, alt: string, layoutId: string, rect: DOMRect, description?: string) => {
     setSelectedImage({ id: layoutId, src, alt, description: description || '' });
     setImageRect(rect);
@@ -200,6 +207,9 @@ export function ProjectDetail() {
     setSelectedImage(null);
     setImageRect(null);
   };
+
+  // Utiliser le markdownContent s'il existe, sinon utiliser l'ancienne structure
+  const hasMarkdown = !!project.markdownContent;
 
   return (
     <div className="min-h-screen">
@@ -242,15 +252,15 @@ export function ProjectDetail() {
         </div>
       </header>
 
-      {/* Main Content - Two Column Layout */}
+      {/* Main Content - Two Column Layout avec Info+Index côte à côte */}
       <section className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-12 sm:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           
-          {/* LEFT COLUMN - Sticky (33%) */}
-          <div className="lg:col-span-1">
+          {/* LEFT COLUMN - Sticky (5 cols) */}
+          <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-24 space-y-6">
               
-              {/* Hero Image - 300px height */}
+              {/* Hero Image */}
               <div className="w-full h-[300px]">
                 <BorderedImage
                   src={project.imageUrl}
@@ -266,68 +276,59 @@ export function ProjectDetail() {
                   style={{ width: `${scrollProgress}%` }} 
                 />
               </div>
-              
-              {/* Project Info */}
-              <div className="space-y-6">
-                {/* Category & Year */}
-                <div className="flex items-center gap-4">
-                  <span className="text-base">UX/UI Design</span>
-                  <span className="text-base text-text-muted">{project.year}</span>
-                </div>
 
-                {/* Title */}
-                <h1 
-                  className="text-4xl md:text-5xl font-semibold"
-                  style={{ letterSpacing: '-0.02em', lineHeight: '1.1' }}
-                >
-                  {project.name}
-                </h1>
-
-                {/* Description */}
-                <div className="text-lg leading-relaxed">
-                  <FormattedText text={project.description} />
-                </div>
-
-                {/* Website Link */}
-                {project.website && (
+              {/* GRID Info + Index côte à côte */}
+              <div className="grid grid-cols-2 gap-6">
+                {/* Infos projet */}
+                <div className="space-y-4">
                   <div>
+                    <h1 className="text-2xl font-semibold mb-2">{project.name}</h1>
+                    <p className="text-sm text-muted-foreground">{project.description}</p>
+                  </div>
+
+                  {project.website && (
                     <a 
                       href={project.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-lg hover:opacity-70 transition-opacity"
+                      className="inline-flex items-center gap-1 text-sm hover:opacity-70 transition-opacity"
                     >
                       Voir le site
-                      <ExternalLink className="w-4 h-4" />
+                      <ExternalLink className="w-3 h-3" />
                     </a>
-                  </div>
-                )}
+                  )}
 
-                {/* Metadata */}
-                <div className="space-y-4 py-6 border-y border-gray-300/30">
-                  <div>
-                    <h3 className="text-base text-text-muted mb-1">Durée</h3>
-                    <p className="text-lg">{project.duration}</p>
+                  <div className="space-y-2 pt-4 border-t border-gray-300/30">
+                    <div>
+                      <span className="text-xs text-muted-foreground">Durée</span>
+                      <p className="text-sm">{project.duration}</p>
+                    </div>
+                    <div>
+                      <span className="text-xs text-muted-foreground">Localisation</span>
+                      <p className="text-sm">{project.location}</p>
+                    </div>
+                    <div>
+                      <span className="text-xs text-muted-foreground">Année</span>
+                      <p className="text-sm">{project.year}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-base text-text-muted mb-1">Localisation</h3>
-                    <p className="text-lg">{project.location}</p>
-                  </div>
-                  <div>
-                    <h3 className="text-base text-text-muted mb-1">Outils</h3>
-                    <div className="flex flex-wrap gap-2">
+
+                  <div className="pt-4 border-t border-gray-300/30">
+                    <span className="text-xs text-muted-foreground block mb-2">Outils</span>
+                    <div className="flex flex-wrap gap-1">
                       {project.tools.map(tool => (
-                        <ToolIcon key={tool} name={tool} className="h-8 w-auto" />
+                        <ToolIcon key={tool} name={tool} className="h-5 w-auto" />
                       ))}
                     </div>
                   </div>
-                  <div>
-                    <h3 className="text-base text-text-muted mb-2">Tags</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
+
+                  <div className="pt-4 border-t border-gray-300/30">
+                    <span className="text-xs text-muted-foreground block mb-2">Tags</span>
+                    <div className="flex flex-wrap gap-1">
+                      {project.tags.slice(0, 4).map((tag) => (
                         <span
                           key={tag}
-                          className="inline-flex items-center px-2.5 py-1 rounded-full text-base bg-[#110F0F]/5 text-[#110F0F]/70"
+                          className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-[#110F0F]/5 text-[#110F0F]/70"
                         >
                           {tag}
                         </span>
@@ -335,198 +336,29 @@ export function ProjectDetail() {
                     </div>
                   </div>
                 </div>
+
+                {/* Table des matières */}
+                <div className="border-l border-gray-300/30 pl-6">
+                  {hasMarkdown && project.markdownContent && (
+                    <TableOfContents content={project.markdownContent} />
+                  )}
+                </div>
               </div>
             </div>
           </div>
           
-          {/* RIGHT COLUMN - Scrollable (67%) */}
-          <div ref={contentRef} className="lg:col-span-2 space-y-0">
-            
-            {/* Challenge */}
-            {project.challenge && (
-              <section className="py-8 border-t border-gray-300/30">
-                <div className="max-w-4xl mx-auto">
-                  <h2 className="text-lg mb-6">Challenge</h2>
-                  <div className="max-w-3xl">
-                    <FormattedText text={project.challenge} />
-                  </div>
-                </div>
-              </section>
-            )}
-
-            {/* Status Quo */}
-            {project.statusQuo && (
-              <section className="py-8 border-t border-gray-300/30">
-                <div className="max-w-4xl mx-auto mb-6">
-                  <h2 className="text-lg">Status Quo</h2>
-                </div>
-                <SectionWithImages 
-                  title="" 
-                  section={project.statusQuo} 
-                  projectId={project.id}
-                  sectionIndex={0}
-                  onImageClick={handleImageClick}
-                />
-              </section>
-            )}
-
-            {/* Process */}
-            {project.process && Object.values(project.process).some(v => v) && (
-              <section className="py-8 border-t border-gray-300/30">
-                <div className="max-w-4xl mx-auto mb-6">
-                  <h2 className="text-lg">Process</h2>
-                </div>
-                
-                <div className="space-y-8">
-                  {project.process.discovery && (
-                    <SectionWithImages 
-                      title="Discovery" 
-                      section={project.process.discovery}
-                      projectId={project.id}
-                      sectionIndex={0}
-                      onImageClick={handleImageClick} 
-                    />
-                  )}
-                  
-                  {project.process.define && (
-                    <SectionWithImages 
-                      title="Define" 
-                      section={project.process.define}
-                      projectId={project.id}
-                      sectionIndex={1}
-                      onImageClick={handleImageClick} 
-                    />
-                  )}
-                  
-                  {project.process.design && (
-                    <SectionWithImages 
-                      title="Design" 
-                      section={project.process.design}
-                      projectId={project.id}
-                      sectionIndex={2}
-                      onImageClick={handleImageClick} 
-                    />
-                  )}
-                  
-                  {project.process.prototyping && (
-                    <SectionWithImages 
-                      title="Prototyping" 
-                      section={project.process.prototyping}
-                      projectId={project.id}
-                      sectionIndex={3}
-                      onImageClick={handleImageClick} 
-                    />
-                  )}
-                  
-                  {project.process.testing && (
-                    <SectionWithImages 
-                      title="Testing" 
-                      section={project.process.testing}
-                      projectId={project.id}
-                      sectionIndex={4}
-                      onImageClick={handleImageClick} 
-                    />
-                  )}
-                  
-                  {project.process.delivery && (
-                    <SectionWithImages 
-                      title="Delivery" 
-                      section={project.process.delivery}
-                      projectId={project.id}
-                      sectionIndex={5}
-                      onImageClick={handleImageClick} 
-                    />
-                  )}
-                </div>
-              </section>
-            )}
-
-            {/* Solution */}
-            {solutionData.content && (
-              <section className="py-8 border-t border-gray-300/30">
-                <div className="max-w-4xl mx-auto">
-                  <h2 className="text-lg mb-6">Solution</h2>
-                  <div className="max-w-3xl">
-                    <FormattedText text={solutionData.content} />
-                  </div>
-                </div>
-                
-                {solutionData.images.length > 0 && (
-                  <div className={`mt-6 ${
-                    solutionData.images.length === 1
-                      ? 'max-w-2xl mx-auto'
-                      : 'grid grid-cols-1 md:grid-cols-2 gap-4'
-                  }`}>
-                    {solutionData.images.map((img, idx) => {
-                      const layoutId = generateStandardImageId(project.id, idx + 100);
-                      
-                      // Check if img is an object with description
-                      if (typeof img === 'object' && 'src' in img) {
-                        const imageWithDesc = img as ImageWithDescription;
-                        return (
-                          <ProjectImage
-                            key={idx}
-                            src={imageWithDesc.src}
-                            alt={imageWithDesc.alt || `Solution - Image ${idx + 1}`}
-                            onClick={(rect) => handleImageClick(imageWithDesc.src, imageWithDesc.alt || `Solution - Image ${idx + 1}`, layoutId, rect, imageWithDesc.description)}
-                          />
-                        );
-                      }
-                      
-                      // Simple string path
-                      return (
-                        <ProjectImage
-                          key={idx}
-                          src={img}
-                          alt={`Solution - Image ${idx + 1}`}
-                          onClick={(rect) => handleImageClick(img, `Solution - Image ${idx + 1}`, layoutId, rect)}
-                        />
-                      );
-                    })}
-                  </div>
-                )}
-              </section>
-            )}
-
-            {/* Impact */}
-            {project.impact && (
-              <section className="py-8 border-t border-gray-300/30">
-                <div className="max-w-4xl mx-auto">
-                  <h2 className="text-lg mb-6">Impact</h2>
-                  <div className="max-w-3xl">
-                    <FormattedText text={project.impact} />
-                  </div>
-                </div>
-              </section>
-            )}
-
-            {/* Learnings */}
-            {project.learnings && (
-              <section className="py-8 border-t border-gray-300/30">
-                <div className="max-w-4xl mx-auto">
-                  <h2 className="text-lg mb-6">Learnings</h2>
-                  <div className="max-w-3xl">
-                    <FormattedText text={project.learnings} />
-                  </div>
-                </div>
-              </section>
-            )}
-
-            {/* Prototype CTA */}
-            {project.prototypeUrl && (
-              <section className="py-8 border-t border-gray-300/30">
-                <div className="max-w-4xl mx-auto">
-                  <a 
-                    href={project.prototypeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-lg hover:opacity-70 transition-opacity"
-                  >
-                    Voir le prototype
-                    <ExternalLink className="w-5 h-5" />
-                  </a>
-                </div>
-              </section>
+          {/* RIGHT COLUMN - Content (7 cols) */}
+          <div ref={contentRef} className="lg:col-span-7">
+            {hasMarkdown && project.markdownContent ? (
+              <div className="prose prose-lg max-w-none">
+                <MarkdownContent content={project.markdownContent} />
+              </div>
+            ) : (
+              // Fallback pour les projets sans markdownContent (ancienne structure)
+              <div className="space-y-8">
+                {/* Ancien contenu ici */}
+                <p className="text-muted-foreground">Contenu en cours de migration...</p>
+              </div>
             )}
           </div>
         </div>
