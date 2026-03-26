@@ -281,8 +281,8 @@ export function ProjectDetail() {
       <section className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-12 sm:py-16">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           
-          {/* LEFT COLUMN - Sticky (espace restant) */}
-          <div className="lg:flex-1">
+          {/* LEFT COLUMN - Sticky (35%) */}
+          <div className="lg:w-[35%]">
             <div className="lg:sticky lg:top-24 space-y-6">
               
               {/* Hero Image */}
@@ -377,8 +377,9 @@ export function ProjectDetail() {
             </div>
           </div>
           
-          {/* RIGHT COLUMN - Content (largeur fixe 550px) */}
-          <div ref={contentRef} className="w-full lg:w-[550px] lg:flex-shrink-0">
+          {/* RIGHT COLUMN - Content (65% avec contenu centré à 550px) */}
+          <div ref={contentRef} className="w-full lg:w-[65%] flex justify-center">
+            <div className="w-full lg:w-[550px]">
             {hasMarkdown && project.markdownContent ? (
               <div className="prose prose-lg max-w-none">
                 <MarkdownContent content={project.markdownContent} />
@@ -390,6 +391,7 @@ export function ProjectDetail() {
                 <p className="text-muted-foreground">Contenu en cours de migration...</p>
               </div>
             )}
+            </div>
           </div>
         </div>
       </section>
