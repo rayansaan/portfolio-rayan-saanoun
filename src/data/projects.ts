@@ -45,11 +45,6 @@ Aujourd'hui la solution se décline en 4 axes :
 
 **Services aux passagers :** La plateforme offre également des services aux passagers pour améliorer l'expérience de voyage, tels que la gestion des préférences de voyage, l'assistance 24/7 et d'autres services personnalisés.
 
-**Role:** Product Designer SaaS (UX/UI, UX Research)
-**Timeline:** Octobre 2022 - Février 2024 (16 mois)
-**Context:** B2B, SaaS, Webapp & Mobile App
-**Tools & Stack:** Figjam, Figma, Miro, Notion, Bubble.io
-
 ## Le problème : La complexité cache la valeur
 
 Au départ, notre comparateur de vols était puissant, mais illisible. 
@@ -153,12 +148,6 @@ Sur le plan produit, j'ai réalisé qu'un bon design fait parfois évoluer la tr
 
 Nash est une plateforme qui offre des solutions technologiques pour faciliter le fonctionnement et la maintenance des éoliennes et des panneaux solaires. Elle fournit des outils pour surveiller, analyser et optimiser les performances des équipements d'énergie renouvelable.
 
-**Role:** UX/UI Designer  
-**Timeline:** 1 semaine (Sprint intensif)  
-**Context:** Webapp, Énergies renouvelables  
-**Location:** Station F - Paris  
-**Tools:** Figma
-
 ## Le problème : Séduire les opérateurs d'énergies renouvelables
 
 Nash-Renewables est une entreprise basée à Hambourg qui combine technologie avancée et expertise environnementale pour optimiser la production des parcs photovoltaïques et éoliens. Leur produit phare, Nash Dev, est un outil SaaS pointu conçu pour automatiser la gestion de ces installations.
@@ -229,12 +218,6 @@ Cela prouve qu'une recherche ciblée, même lors d'un sprint extrêmement contra
 
 Veeton a développé une technologie d'intelligence artificielle exclusive permettant aux marques de mode de générer des shootings photo e-commerce de haute qualité à grande échelle, à partir d'une simple photo de vêtement posée à plat.
 
-**Role:** UX/UI Designer  
-**Timeline:** 1 mois (10 avril - 10 mai 2024)  
-**Context:** Webapp, Intelligence Artificielle, Fashion Tech, E-commerce  
-**Location:** Station F - Paris  
-**Tools:** Figma, Figjam
-
 ## Le problème : Démocratiser les shootings de mode par l'IA
 
 Veeton a développé une technologie d'intelligence artificielle exclusive permettant aux marques de mode de générer des shootings photo e-commerce de haute qualité à grande échelle, à partir d'une simple photo de vêtement posée à plat.
@@ -303,12 +286,6 @@ J'ai appris que dans le domaine du luxe et de la mode, le design (les couleurs, 
 ## Le contexte
 
 Rakoono est un assistant intelligent destiné aux équipes de football. Il combine l'intelligence artificielle et les données sportives pour accompagner les coachs et les recruteurs dans la préparation des matchs et le recrutement de joueurs.
-
-**Role:** UX/UI Designer  
-**Timeline:** 1 semaine  
-**Context:** Webapp, Sport, Intelligence Artificielle  
-**Location:** Station F - Paris  
-**Tools:** Figma
 
 ## Le défi : Révolutionner l'analyse sportive
 

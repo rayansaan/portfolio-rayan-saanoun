@@ -5,7 +5,6 @@ import ReactMarkdown from 'react-markdown';
 import { allProjects } from '@/data/projects';
 import { useLenis } from '@/context/LenisContext';
 import { BorderedImage } from '@/components/BorderedImage';
-import { ToolIcon } from '@/components/ToolIcon';
 import { GSAPFlipLightbox } from '@/components/GSAPFlipLightbox';
 import { generateStandardImageId } from '@/utils/generateId';
 import type { ImageDescription } from '@/types';
@@ -120,8 +119,34 @@ function useScrollProgress(targetRef: RefObject<HTMLElement | null>) {
   return progress;
 }
 
+// Fonction pour extraire le sous-titre du H1
+function extractSubtitle(content: string): string | null {
+  const h1Match = content.match(/^# (.+)$/m);
+  if (h1Match) {
+    const fullTitle = h1Match[1];
+    // Extraire le texte après le ":"
+    const parts = fullTitle.split(':');
+    if (parts.length > 1) {
+      return parts.slice(1).join(':').trim();
+    }
+  }
+  return null;
+}
+
+// Fonction pour nettoyer le markdown (retirer tout avant le premier H2)
+function cleanMarkdown(content: string): string {
+  // Trouver la première occurrence de "## " (titre H2)
+  const firstH2Index = content.indexOf('## ');
+  if (firstH2Index !== -1) {
+    return content.slice(firstH2Index);
+  }
+  return content;
+}
+
 // Composant pour parser le markdown avec IDs
 function MarkdownContent({ content }: { content: string }) {
+  const cleanContent = cleanMarkdown(content);
+  
   return (
     <ReactMarkdown
       components={{
@@ -156,7 +181,7 @@ function MarkdownContent({ content }: { content: string }) {
         ),
       }}
     >
-      {content}
+      {cleanContent}
     </ReactMarkdown>
   );
 }
@@ -282,8 +307,12 @@ export function ProjectDetail() {
                 {/* Infos projet */}
                 <div className="space-y-4">
                   <div>
-                    <h1 className="text-2xl font-semibold mb-2">{project.name}</h1>
-                    <p className="text-sm text-muted-foreground">{project.description}</p>
+                    <h1 className="text-2xl font-semibold mb-1">{project.name}</h1>
+                    {hasMarkdown && project.markdownContent && (
+                      <p className="text-sm text-muted-foreground italic">
+                        {extractSubtitle(project.markdownContent)}
+                      </p>
+                    )}
                   </div>
 
                   {project.website && (
@@ -314,25 +343,26 @@ export function ProjectDetail() {
                   </div>
 
                   <div className="pt-4 border-t border-gray-300/30">
-                    <span className="text-xs text-muted-foreground block mb-2">Outils</span>
-                    <div className="flex flex-wrap gap-1">
-                      {project.tools.map(tool => (
-                        <ToolIcon key={tool} name={tool} className="h-5 w-auto" />
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="pt-4 border-t border-gray-300/30">
-                    <span className="text-xs text-muted-foreground block mb-2">Tags</span>
-                    <div className="flex flex-wrap gap-1">
-                      {project.tags.slice(0, 4).map((tag) => (
-                        <span
-                          key={tag}
-                          className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-[#110F0F]/5 text-[#110F0F]/70"
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                    <span className="text-xs text-muted-foreground block mb-2">Tools & Stack</span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.tools.map((tool) => {
+                        const colors: Record<string, string> = {
+                          'Figjam': 'bg-[#FFE4E1] text-[#8B4513]',
+                          'Figma': 'bg-[#E6E6FA] text-[#4B0082]',
+                          'Miro': 'bg-[#F0F8FF] text-[#191970]',
+                          'Notion': 'bg-[#F5F5F5] text-[#36454F]',
+                          'Bubble.io': 'bg-[#FFF8DC] text-[#8B7355]',
+                        };
+                        const colorClass = colors[tool] || 'bg-gray-100 text-gray-700';
+                        return (
+                          <span
+                            key={tool}
+                            className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${colorClass}`}
+                          >
+                            {tool}
+                          </span>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
