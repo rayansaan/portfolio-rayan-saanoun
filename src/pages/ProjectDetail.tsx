@@ -279,10 +279,10 @@ export function ProjectDetail() {
 
       {/* Main Content - Two Column Layout avec Info+Index côte à côte */}
       <section className="w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-12 sm:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           
-          {/* LEFT COLUMN - Sticky (5 cols) */}
-          <div className="lg:col-span-5">
+          {/* LEFT COLUMN - Sticky (espace restant) */}
+          <div className="lg:flex-1">
             <div className="lg:sticky lg:top-24 space-y-6">
               
               {/* Hero Image */}
@@ -367,8 +367,8 @@ export function ProjectDetail() {
                   </div>
                 </div>
 
-                {/* Table des matières */}
-                <div className="border-l border-gray-300/30 pl-6">
+                {/* Table des matières - caché sur tablette et mobile */}
+                <div className="border-l border-gray-300/30 pl-6 hidden lg:block">
                   {hasMarkdown && project.markdownContent && (
                     <TableOfContents content={project.markdownContent} />
                   )}
@@ -377,8 +377,8 @@ export function ProjectDetail() {
             </div>
           </div>
           
-          {/* RIGHT COLUMN - Content (7 cols) */}
-          <div ref={contentRef} className="lg:col-span-7">
+          {/* RIGHT COLUMN - Content (largeur fixe 550px) */}
+          <div ref={contentRef} className="w-full lg:w-[550px] lg:flex-shrink-0">
             {hasMarkdown && project.markdownContent ? (
               <div className="prose prose-lg max-w-none">
                 <MarkdownContent content={project.markdownContent} />
