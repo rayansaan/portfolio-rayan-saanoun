@@ -142,53 +142,77 @@ Sur le plan produit, j'ai réalisé qu'un bon design fait parfois évoluer la tr
     tags: ['Prototyping', 'UX Research', 'UX/UI Design', 'Webapp'],
     tools: ['Figma'],
     description: 'Refonte UX pour Nash-Renewables - secteur des énergies renouvelables (gestion de parcs photovoltaïques et éoliens)',
-    markdownContent: `# Nash : Optimiser l'expérience utilisateur pour les énergies renouvelables
+    markdownContent: `# Nash Renewables : L'onboarding repensé par la donnée
+
+**Index**
+* Le contexte
+* Le problème : L'urgence nuit à l'expérience
+* Nos principes : Guidage, Clarté, Accessibilité
+* Guidage : De la vidéo passive à l'interaction
+* Clarté : Nettoyer la navigation
+* Accessibilité : Le pivot "Mobile First"
+* L'impact : Convaincre en une semaine
+* Ce que j'ai appris
+
+**7 avril 2023 — 14 avril 2023 (Sprint d'une semaine à Station F)**
+
+Nash-Renewables est une entreprise spécialisée dans les solutions énergétiques renouvelables. Leur outil SaaS, Nash Dev, automatise et optimise la gestion des parcs photovoltaïques et éoliens. 
+
+Mon rôle lors de ce sprint intensif d'une semaine était de repenser l'expérience utilisateur, et plus particulièrement l'onboarding, pour refléter leur positionnement de leader technologique.
 
 ## Le contexte
 
 Nash est une plateforme qui offre des solutions technologiques pour faciliter le fonctionnement et la maintenance des éoliennes et des panneaux solaires. Elle fournit des outils pour surveiller, analyser et optimiser les performances des équipements d'énergie renouvelable.
 
-## Le problème : Séduire les opérateurs d'énergies renouvelables
+## Le problème : L'urgence nuit à l'expérience
 
-Nash-Renewables est une entreprise basée à Hambourg qui combine technologie avancée et expertise environnementale pour optimiser la production des parcs photovoltaïques et éoliens. Leur produit phare, Nash Dev, est un outil SaaS pointu conçu pour automatiser la gestion de ces installations.
+Par manque de ressources techniques lors du lancement, Nash avait opté pour une solution de facilité : leur "onboarding" se résumait à une simple vidéo explicative. 
 
-Mon défi lors de ce sprint intensif d'une semaine à Station F était clair : repenser l'expérience utilisateur globale pour accompagner l'entreprise dans son positionnement de leader de confiance. L'objectif principal était d'optimiser l'onboarding pour le rendre intuitif, fluide et parfaitement adapté aux besoins spécifiques des opérateurs.
+L'audit UX que j'ai réalisé a révélé un outil puissant, mais une interface chaotique. Les informations étaient dupliquées, et lorsqu'une fenêtre était fermée, il devenait parfois impossible de retrouver l'information. L'utilisateur était livré à lui-même face à un outil métier complexe.
 
-### Une solution d'urgence qui montre ses limites
+## Nos principes
 
-Le point de départ était complexe. Par manque de ressources en développement disponibles à ce moment-là, Nash avait dû intégrer rapidement des solutions d'urgence : leur onboarding se résumait à une simple vidéo.
+Pour ce sprint, j'ai défini trois axes majeurs de conception :
+1. **Guidage :** Accompagner l'utilisateur pas à pas, plutôt que de le noyer d'informations.
+2. **Clarté :** Éliminer la redondance visuelle (informations dupliquées).
+3. **Accessibilité :** S'adapter à la réalité du terrain et aux habitudes de découverte des opérateurs.
 
-De plus, mon audit UX initial a mis en lumière des problèmes structurels dans la navigation de la plateforme. L'outil manquait de la simplicité d'utilisation nécessaire pour réellement valoriser la puissance de leurs solutions technologiques.
+## Guidage : De la vidéo passive à l'interaction
 
-## La découverte : Co-création et découverte inattendue
+Regarder une vidéo n'est pas "apprendre à utiliser un outil". 
 
-Plutôt que de me baser sur des suppositions, j'ai organisé des sessions d'onboarding avec différents profils d'utilisateurs : certains familiers avec l'outil et d'autres totalement novices. Cela m'a permis de construire des User Stories solides et d'évaluer précisément les opportunités d'amélioration.
+J'ai remplacé l'onboarding vidéo par une dénomination claire des étapes directement dans l'interface. L'objectif psychologique est de rendre l'utilisateur acteur de sa découverte en l'invitant à interagir avec la carte et les données dès les premières secondes.
 
-Mais le vrai tournant du projet est venu d'un sondage de recherche : nous avons découvert que les nouveaux clients intéressés par cette solution consultaient le site de Nash principalement sur leur téléphone mobile ! Une donnée cruciale qui a radicalement fait pivoter ma stratégie de design.
+*[Insérer ici : Comparatif "Ancien Onboarding Vidéo" vs "Nouveau parcours interactif pas-à-pas"]*
 
-## La stratégie : Mobile First
+## Clarté : Nettoyer la navigation
 
-Suite à la découverte cruciale sur l'usage mobile, j'ai complètement repensé l'approche pour adopter une conception axée "Mobile first". Cette stratégie s'aligne parfaitement avec les habitudes réelles de nos prospects qui découvrent Nash principalement sur smartphone.
+Pour pallier les fenêtres perdues et les données dupliquées, nous avons rationalisé l'architecture de l'information (GUI). 
 
-J'ai cartographié les parcours utilisateurs et établi des user stories priorisées pour guider la conception de l'expérience d'onboarding.
+*[Insérer ici : GIF montrant les nouvelles interactions fluides avec la map et les modales de données]*
 
-## La solution : Un onboarding structuré et progressif
+L'interface a été épurée pour que la donnée (la production d'énergie, la disponibilité des ressources) soit lisible sans effort cognitif inutile.
 
-Ma proposition s'est articulée autour d'une dénomination claire des étapes, guidant pas à pas l'utilisateur et l'invitant à consulter les informations sans friction.
+## Accessibilité : Le pivot "Mobile First"
 
-J'ai modélisé l'ensemble des parcours et livré un prototype interactif sur Figma, avec une attention particulière portée à l'expérience mobile pour garantir une première impression professionnelle et engageante.
+Voici le point de bascule de ce projet. Au départ, nous pensions concevoir pour des écrans de bureau. 
 
-## L'impact : Poser les fondations de l'acquisition
+Cependant, j'ai mené des sessions de recherche et lancé un sondage auprès des utilisateurs. Le constat a été sans appel : la majorité des nouveaux clients intéressés par l'outil le consultaient pour la première fois *depuis leur mobile*. 
 
-En l'espace d'une seule semaine, j'ai réussi à transformer une expérience d'accueil vidéo passive en un véritable parcours d'intégration interactif. Bien que le délai très court du sprint ne permette pas de mesurer des métriques d'adoption à long terme, la nouvelle interface a permis d'allier simplicité et efficacité.
+J'ai donc fait pivoter toute ma stratégie de conception pour adopter une approche "Mobile First".
 
-Surtout, elle garantit désormais que la première impression d'un opérateur (qui se fait sur mobile) reflète le professionnalisme et la position de leader de Nash-Renewables.
+*[Insérer ici : Écrans du prototype Mobile First, montrant l'adaptation parfaite des cartes et des données sur petit écran]*
 
-## Apprentissages : La donnée utilisateur bat toujours l'intuition
+## L'impact : Convaincre en une semaine
 
-Ce projet m'a rappelé une règle d'or : l'importance vitale de la recherche utilisateur (UX Research). Sans ce sondage révélant l'usage majoritaire du mobile lors de la phase de découverte, nous aurions probablement conçu un onboarding "desktop-only" inadapté à l'acquisition de nouveaux clients.
+En seulement une semaine de conception et de prototypage sur Figma, nous avons livré un parcours utilisateur totalement révisé. 
 
-Cela prouve qu'une recherche ciblée, même lors d'un sprint extrêmement contraint d'une semaine, est le meilleur moyen de dérisquer un projet et de concevoir un produit juste.`,
+Le nouvel onboarding garantit que la première impression d'un prospect (qui se fait sur son téléphone) reflète enfin le professionnalisme et l'expertise technique de Nash-Renewables, ce qui n'était pas le cas avec l'ancienne interface.
+
+## Ce que j'ai appris
+
+La donnée utilisateur (UX Research) bat toujours l'intuition. Sans ce sondage rapide nous indiquant l'usage massif du mobile, j'aurais passé ma semaine à concevoir une interface "desktop" inadaptée à la réalité de l'acquisition client. Ce projet m'a prouvé que même dans un sprint extrêmement court, prendre le temps d'interroger les utilisateurs permet de dérisquer tout le processus de design.`,
+
     images: [
       '/images/projects/nash/Nash_header.png',
       '/images/projects/nash/image 1.png',
