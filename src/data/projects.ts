@@ -212,53 +212,72 @@ Cela prouve qu'une recherche ciblée, même lors d'un sprint extrêmement contra
     tags: ['Prototyping', 'UX Research', 'UX/UI Design', 'website'],
     tools: ['Figma', 'Figjam'],
     description: 'Veeton utilise l\'intelligence artificielle pour permettre aux marques de mode de générer des shootings photo e-commerce de haute qualité à partir d\'une simple photo de vêtement posée à plat.',
-    markdownContent: `# Veeton : L'IA au service de la mode
+    markdownContent: `# Veeton : L'IA au service de la photographie de mode
+
+**Index**
+* Le contexte
+* Le problème : La technologie sans les codes
+* Nos principes : Élégance, Réassurance, Scalabilité
+* Élégance : Adopter les codes du luxe
+* Réassurance : Comprendre la boîte noire
+* Ce que j'ai appris
+* Remerciements
+
+**10 avril 2024 — 10 mai 2024 (Station F)**
+
+Veeton permet aux marques de mode de générer des shootings photo e-commerce à grande échelle grâce à l'Intelligence Artificielle. À partir d'une simple photo d'un vêtement posé à plat, l'IA crée un rendu professionnel sur mannequin.
+
+Mon rôle, le temps d'un sprint d'un mois, a été d'aligner cette technologie de pointe avec les exigences visuelles du luxe.
 
 ## Le contexte
 
 Veeton a développé une technologie d'intelligence artificielle exclusive permettant aux marques de mode de générer des shootings photo e-commerce de haute qualité à grande échelle, à partir d'une simple photo de vêtement posée à plat.
 
-## Le problème : Démocratiser les shootings de mode par l'IA
+## Le problème : La technologie sans les codes
 
-Veeton a développé une technologie d'intelligence artificielle exclusive permettant aux marques de mode de générer des shootings photo e-commerce de haute qualité à grande échelle, à partir d'une simple photo de vêtement posée à plat.
+La technologie de Veeton était puissante, mais son interface et ses visuels de présentation ne parlaient pas au monde de la mode.
 
-Mon défi pendant ce mois passé à Station F était d'aider l'entreprise à mieux comprendre et intégrer les codes de la photographie de mode haut de gamme et du luxe. L'objectif était de concevoir une plateforme qui parle aux marques, en alliant la puissance de l'IA aux exigences visuelles très strictes du secteur.
+L'audit initial était clair : les visuels de démonstration étaient trop rigides. Pire, les marques (nos utilisateurs) manquaient d'informations cruciales. Elles ne savaient pas si elles pouvaient alimenter le modèle avec de nouvelles poses ou de nouveaux mannequins.
 
-### Une technologie prometteuse, un positionnement à affiner
+En l'état, l'interface ne rassurait pas. Sans confiance, impossible de convaincre les directeurs artistiques d'adopter l'outil.
 
-L'audit initial a révélé que la présentation manquait de profondeur. Par exemple, les visuels de démonstration utilisés paraissaient parfois trop "rigides" pour le secteur du luxe.
+## Nos principes
 
-Il manquait également des informations cruciales pour l'utilisateur, notamment sur la possibilité d'alimenter le modèle d'IA avec de nouvelles poses ou de choisir différents mannequins. En bref, nous avions un produit au potentiel énorme, mais dont la communication et l'interface (MVP) ne rassuraient pas encore pleinement les clients cibles sur sa capacité à s'adapter à leur image de marque.
+Pour corriger le tir, notre réflexion s'est articulée autour de trois axes :
+1. **Élégance :** L'interface doit s'effacer au profit du vêtement.
+2. **Réassurance :** Démystifier l'IA en montrant le contrôle utilisateur.
+3. **Scalabilité :** Prouver que l'outil gère des collections entières, pas juste une photo.
 
-## La découverte : Immersion dans les codes du luxe
+## Élégance : Adopter les codes du luxe
 
-J'ai organisé des sessions de brainstorming pour explorer toutes les manières dont l'IA de Veeton pouvait révolutionner ce secteur.
+J'ai analysé les concurrents (Lalaland, Vmake AI, Botika) et les sites de mode haut de gamme. Les règles sont strictes :
+* L'accent est mis sur l'image.
+* Les couleurs sont majoritairement noir et blanc.
+* Les typographies sont sans empattement (sans serif).
 
-Ensuite, j'ai mené une analyse concurrentielle approfondie de solutions comme Lalaland, Vmake AI et Botika. J'ai observé que les sites de mode haut de gamme mettent systématiquement l'accent sur l'image, utilisent majoritairement le noir et blanc, et privilégient des typographies sans empattement. En parallèle, j'ai créé des profils types d'utilisateurs (comme "Camille, Directrice Artistique") pour comprendre leurs frustrations face à la lenteur des shootings traditionnels et leur besoin de solutions scalables et personnalisées.
+*[Insérer ici : Comparatif visuel "Ancienne interface MVP" vs "Nouvelle interface épurée"]*
 
-## La stratégie : S'inspirer du luxe
+En adoptant ces codes, nous avons créé une interface qui utilise un wording valorisant et un design minimaliste. L'outil Veeton n'a plus l'air d'un logiciel SaaS complexe, mais d'une véritable plateforme créative.
 
-Fort de ces insights, j'ai restructuré l'architecture de l'information et le parcours utilisateur. L'idée était de concevoir une interface qui adopte un wording valorisant et une esthétique épurée, s'inspirant directement de l'univers du luxe.
+## Réassurance : Comprendre la boîte noire
 
-J'ai cartographié les parcours utilisateurs et établi des user stories pour guider le développement, en m'assurant que chaque fonctionnalité réponde aux besoins spécifiques des directeurs artistiques et responsables e-commerce.
+Une Directrice Artistique comme notre persona "Camille" a besoin d'optimiser ses cycles de création, mais elle refuse de perdre le contrôle.
 
-## La solution : Une plateforme premium
+Nous avons revu le parcours utilisateur pour intégrer des interactions fluides démontrant la flexibilité du modèle. L'interface montre explicitement comment changer les poses ou ajuster les mannequins.
 
-J'ai réalisé des wireframes et des maquettes détaillées en m'inspirant des codes visuels du luxe : noir et blanc dominants, typographies sans empattement épurées, et mise en avant des visuels. L'objectif était de créer une interface qui démontre clairement la valeur, la flexibilité et la simplicité de la technologie Veeton.
+*[Insérer ici : Vidéo ou GIF du prototype montrant l'interaction avec le modèle IA]*
 
-J'ai livré un prototype interactif complet sur Figma, pensé pour démontrer clairement la valeur, la flexibilité et la simplicité de la technologie Veeton. Le prototype met en avant la capacité de la plateforme à générer des visuels de mode de haute qualité tout en offrant une expérience utilisateur intuitive et professionnelle.
+Cette transparence transforme l'IA : elle passe d'une "boîte noire intimidante" à un véritable assistant de création sur-mesure.
 
-## L'impact : Un alignement stratégique
+## Ce que j'ai appris
 
-Ce projet d'un mois a permis de définir une vision claire de la manière dont la technologie de Veeton doit être présentée pour convaincre les marques de mode.
+Ce mois à Station F m'a confirmé une chose : la technologie ne suffit pas.
 
-L'audit concurrentiel et la création des personas ont fourni à l'équipe fondatrice des arguments solides pour adapter leur discours et leur positionnement. Le prototype final pose les bases d'un outil non seulement puissant techniquement, mais aussi crédible esthétiquement dans l'univers très exigeant du e-commerce de mode.
+Dans des secteurs comme la mode, la confiance s'acquiert par le design et le respect des codes visuels. Un bon UX/UI Design ne fait pas que rendre un produit joli, il le rend crédible aux yeux de son marché cible.
 
-## Apprentissages : La tech doit épouser les codes de son secteur
+## Remerciements
 
-Ce projet m'a enseigné que, quelle que soit la puissance d'une technologie (comme l'IA générative), son adoption dépend de sa capacité à rassurer son audience.
-
-J'ai appris que dans le domaine du luxe et de la mode, le design (les couleurs, la typographie, la souplesse des visuels) n'est pas qu'une question d'esthétique, c'est une question de confiance. Comprendre ces codes visuels subtils a été déterminant pour concevoir une interface pertinente et surmonter les réticences liées à l'utilisation de l'IA.`,
+Je remercie l'équipe fondatrice de Veeton et les résidents de Station F pour nos sessions de brainstorming intenses, qui ont permis de redéfinir la vision de ce produit fascinant.`,
     images: [
       '/images/projects/veeton/Slide_-_16.png',
       '/images/projects/veeton/image 1.png',
