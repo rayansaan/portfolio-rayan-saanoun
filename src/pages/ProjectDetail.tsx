@@ -216,7 +216,7 @@ export function ProjectDetail() {
       <div 
         className="fixed top-0 left-0 right-0 h-32 z-40 pointer-events-none"
         style={{
-          background: 'linear-gradient(to bottom, white 0%, white 40%, transparent 100%)'
+          background: 'linear-gradient(to bottom, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 40%, transparent 100%)'
         }}
       />
 
