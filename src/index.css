@@ -126,6 +126,12 @@
   );
 }
 
+/* Portrait vignette mask */
+.mask-gradient-portrait {
+  mask-image: radial-gradient(circle, black 60%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle, black 60%, transparent 100%);
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
