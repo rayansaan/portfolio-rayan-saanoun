@@ -32,6 +32,16 @@ export function HeroSection() {
   return (
     <section className="w-full h-[85vh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-32 xl:px-48 overflow-hidden">
       <div className="flex flex-col items-center text-center gap-6 sm:gap-8">
+        {/* Portrait */}
+        <motion.img
+          src="/images/profile/portrait-rayan-portfolio.png"
+          alt="Portrait de Rayan Saanoun"
+          className="w-32 h-32 object-cover rounded-none"
+          initial={{ opacity: 0, y: 20, filter: "blur(15px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        />
+
         {/* Name */}
         <motion.h1
           className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight"
