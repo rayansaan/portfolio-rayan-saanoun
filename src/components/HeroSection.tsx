@@ -36,7 +36,7 @@ export function HeroSection() {
         <motion.img
           src="/images/profile/portrait-rayan-portfolio.png"
           alt="Portrait de Rayan Saanoun"
-          className="w-56 h-auto mask-gradient-portrait"
+          className="w-72 sm:w-56 h-auto mask-gradient-portrait"
           initial={{ opacity: 0, y: 20, filter: "blur(15px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
