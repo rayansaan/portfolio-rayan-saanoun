@@ -1,5 +1,4 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
 
 interface CircularRevealProps {
   isOpen: boolean;
@@ -18,26 +17,12 @@ export function CircularReveal({
   onClose,
   children 
 }: CircularRevealProps) {
-  const [showContent, setShowContent] = useState(false);
-
   // Calculer le rayon maximal pour couvrir tout l'écran
   const calculateMaxRadius = () => {
     const maxX = Math.max(originX, window.innerWidth - originX);
     const maxY = Math.max(originY, window.innerHeight - originY);
     return Math.sqrt(maxX ** 2 + maxY ** 2) * 1.2;
   };
-
-  useEffect(() => {
-    if (isOpen) {
-      // Afficher le contenu après le début de l'animation
-      const timer = setTimeout(() => {
-        setShowContent(true);
-      }, 200);
-      return () => clearTimeout(timer);
-    } else {
-      setShowContent(false);
-    }
-  }, [isOpen]);
 
   return (
     <AnimatePresence>
@@ -73,12 +58,9 @@ export function CircularReveal({
             {/* Contenu (image) */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ 
-                opacity: showContent ? 1 : 0, 
-                scale: showContent ? 1 : 0.8 
-              }}
+              animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.3, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="w-full h-full flex items-center justify-center p-8"
             >
               {children}
@@ -87,10 +69,11 @@ export function CircularReveal({
             {/* Bouton fermeture */}
             <motion.button
               initial={{ opacity: 0 }}
-              animate={{ opacity: showContent ? 1 : 0 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2, delay: 0.2 }}
               onClick={onClose}
+              aria-label="Fermer"
               className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center text-white hover:bg-white/10 rounded-full transition-colors z-[10000]"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

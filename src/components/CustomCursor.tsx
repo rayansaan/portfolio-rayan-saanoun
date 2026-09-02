@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 
+const CURSOR_SIZE = 24;
+const HALF_SIZE = CURSOR_SIZE / 2;
+
 export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const [isHoveringLink, setIsHoveringLink] = useState(false);
   
-  const CURSOR_SIZE = 24;
-  const HALF_SIZE = CURSOR_SIZE / 2;
-
   useEffect(() => {
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
     if (isTouchDevice) return;

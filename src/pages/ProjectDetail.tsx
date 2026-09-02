@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef, type RefObject } from 'react';
+import { useState, useEffect, useMemo, useRef, type RefObject } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { allProjects } from '@/data/projects';
-import { useLenis } from '@/context/LenisContext';
+import { useLenis } from '@/hooks/useLenis';
 import { BorderedImage } from '@/components/BorderedImage';
 import { GSAPFlipLightbox } from '@/components/GSAPFlipLightbox';
 import { generateStandardImageId } from '@/utils/generateId';
@@ -14,7 +14,7 @@ function TableOfContents({ content }: { content: string }) {
   const [activeId, setActiveId] = useState<string>('');
   
   // Extraire les titres H2 du markdown
-  const headings = content.split('\n')
+  const headings = useMemo(() => content.split('\n')
     .filter(line => line.startsWith('## '))
     .map(line => {
       const title = line.replace('## ', '').trim();
@@ -24,7 +24,7 @@ function TableOfContents({ content }: { content: string }) {
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-+|-+$/g, '');
       return { title, id };
-    });
+    }), [content]);
 
   // Observer les sections pour la mise en évidence
   useEffect(() => {
@@ -381,9 +381,48 @@ export function ProjectDetail() {
           <div ref={contentRef} className="w-full lg:w-[70%] flex justify-center">
             <div className="w-full lg:w-[550px]">
             {hasMarkdown && project.markdownContent ? (
-              <div className="prose prose-lg max-w-none">
-                <MarkdownContent content={project.markdownContent} />
-              </div>
+              <>
+                <div className="prose prose-lg max-w-none">
+                  <MarkdownContent content={project.markdownContent} />
+                </div>
+
+                {project.images && project.images.length > 1 && (
+                  <section className="mt-16" aria-labelledby="project-gallery-title">
+                    <h2 id="project-gallery-title" className="text-2xl font-semibold mb-6">
+                      Le projet en images
+                    </h2>
+                    <div className="space-y-6">
+                      {project.images.slice(1).map((src, index) => {
+                        const imageNumber = index + 2;
+                        const alt = `${project.name} — aperçu ${imageNumber}`;
+
+                        return (
+                          <button
+                            key={src}
+                            type="button"
+                            className="block w-full overflow-hidden rounded-lg border border-[#110F0F]/5 bg-white text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#110F0F] focus-visible:ring-offset-4"
+                            onClick={(event) => handleImageClick(
+                              src,
+                              alt,
+                              generateStandardImageId(project.id, imageNumber - 1),
+                              event.currentTarget.getBoundingClientRect(),
+                            )}
+                            aria-label={`Agrandir l’image ${imageNumber} du projet ${project.name}`}
+                          >
+                            <img
+                              src={src}
+                              alt={alt}
+                              loading="lazy"
+                              decoding="async"
+                              className="h-auto w-full object-contain transition-transform duration-500 hover:scale-[1.01]"
+                            />
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </section>
+                )}
+              </>
             ) : (
               // Fallback pour les projets sans markdownContent (ancienne structure)
               <div className="space-y-8">
@@ -411,6 +450,8 @@ export function ProjectDetail() {
                   <img
                     src={p.imageUrl}
                     alt={p.name}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>

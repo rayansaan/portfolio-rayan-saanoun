@@ -1,12 +1,11 @@
+import { useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useVelocity, useTransform, AnimatePresence } from 'framer-motion';
-import { useHoverImage } from '@/context/HoverImageContext';
+import { useHoverImage } from '@/hooks/useHoverImage';
 
 export function CursorFollowImage() {
   const { currentImage, imageType, mouseX, mouseY } = useHoverImage();
   
-  // Ne pas rendre sur les appareils tactiles
   const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
-  if (isTouchDevice) return null;
   
   // Dimensions selon le type d'image
   const isIcon = imageType === 'icon';
@@ -18,9 +17,10 @@ export function CursorFollowImage() {
   const x = useMotionValue(mouseX + offset);
   const y = useMotionValue(mouseY + offset);
   
-  // Mise à jour directe des motion values (pas de useEffect)
-  x.set(mouseX + offset);
-  y.set(mouseY + offset);
+  useEffect(() => {
+    x.set(mouseX + offset);
+    y.set(mouseY + offset);
+  }, [mouseX, mouseY, offset, x, y]);
   
   // Spring optimisé pour plus de fluidité
   const springConfig = { 
@@ -43,6 +43,8 @@ export function CursorFollowImage() {
   // Transformation de la vélocité en skew (-15° à 15°)
   const skewX = useTransform(smoothYVelocity, [-500, 500], [15, -15]);
   const skewY = useTransform(smoothXVelocity, [-500, 500], [-15, 15]);
+
+  if (isTouchDevice) return null;
   
   return (
     <div

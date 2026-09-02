@@ -72,8 +72,6 @@ De nombreux outils vous donnent le prix d'un vol. Presque aucun ne vous donne le
 
 Nous avons conçu un calculateur multimodal complet. En un coup d'œil, l'utilisateur évalue le temps "porte-à-porte", le coût total et l'impact écologique. Il peut comparer objectivement le train, la voiture, les vols commerciaux et l'aviation d'affaires.
 
-*[Insérer ici : Comparatif Avant / Après de la page de recherche]*
-
 Sans cette clarté visuelle, l'utilisateur est noyé. Avec elle, il prend une décision éclairée.
 
 ### Un calculateur multimodal intelligent
@@ -87,8 +85,6 @@ Pour transformer cette vision en réalité rapidement, j'ai collaboré étroitem
 L'analyse de nos concurrents a révélé un vide : il manquait une représentation spatiale claire.
 
 Nous avons introduit une carte interactive. Ce n'est pas juste un élément esthétique. C'est l'outil qui permet de visualiser le gain de temps et l'empreinte carbone (notamment via les vols à vide / Empty legs) en temps réel.
-
-*[Insérer ici : GIF ou Vidéo de l'interaction avec la map et les filtres]*
 
 ## L'impact : Un déploiement à grande échelle
 
@@ -119,6 +115,8 @@ Sur le plan technique, construire le produit sur Bubble.io nous a permis d'itér
 Sur le plan produit, j'ai réalisé qu'un bon design fait parfois évoluer la trajectoire de l'entreprise : l'expérience a prouvé que la relation humaine était tout aussi vitale que la donnée, faisant du développement de la messagerie pilote-client notre nouvel objectif principal. J'en tire une conviction forte : la roadmap d'un produit complexe ne se devine pas, elle se priorise uniquement sur la base des retours issus de tests utilisateurs continus sur le terrain.`,
     images: [
       '/images/projects/moove/Moove_header.png',
+      '/images/projects/moove/Screen_prez_search.png',
+      '/images/projects/moove/search/Moove_header_search.png',
       '/images/projects/moove/search/Bastien__scapin.png',
       '/images/projects/moove/search/golden_nuggets.png',
       '/images/projects/moove/search/image 1.png',
@@ -183,13 +181,9 @@ Regarder une vidéo n'est pas "apprendre à utiliser un outil".
 
 J'ai remplacé l'onboarding vidéo par une dénomination claire des étapes directement dans l'interface. L'objectif psychologique est de rendre l'utilisateur acteur de sa découverte en l'invitant à interagir avec la carte et les données dès les premières secondes.
 
-*[Insérer ici : Comparatif "Ancien Onboarding Vidéo" vs "Nouveau parcours interactif pas-à-pas"]*
-
 ## Clarté : Nettoyer la navigation
 
 Pour pallier les fenêtres perdues et les données dupliquées, nous avons rationalisé l'architecture de l'information (GUI). 
-
-*[Insérer ici : GIF montrant les nouvelles interactions fluides avec la map et les modales de données]*
 
 L'interface a été épurée pour que la donnée (la production d'énergie, la disponibilité des ressources) soit lisible sans effort cognitif inutile.
 
@@ -200,8 +194,6 @@ Voici le point de bascule de ce projet. Au départ, nous pensions concevoir pour
 Cependant, j'ai mené des sessions de recherche et lancé un sondage auprès des utilisateurs. Le constat a été sans appel : la majorité des nouveaux clients intéressés par l'outil le consultaient pour la première fois *depuis leur mobile*. 
 
 J'ai donc fait pivoter toute ma stratégie de conception pour adopter une approche "Mobile First".
-
-*[Insérer ici : Écrans du prototype Mobile First, montrant l'adaptation parfaite des cartes et des données sur petit écran]*
 
 ## L'impact : Convaincre en une semaine
 
@@ -221,7 +213,10 @@ La donnée utilisateur (UX Research) bat toujours l'intuition. Sans ce sondage r
       '/images/projects/nash/image 6.png',
       '/images/projects/nash/image 7.png',
       '/images/projects/nash/image 8.png',
-      '/images/projects/nash/image 9.png'
+      '/images/projects/nash/image 9.png',
+      '/images/projects/nash/image 10.png',
+      '/images/projects/nash/image 11.png',
+      '/images/projects/nash/image.png'
     ]
   },
   {
@@ -279,8 +274,6 @@ J'ai analysé les concurrents (Lalaland, Vmake AI, Botika) et les sites de mode 
 * Les couleurs sont majoritairement noir et blanc.
 * Les typographies sont sans empattement (sans serif).
 
-*[Insérer ici : Comparatif visuel "Ancienne interface MVP" vs "Nouvelle interface épurée"]*
-
 En adoptant ces codes, nous avons créé une interface qui utilise un wording valorisant et un design minimaliste. L'outil Veeton n'a plus l'air d'un logiciel SaaS complexe, mais d'une véritable plateforme créative.
 
 ## Réassurance : Comprendre la boîte noire
@@ -288,8 +281,6 @@ En adoptant ces codes, nous avons créé une interface qui utilise un wording va
 Une Directrice Artistique comme notre persona "Camille" a besoin d'optimiser ses cycles de création, mais elle refuse de perdre le contrôle.
 
 Nous avons revu le parcours utilisateur pour intégrer des interactions fluides démontrant la flexibilité du modèle. L'interface montre explicitement comment changer les poses ou ajuster les mannequins.
-
-*[Insérer ici : Vidéo ou GIF du prototype montrant l'interaction avec le modèle IA]*
 
 Cette transparence transforme l'IA : elle passe d'une "boîte noire intimidante" à un véritable assistant de création sur-mesure.
 
@@ -352,7 +343,15 @@ Interface dédiée aux coachs et recruteurs avec visualisation des données spor
 
 Prototype interactif sur Figma démontrant l'expérience utilisateur complète.`,
     images: [
-      '/images/projects/rakoono/Miniature_Rakoono.png'
+      '/images/projects/rakoono/Miniature_Rakoono.png',
+      '/images/projects/rakoono/image 1.png',
+      '/images/projects/rakoono/image 2.png',
+      '/images/projects/rakoono/image 3.png',
+      '/images/projects/rakoono/image 4.png',
+      '/images/projects/rakoono/image 5.png',
+      '/images/projects/rakoono/image 6.png',
+      '/images/projects/rakoono/image 7.png',
+      '/images/projects/rakoono/image.png'
     ]
   }
 ];

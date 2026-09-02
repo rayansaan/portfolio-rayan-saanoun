@@ -47,6 +47,7 @@ export function Header() {
           <img 
             src="/icons/logo-rayan-saan.svg" 
             alt="Rayan Saanoun" 
+            decoding="async"
             className={`w-auto transition-all duration-300 ${
               isScrolled ? 'h-5' : 'h-6'
             }`}

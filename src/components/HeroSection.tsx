@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
-import { useLenis } from '@/context/LenisContext';
+import { useLenis } from '@/hooks/useLenis';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { LogoCarousel } from './LogoCarousel';
 

@@ -34,6 +34,7 @@ export function LogoCarousel() {
               <img
                 src={logo.src}
                 alt={logo.name}
+                decoding="async"
                 className="w-auto h-8 sm:h-12 object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
               />
             </div>
@@ -47,7 +48,9 @@ export function LogoCarousel() {
             >
               <img
                 src={logo.src}
-                alt={logo.name}
+                alt=""
+                aria-hidden="true"
+                decoding="async"
                 className="w-auto h-8 sm:h-12 object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
               />
             </div>

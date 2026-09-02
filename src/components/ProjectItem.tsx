@@ -1,6 +1,6 @@
 import type { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { useHoverImage } from '@/context/HoverImageContext';
+import { useHoverImage } from '@/hooks/useHoverImage';
 import type { Project } from '@/types';
 
 interface ProjectItemProps {
@@ -58,6 +58,8 @@ export function ProjectItem({ project }: ProjectItemProps) {
         <img
           src={project.imageUrl}
           alt={project.name}
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>
