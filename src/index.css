@@ -108,6 +108,12 @@
   animation-play-state: paused;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 /* Logo Carousel Gradient Mask */
 .mask-gradient-carousel {
   mask-image: linear-gradient(

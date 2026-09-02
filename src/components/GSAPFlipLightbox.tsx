@@ -255,6 +255,9 @@ export function GSAPFlipLightbox({
       ref={modalRef}
       className="fixed inset-0 z-50"
       style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Aperçu agrandi : ${image.alt}`}
     >
       {/* Backdrop */}
       <div

@@ -1,17 +1,14 @@
-import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Lenis from 'lenis';
-
-type LenisContextType = {
-  lenis: Lenis | null;
-};
-
-const LenisContext = createContext<LenisContextType>({ lenis: null });
+import { LenisContext } from '@/context/lenis';
 
 export function LenisProvider({ children }: { children: ReactNode }) {
   const [lenis, setLenis] = useState<Lenis | null>(null);
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
+    let animationFrameId = 0;
+
     const initLenis = () => {
       const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
       
@@ -35,11 +32,10 @@ export function LenisProvider({ children }: { children: ReactNode }) {
 
       function raf(time: number) {
         lenisRef.current?.raf(time);
-        requestAnimationFrame(raf);
+        animationFrameId = requestAnimationFrame(raf);
       }
 
-      requestAnimationFrame(raf);
-      console.log('Lenis initialized');
+      animationFrameId = requestAnimationFrame(raf);
     };
 
     if (document.readyState === 'complete') {
@@ -50,7 +46,9 @@ export function LenisProvider({ children }: { children: ReactNode }) {
 
     return () => {
       window.removeEventListener('load', initLenis);
+      cancelAnimationFrame(animationFrameId);
       lenisRef.current?.destroy();
+      lenisRef.current = null;
     };
   }, []);
 
@@ -59,8 +57,4 @@ export function LenisProvider({ children }: { children: ReactNode }) {
       {children}
     </LenisContext.Provider>
   );
-}
-
-export function useLenis() {
-  return useContext(LenisContext);
 }

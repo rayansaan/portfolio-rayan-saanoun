@@ -1,7 +1,5 @@
-import { createContext, useContext, useState, type ReactNode, useCallback } from 'react';
-import type { HoverImageState } from '@/types';
-
-const HoverImageContext = createContext<HoverImageState | undefined>(undefined);
+import { useState, type ReactNode, useCallback } from 'react';
+import { HoverImageContext } from '@/context/hover-image';
 
 export function HoverImageProvider({ children }: { children: ReactNode }) {
   const [currentImage, setCurrentImageState] = useState<string | null>(null);
@@ -29,12 +27,4 @@ export function HoverImageProvider({ children }: { children: ReactNode }) {
       {children}
     </HoverImageContext.Provider>
   );
-}
-
-export function useHoverImage(): HoverImageState {
-  const context = useContext(HoverImageContext);
-  if (context === undefined) {
-    throw new Error('useHoverImage must be used within a HoverImageProvider');
-  }
-  return context;
 }

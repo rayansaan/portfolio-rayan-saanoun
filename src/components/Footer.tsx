@@ -17,6 +17,8 @@ export function Footer() {
             <img 
               src="/icons/logo-rayan-saan.svg" 
               alt="Rayan Saanoun" 
+              loading="lazy"
+              decoding="async"
               className="h-6 w-auto brightness-0 invert"
             />
           </a>

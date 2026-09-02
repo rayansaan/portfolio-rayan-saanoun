@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { lazy, Suspense, useState, useEffect } from 'react';
+import { motion, MotionConfig } from 'framer-motion';
 import { Header } from '@/components/Header';
 import { HeroSection } from '@/components/HeroSection';
 import { ProjectSection } from '@/components/ProjectSection';
@@ -9,9 +9,10 @@ import { CursorFollowImage } from '@/components/CursorFollowImage';
 import { HoverImageProvider } from '@/context/HoverImageContext';
 import { CustomCursor } from '@/components/CustomCursor';
 import { LenisProvider } from '@/context/LenisContext';
-import { ProjectDetail } from '@/pages/ProjectDetail';
-import { About } from '@/pages/About';
 import { uxUiProjects, otherProjects } from '@/data/projects';
+
+const ProjectDetail = lazy(() => import('@/pages/ProjectDetail').then((module) => ({ default: module.ProjectDetail })));
+const About = lazy(() => import('@/pages/About').then((module) => ({ default: module.About })));
 
 function HomePage() {
   const [hasScrolled, setHasScrolled] = useState(false);
@@ -60,11 +61,12 @@ function HomePage() {
               projects={uxUiProjects} 
             />
             
-            {/* Other Projects Section */}
-            <ProjectSection 
-              title="Autres Projets" 
-              projects={otherProjects}
-            />
+            {otherProjects.length > 0 && (
+              <ProjectSection
+                title="Autres Projets"
+                projects={otherProjects}
+              />
+            )}
           </motion.div>
         </div>
         
@@ -77,18 +79,22 @@ function HomePage() {
 
 function App() {
   return (
-    <HoverImageProvider>
-      <LenisProvider>
-        <CustomCursor />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/project/:id" element={<ProjectDetail />} />
-          </Routes>
-        </BrowserRouter>
-      </LenisProvider>
-    </HoverImageProvider>
+    <MotionConfig reducedMotion="user">
+      <HoverImageProvider>
+        <LenisProvider>
+          <CustomCursor />
+          <BrowserRouter>
+            <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/project/:id" element={<ProjectDetail />} />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </LenisProvider>
+      </HoverImageProvider>
+    </MotionConfig>
   );
 }
 

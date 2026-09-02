@@ -19,15 +19,21 @@ const services = [
 const experiences = [
   {
     title: 'Product Designer',
-    company: 'Pépinière 27',
+    company: 'Moove',
     location: 'Paris',
-    period: '2022 - Présent',
+    period: '2022 – 2024',
+  },
+  {
+    title: 'Designer OPS',
+    company: 'Cdiscount',
+    location: 'Bordeaux',
+    period: 'Stage',
   },
   {
     title: 'UX/UI Designer',
-    company: 'Station F',
+    company: 'Nash, Veeton & Rakoono',
     location: 'Paris',
-    period: '2021 - 2022',
+    period: '2023 – 2024',
   },
 ];
 
@@ -57,9 +63,13 @@ export function About() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              {/* Photo Placeholder */}
-              <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
-                <span className="text-muted-foreground text-sm">Photo</span>
+              <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-muted overflow-hidden flex-shrink-0">
+                <img
+                  src="/images/profile/portrait-rayan-portfolio.png"
+                  alt="Portrait de Rayan Saanoun"
+                  className="h-full w-full object-cover object-top"
+                  decoding="async"
+                />
               </div>
               
               {/* Title & Info */}
@@ -87,18 +97,17 @@ export function About() {
               <h2 className="text-2xl sm:text-3xl font-medium mb-6">À propos</h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  Product Designer basé à Bordeaux, je conçois des expériences digitales centrées sur l'utilisateur 
-                  et alignées avec les objectifs business. Fort de plus de 4 ans d'expérience, j'accompagne 
-                  startups et entreprises dans la création de produits digitaux innovants.
+                  Product Designer basé à Bordeaux, je transforme des sujets complexes en expériences digitales
+                  simples, utiles et alignées avec les objectifs business.
                 </p>
                 <p>
-                  Ma méthode combine recherche utilisateur rigoureuse, prototypage rapide et itérations basées 
-                  sur les retours terrain. Je crois profondément en la collaboration étroite entre designers, 
-                  développeurs et stakeholders pour créer des produits cohérents et performants.
+                  Ma méthode combine recherche utilisateur, cadrage produit, prototypage et tests. Je travaille
+                  au plus près des développeurs et des équipes métier pour construire des solutions réalistes,
+                  cohérentes et faciles à faire évoluer.
                 </p>
                 <p>
-                  Actuellement en poste à la Pépinière 27 à Paris, je continue d'explorer les nouvelles 
-                  approches du design produit et du design thinking.
+                  J'ai notamment travaillé sur des produits liés à l'aviation d'affaires, aux énergies
+                  renouvelables, à la mode et à l'intelligence artificielle.
                 </p>
               </div>
             </motion.section>
