@@ -11,9 +11,6 @@ export function LenisProvider({ children }: { children: ReactNode }) {
 
     const initLenis = () => {
       const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      if (prefersReducedMotion) return;
       
       if (lenisRef.current) {
         lenisRef.current.destroy();
