@@ -76,7 +76,7 @@ export function Header() {
             )
           ))}
           <a
-            href="/cv/CV-Rayan_Saanoun-2025.pdf"
+            href="/cv/CV-Rayan-Saanoun-2026.pdf"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -135,7 +135,7 @@ export function Header() {
               )
             ))}
             <a
-              href="/cv/CV-Rayan_Saanoun-2025.pdf"
+              href="/cv/CV-Rayan-Saanoun-2026.pdf"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsOpen(false)}
