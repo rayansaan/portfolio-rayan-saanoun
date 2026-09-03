@@ -61,12 +61,10 @@ function HomePage() {
               projects={uxUiProjects} 
             />
             
-            {otherProjects.length > 0 && (
-              <ProjectSection
-                title="Autres Projets"
-                projects={otherProjects}
-              />
-            )}
+            <ProjectSection
+              title="Autres projets"
+              projects={otherProjects}
+            />
           </motion.div>
         </div>
         
