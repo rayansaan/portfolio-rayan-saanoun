@@ -98,7 +98,7 @@ export function PhotoLightbox({ photos, categories, projectName, initialIndex, o
     if (firstOpen && backdrop) {
       timeline.fromTo(backdrop, { opacity: 0 }, {
         opacity: 1,
-        duration: 0.65,
+        duration: 0.85,
         ease: 'power2.inOut',
       }, 0);
     }
@@ -106,14 +106,14 @@ export function PhotoLightbox({ photos, categories, projectName, initialIndex, o
       x: origin.left + origin.width / 2 - target.left - target.width / 2,
       y: origin.top + origin.height / 2 - target.top - target.height / 2,
       scale: initialScale,
-      opacity: 0.92,
+      opacity: 0.72,
       transformOrigin: 'center center',
     } : { x: 0, y: 0, scale: 0.97, opacity: 0 }, {
       x: 0,
       y: 0,
       scale: 1,
       opacity: 1,
-      duration: firstOpen ? 0.68 : 0.32,
+      duration: firstOpen ? 0.9 : 0.38,
       ease: 'power3.inOut',
       clearProps: 'transform,opacity',
     }, 0);
@@ -124,7 +124,7 @@ export function PhotoLightbox({ photos, categories, projectName, initialIndex, o
         opacity: 1,
         duration: 0.35,
         ease: 'power2.inOut',
-      }, 0.3);
+      }, 0.52);
     }
     return () => { timeline.kill(); };
   }, [photo.id, origin, reduceMotion]);
@@ -150,14 +150,14 @@ export function PhotoLightbox({ photos, categories, projectName, initialIndex, o
       y: origin.top + origin.height / 2 - target.top - target.height / 2,
       scale: destinationScale,
       opacity: 0.9,
-      duration: 0.58,
+      duration: 0.72,
       ease: 'power3.inOut',
       transformOrigin: 'center center',
     }, 0);
     if (backdrop) {
       timeline.to(backdrop, {
         opacity: 0,
-        duration: 0.58,
+        duration: 0.72,
         ease: 'power2.inOut',
       }, 0);
     }

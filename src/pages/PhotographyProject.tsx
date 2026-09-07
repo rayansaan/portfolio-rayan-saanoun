@@ -30,7 +30,10 @@ function PhotoTile({ photo, index, onOpen }: {
       type="button"
       className="photo-tile"
       style={scatterStyle(photo.id)}
-      onClick={(event) => onOpen(event.currentTarget.getBoundingClientRect())}
+      onClick={(event) => {
+        const image = event.currentTarget.querySelector('img');
+        onOpen((image ?? event.currentTarget).getBoundingClientRect());
+      }}
       aria-label={`Agrandir : ${photo.alt}`}
       aria-haspopup="dialog"
     >
