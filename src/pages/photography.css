@@ -76,9 +76,13 @@
   justify-self: var(--photo-align);
   margin-top: var(--photo-shift);
   transform: rotate(var(--photo-angle));
-  transition: transform 250ms ease;
   box-shadow: 0 0.3rem 0.8rem rgb(0 0 0 / 8%), 0 1.2rem 2.2rem rgb(0 0 0 / 5%);
   background: var(--bg-color);
+  transition:
+    transform 480ms cubic-bezier(0.65, 0, 0.35, 1),
+    box-shadow 480ms cubic-bezier(0.65, 0, 0.35, 1),
+    filter 480ms cubic-bezier(0.65, 0, 0.35, 1);
+  will-change: transform;
 }
 
 .photo-tile img {
@@ -94,8 +98,19 @@
 }
 
 @media (hover: hover) {
-  .photo-tile:hover { transform: rotate(0deg) scale(1.04); z-index: 1; }
+  .photo-tile:hover {
+    z-index: 1;
+    transform: rotate(0deg) scale(1.045);
+    box-shadow: 0 0.6rem 1.2rem rgb(0 0 0 / 10%), 0 1.8rem 3rem rgb(0 0 0 / 12%);
+    filter: saturate(1.04);
+  }
   .photography-back:hover { text-decoration: underline; text-underline-offset: 0.25em; }
+}
+
+.photo-tile:active {
+  transform: rotate(0deg) scale(0.985);
+  transition-duration: 150ms;
+  transition-timing-function: ease-in-out;
 }
 
 .photography-page :focus-visible,
@@ -122,12 +137,15 @@
 }
 
 .photo-lightbox::backdrop {
-  background: rgb(5 5 5 / 92%);
-  animation: photo-backdrop-in 300ms ease both;
+  background: transparent;
 }
 
-.photo-lightbox[data-closing="true"]::backdrop {
-  animation: photo-backdrop-out 200ms ease both;
+.photo-lightbox-backdrop {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: rgb(5 5 5 / 92%);
+  opacity: 0;
 }
 
 /* Le curseur personnalisé du site reste derrière le dialogue natif. */
@@ -149,6 +167,7 @@
 
 .photo-lightbox-stage {
   position: absolute;
+  z-index: 1;
   inset: max(4.25rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(6rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
   display: flex;
   align-items: center;
@@ -178,6 +197,7 @@
 
 .photo-lightbox-footer {
   position: absolute;
+  z-index: 2;
   right: max(1rem, env(safe-area-inset-right));
   bottom: max(0.75rem, env(safe-area-inset-bottom));
   left: max(1rem, env(safe-area-inset-left));
@@ -218,10 +238,6 @@
   .photo-lightbox-footer p { max-width: 100%; max-height: 2rem; }
 }
 
-@keyframes photo-backdrop-in { from { opacity: 0; } to { opacity: 1; } }
-@keyframes photo-backdrop-out { from { opacity: 1; } to { opacity: 0; } }
-
 @media (prefers-reduced-motion: reduce) {
   .photo-tile, .photography-filters button { transition: none; }
-  .photo-lightbox::backdrop, .photo-lightbox[data-closing="true"]::backdrop { animation: none; }
 }

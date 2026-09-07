@@ -48,6 +48,7 @@ export function PhotoLightbox({ photos, categories, projectName, initialIndex, o
   const reduceMotion = useReducedMotion();
   const [index, setIndex] = useState(initialIndex);
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
   const hasAnimated = useRef(false);
   const isClosing = useRef(false);
@@ -81,35 +82,85 @@ export function PhotoLightbox({ photos, categories, projectName, initialIndex, o
 
   useLayoutEffect(() => {
     const image = imageRef.current;
+    const backdrop = backdropRef.current;
+    const dialog = dialogRef.current;
     if (!image) return;
     const target = image.getBoundingClientRect();
     const firstOpen = !hasAnimated.current;
     hasAnimated.current = true;
-    if (reduceMotion || !target.width || !target.height) return;
+    if (reduceMotion || !target.width || !target.height) {
+      if (backdrop) gsap.set(backdrop, { opacity: 1 });
+      return;
+    }
     const initialScale = Math.min(origin.width / target.width, origin.height / target.height);
 
-    const animation = gsap.fromTo(image, firstOpen ? {
+    const timeline = gsap.timeline();
+    if (firstOpen && backdrop) {
+      timeline.fromTo(backdrop, { opacity: 0 }, {
+        opacity: 1,
+        duration: 0.65,
+        ease: 'power2.inOut',
+      }, 0);
+    }
+    timeline.fromTo(image, firstOpen ? {
       x: origin.left + origin.width / 2 - target.left - target.width / 2,
       y: origin.top + origin.height / 2 - target.top - target.height / 2,
-      scaleX: initialScale,
-      scaleY: initialScale,
+      scale: initialScale,
+      opacity: 0.92,
+      transformOrigin: 'center center',
+    } : { x: 0, y: 0, scale: 0.97, opacity: 0 }, {
+      x: 0,
+      y: 0,
+      scale: 1,
       opacity: 1,
-    } : { x: 0, y: 0, scaleX: 0.97, scaleY: 0.97, opacity: 0 }, {
-      x: 0, y: 0, scaleX: 1, scaleY: 1, opacity: 1,
-      duration: firstOpen ? 0.5 : 0.25,
-      ease: 'power3.out',
+      duration: firstOpen ? 0.68 : 0.32,
+      ease: 'power3.inOut',
       clearProps: 'transform,opacity',
-    });
-    return () => { animation.kill(); };
+    }, 0);
+    if (firstOpen && dialog) {
+      timeline.fromTo(dialog.querySelectorAll('.photo-lightbox-close, .photo-lightbox-footer'), {
+        opacity: 0,
+      }, {
+        opacity: 1,
+        duration: 0.35,
+        ease: 'power2.inOut',
+      }, 0.3);
+    }
+    return () => { timeline.kill(); };
   }, [photo.id, origin, reduceMotion]);
 
   const close = useCallback(() => {
     if (isClosing.current) return;
     isClosing.current = true;
     const dialog = dialogRef.current;
-    if (reduceMotion || !dialog) { onClose(); return; }
+    const image = imageRef.current;
+    const backdrop = backdropRef.current;
+    if (reduceMotion || !dialog || !image) { onClose(); return; }
     dialog.dataset.closing = 'true';
-    gsap.to(dialog, { opacity: 0, duration: 0.2, onComplete: onClose });
+    const target = image.getBoundingClientRect();
+    const destinationScale = Math.min(origin.width / target.width, origin.height / target.height);
+    const timeline = gsap.timeline({ onComplete: onClose });
+    timeline.to(dialog.querySelectorAll('.photo-lightbox-close, .photo-lightbox-footer'), {
+      opacity: 0,
+      duration: 0.22,
+      ease: 'power2.inOut',
+    }, 0);
+    timeline.to(image, {
+      x: origin.left + origin.width / 2 - target.left - target.width / 2,
+      y: origin.top + origin.height / 2 - target.top - target.height / 2,
+      scale: destinationScale,
+      opacity: 0.9,
+      duration: 0.58,
+      ease: 'power3.inOut',
+      transformOrigin: 'center center',
+    }, 0);
+    if (backdrop) {
+      timeline.to(backdrop, {
+        opacity: 0,
+        duration: 0.58,
+        ease: 'power2.inOut',
+      }, 0);
+    }
   }, [onClose, reduceMotion]);
 
   const navigate = (direction: number) => {
@@ -132,6 +183,7 @@ export function PhotoLightbox({ photos, categories, projectName, initialIndex, o
         }
       }}
     >
+      <div ref={backdropRef} className="photo-lightbox-backdrop" aria-hidden="true" onClick={close} />
       <h2 id="photo-lightbox-title" className="sr-only">Photographies de {projectName}</h2>
       <button type="button" className="photo-lightbox-close" autoFocus aria-label="Fermer la photo" onClick={close}>
         <X aria-hidden="true" size={24} />
