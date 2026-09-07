@@ -66,7 +66,7 @@ function HomePage() {
             />
             
             <ProjectSection
-              title="Autres projets"
+              title="Explorations"
               projects={additionalProjects}
             />
           </motion.div>
