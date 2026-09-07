@@ -10,9 +10,13 @@ import { HoverImageProvider } from '@/context/HoverImageContext';
 import { CustomCursor } from '@/components/CustomCursor';
 import { LenisProvider } from '@/context/LenisContext';
 import { uxUiProjects, otherProjects } from '@/data/projects';
+import { photographyProjectCards } from '@/data/photography';
 
 const ProjectDetail = lazy(() => import('@/pages/ProjectDetail').then((module) => ({ default: module.ProjectDetail })));
 const About = lazy(() => import('@/pages/About').then((module) => ({ default: module.About })));
+const PhotographyProject = lazy(() => import('@/pages/PhotographyProject').then((module) => ({ default: module.PhotographyProjectPage })));
+
+const additionalProjects = [...otherProjects, ...photographyProjectCards];
 
 function HomePage() {
   const [hasScrolled, setHasScrolled] = useState(false);
@@ -63,7 +67,7 @@ function HomePage() {
             
             <ProjectSection
               title="Autres projets"
-              projects={otherProjects}
+              projects={additionalProjects}
             />
           </motion.div>
         </div>
@@ -87,6 +91,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/project/:id" element={<ProjectDetail />} />
+                <Route path="/photography/:id" element={<PhotographyProject />} />
               </Routes>
             </Suspense>
           </BrowserRouter>

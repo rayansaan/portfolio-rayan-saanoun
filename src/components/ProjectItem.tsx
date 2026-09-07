@@ -1,10 +1,10 @@
 import type { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useHoverImage } from '@/hooks/useHoverImage';
-import type { Project } from '@/types';
+import type { ProjectCard } from '@/types';
 
 interface ProjectItemProps {
-  project: Project;
+  project: ProjectCard;
 }
 
 // Mapping des projets vers leurs icônes de survol

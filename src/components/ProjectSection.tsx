@@ -1,9 +1,9 @@
 import { ProjectItem } from './ProjectItem';
-import type { Project } from '@/types';
+import type { ProjectCard } from '@/types';
 
 interface ProjectSectionProps {
   title: string;
-  projects: Project[];
+  projects: ProjectCard[];
   className?: string;
 }
 

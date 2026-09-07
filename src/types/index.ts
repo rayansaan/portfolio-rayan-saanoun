@@ -52,6 +52,34 @@ export interface Project {
   images?: string[];
 }
 
+export type ProjectCard = Pick<Project, 'id' | 'name' | 'imageUrl' | 'href' | 'description' | 'tags'>;
+
+export interface PhotographyCategory {
+  id: string;
+  /** Chemin des sous-dossiers, relatif au dossier du projet. */
+  path: string[];
+}
+
+export interface Photograph {
+  id: string;
+  /** Copies optimisées hébergées avec le site, jamais des liens Drive temporaires. */
+  src: string;
+  thumbnailSrc: string;
+  width: number;
+  height: number;
+  alt: string;
+  categoryId?: string;
+}
+
+export interface PhotographyProject {
+  id: string;
+  /** Nom du dossier principal, conservé comme titre. */
+  name: string;
+  coverPhotoId: string;
+  categories: PhotographyCategory[];
+  photos: Photograph[];
+}
+
 export interface HoverImageState {
   currentImage: string | null;
   setCurrentImage: (image: string | null, type?: 'image' | 'icon') => void;

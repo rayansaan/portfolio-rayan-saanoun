@@ -1,0 +1,354 @@
+[
+  {
+    "id": "cars",
+    "name": "Cars",
+    "coverPhotoId": "cars-img-6204-385d800b",
+    "categories": [],
+    "photos": [
+      {
+        "id": "cars-img-6203-ea91e298",
+        "src": "/images/photography/cars/cars-img-6203-ea91e298.webp",
+        "thumbnailSrc": "/images/photography/cars/cars-img-6203-ea91e298-thumb.webp",
+        "width": 1536,
+        "height": 2048,
+        "alt": "Deux voitures de sport, rouge et noire, garées devant un bâtiment sous un ciel bleu."
+      },
+      {
+        "id": "cars-img-6204-385d800b",
+        "src": "/images/photography/cars/cars-img-6204-385d800b.webp",
+        "thumbnailSrc": "/images/photography/cars/cars-img-6204-385d800b-thumb.webp",
+        "width": 2560,
+        "height": 1942,
+        "alt": "Voiture de sport rouge vue de profil dans un bâtiment circulaire bordé de cuves métalliques."
+      },
+      {
+        "id": "cars-img-6205-53084a86",
+        "src": "/images/photography/cars/cars-img-6205-53084a86.webp",
+        "thumbnailSrc": "/images/photography/cars/cars-img-6205-53084a86-thumb.webp",
+        "width": 1920,
+        "height": 2560,
+        "alt": "Voiture de sport rouge vue de trois quarts dans un jeu d’ombre et de lumière entre des cuves métalliques."
+      }
+    ]
+  },
+  {
+    "id": "portrait",
+    "name": "Portrait",
+    "coverPhotoId": "portrait-almd-rayan-1-7eceeafd",
+    "categories": [],
+    "photos": [
+      {
+        "id": "portrait-almd-rayan-1-7eceeafd",
+        "src": "/images/photography/portrait/portrait-almd-rayan-1-7eceeafd.webp",
+        "thumbnailSrc": "/images/photography/portrait/portrait-almd-rayan-1-7eceeafd-thumb.webp",
+        "width": 2249,
+        "height": 2560,
+        "alt": "Portrait serré d’un homme éclairé de côté sur fond noir."
+      },
+      {
+        "id": "portrait-enzo-saut-3-8fa12e13",
+        "src": "/images/photography/portrait/portrait-enzo-saut-3-8fa12e13.webp",
+        "thumbnailSrc": "/images/photography/portrait/portrait-enzo-saut-3-8fa12e13-thumb.webp",
+        "width": 1729,
+        "height": 2560,
+        "alt": "Personne en plein saut dans un escalier entre deux murs clairs, sous un ciel bleu."
+      },
+      {
+        "id": "portrait-packshot-rayan-saanoun-8ddc2055",
+        "src": "/images/photography/portrait/portrait-packshot-rayan-saanoun-8ddc2055.webp",
+        "thumbnailSrc": "/images/photography/portrait/portrait-packshot-rayan-saanoun-8ddc2055-thumb.webp",
+        "width": 1707,
+        "height": 2560,
+        "alt": "Flacon cosmétique tenu entre deux mains sur fond clair, sous le logo Avril."
+      }
+    ]
+  },
+  {
+    "id": "world",
+    "name": "World",
+    "coverPhotoId": "world-img-5544-2dc0ffe6",
+    "categories": [
+      {
+        "id": "shanghai",
+        "path": [
+          "Shanghai"
+        ]
+      },
+      {
+        "id": "suzhou",
+        "path": [
+          "Suzhou"
+        ]
+      },
+      {
+        "id": "tunisia",
+        "path": [
+          "Tunisia"
+        ]
+      }
+    ],
+    "photos": [
+      {
+        "id": "world-img-0516-af1b9c53",
+        "src": "/images/photography/world/world-img-0516-af1b9c53.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-0516-af1b9c53-thumb.webp",
+        "width": 1920,
+        "height": 2560,
+        "alt": "Gratte-ciel illuminés de Shanghai et leurs reflets colorés sur le fleuve, de nuit.",
+        "categoryId": "shanghai"
+      },
+      {
+        "id": "world-img-0540-85f754e3",
+        "src": "/images/photography/world/world-img-0540-85f754e3.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-0540-85f754e3-thumb.webp",
+        "width": 1920,
+        "height": 2560,
+        "alt": "Promenade entre des bâtiments en brique et des tours contemporaines à Shanghai.",
+        "categoryId": "shanghai"
+      },
+      {
+        "id": "world-img-0579-jpg-3cab8fb2",
+        "src": "/images/photography/world/world-img-0579-jpg-3cab8fb2.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-0579-jpg-3cab8fb2-thumb.webp",
+        "width": 1918,
+        "height": 2560,
+        "alt": "Avenue de Shanghai bordée d’une voie surélevée, avec le soleil derrière les nuages.",
+        "categoryId": "shanghai"
+      },
+      {
+        "id": "world-img-0593-jpg-10325a83",
+        "src": "/images/photography/world/world-img-0593-jpg-10325a83.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-0593-jpg-10325a83-thumb.webp",
+        "width": 1920,
+        "height": 2560,
+        "alt": "Plateau de petits pains dorés au premier plan d’un comptoir de cuisine à Shanghai.",
+        "categoryId": "shanghai"
+      },
+      {
+        "id": "world-img-0605-5a980990",
+        "src": "/images/photography/world/world-img-0605-5a980990.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-0605-5a980990-thumb.webp",
+        "width": 1920,
+        "height": 2560,
+        "alt": "Piles de galettes sur un étal, devant une cuisine ouverte à Shanghai.",
+        "categoryId": "shanghai"
+      },
+      {
+        "id": "world-img-0690-jpg-bd0cf164",
+        "src": "/images/photography/world/world-img-0690-jpg-bd0cf164.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-0690-jpg-bd0cf164-thumb.webp",
+        "width": 1921,
+        "height": 2560,
+        "alt": "Tours du quartier de Pudong au-dessus d’un rond-point végétalisé à Shanghai.",
+        "categoryId": "shanghai"
+      },
+      {
+        "id": "world-img-0696-jpg-d44559c3",
+        "src": "/images/photography/world/world-img-0696-jpg-d44559c3.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-0696-jpg-d44559c3-thumb.webp",
+        "width": 1920,
+        "height": 2560,
+        "alt": "Tour aux sphères roses dominant une avenue et les passerelles de Shanghai.",
+        "categoryId": "shanghai"
+      },
+      {
+        "id": "world-img-0989-d8b2e7c5",
+        "src": "/images/photography/world/world-img-0989-d8b2e7c5.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-0989-d8b2e7c5-thumb.webp",
+        "width": 1920,
+        "height": 2560,
+        "alt": "Canal bordé de maisons blanches, de lanternes rouges et d’une passerelle, à la lumière du soir.",
+        "categoryId": "shanghai"
+      },
+      {
+        "id": "world-img-0990-57b5a750",
+        "src": "/images/photography/world/world-img-0990-57b5a750.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-0990-57b5a750-thumb.webp",
+        "width": 1920,
+        "height": 2560,
+        "alt": "Maisons blanches et lanternes rouges se reflétant dans un canal sous un ciel doré.",
+        "categoryId": "shanghai"
+      },
+      {
+        "id": "world-img-1075-jpg-edit-ed7d9b5f",
+        "src": "/images/photography/world/world-img-1075-jpg-edit-ed7d9b5f.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-1075-jpg-edit-ed7d9b5f-thumb.webp",
+        "width": 1920,
+        "height": 2560,
+        "alt": "Promenade face aux tours de Shanghai sous un ciel nuageux, avec le titre Journey to Shanghai.",
+        "categoryId": "shanghai"
+      },
+      {
+        "id": "world-img-0964-faaf524a",
+        "src": "/images/photography/world/world-img-0964-faaf524a.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-0964-faaf524a-thumb.webp",
+        "width": 1920,
+        "height": 2560,
+        "alt": "Chat roux et blanc assis près d’une fenêtre ouverte sur une rue de Suzhou.",
+        "categoryId": "suzhou"
+      },
+      {
+        "id": "world-img-0966-8cd7eedf",
+        "src": "/images/photography/world/world-img-0966-8cd7eedf.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-0966-8cd7eedf-thumb.webp",
+        "width": 1920,
+        "height": 2560,
+        "alt": "Rue arborée de Suzhou avec une camionnette et des bâtiments aux toits traditionnels.",
+        "categoryId": "suzhou"
+      },
+      {
+        "id": "world-img-0967-8d356bca",
+        "src": "/images/photography/world/world-img-0967-8d356bca.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-0967-8d356bca-thumb.webp",
+        "width": 1920,
+        "height": 2560,
+        "alt": "Pagode à plusieurs étages se détachant sur un ciel bleu à Suzhou.",
+        "categoryId": "suzhou"
+      },
+      {
+        "id": "world-img-0968-aa169bbc",
+        "src": "/images/photography/world/world-img-0968-aa169bbc.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-0968-aa169bbc-thumb.webp",
+        "width": 1920,
+        "height": 2560,
+        "alt": "Pagode de Suzhou encadrée par des arbres, avec une sculpture au premier plan.",
+        "categoryId": "suzhou"
+      },
+      {
+        "id": "world-img-0971-fc5a8878",
+        "src": "/images/photography/world/world-img-0971-fc5a8878.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-0971-fc5a8878-thumb.webp",
+        "width": 1920,
+        "height": 2560,
+        "alt": "Fenêtre à motifs géométriques sur un mur jaune parcouru d’ombres de feuillage à Suzhou.",
+        "categoryId": "suzhou"
+      },
+      {
+        "id": "world-img-0992-79b07e71",
+        "src": "/images/photography/world/world-img-0992-79b07e71.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-0992-79b07e71-thumb.webp",
+        "width": 1920,
+        "height": 2560,
+        "alt": "Canal étroit entre des maisons blanches et des lanternes rouges au coucher du soleil à Suzhou.",
+        "categoryId": "suzhou"
+      },
+      {
+        "id": "world-img-0995-edit-79f17d62",
+        "src": "/images/photography/world/world-img-0995-edit-79f17d62.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-0995-edit-79f17d62-thumb.webp",
+        "width": 1920,
+        "height": 2560,
+        "alt": "Canal et barques sous les lanternes au crépuscule, avec le titre Stopover to Suzhou.",
+        "categoryId": "suzhou"
+      },
+      {
+        "id": "world-img-0995-9ad57584",
+        "src": "/images/photography/world/world-img-0995-9ad57584.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-0995-9ad57584-thumb.webp",
+        "width": 1920,
+        "height": 2560,
+        "alt": "Barques et lanternes éclairées le long d’un canal de Suzhou au crépuscule.",
+        "categoryId": "suzhou"
+      },
+      {
+        "id": "world-img-5476-46146ac3",
+        "src": "/images/photography/world/world-img-5476-46146ac3.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-5476-46146ac3-thumb.webp",
+        "width": 1536,
+        "height": 2048,
+        "alt": "Vallée rocheuse ponctuée de palmiers et de végétation dans un paysage aride de Tunisie.",
+        "categoryId": "tunisia"
+      },
+      {
+        "id": "world-img-5478-d43641a3",
+        "src": "/images/photography/world/world-img-5478-d43641a3.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-5478-d43641a3-thumb.webp",
+        "width": 1536,
+        "height": 2048,
+        "alt": "Petit édifice blanc au sommet d’une formation rocheuse ocre sous un ciel bleu en Tunisie.",
+        "categoryId": "tunisia"
+      },
+      {
+        "id": "world-img-5510-b7c7fd7a",
+        "src": "/images/photography/world/world-img-5510-b7c7fd7a.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-5510-b7c7fd7a-thumb.webp",
+        "width": 1536,
+        "height": 2048,
+        "alt": "Ruelle bordée de murs de pierre et d’arcades, avec une tour au loin en Tunisie.",
+        "categoryId": "tunisia"
+      },
+      {
+        "id": "world-img-5513-989d4864",
+        "src": "/images/photography/world/world-img-5513-989d4864.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-5513-989d4864-thumb.webp",
+        "width": 1536,
+        "height": 2048,
+        "alt": "Palmier au milieu d’une ruelle pavée entourée de constructions en pierre claire en Tunisie.",
+        "categoryId": "tunisia"
+      },
+      {
+        "id": "world-img-5515-3c639997",
+        "src": "/images/photography/world/world-img-5515-3c639997.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-5515-3c639997-thumb.webp",
+        "width": 1536,
+        "height": 2048,
+        "alt": "Passage pavé et façades en pierre ocre percées de portes arrondies en Tunisie.",
+        "categoryId": "tunisia"
+      },
+      {
+        "id": "world-img-5518-605f771f",
+        "src": "/images/photography/world/world-img-5518-605f771f.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-5518-605f771f-thumb.webp",
+        "width": 1536,
+        "height": 2048,
+        "alt": "Cour entourée de hautes constructions en terre et en pierre sous un ciel bleu en Tunisie.",
+        "categoryId": "tunisia"
+      },
+      {
+        "id": "world-img-5531-76344a62",
+        "src": "/images/photography/world/world-img-5531-76344a62.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-5531-76344a62-thumb.webp",
+        "width": 1536,
+        "height": 2048,
+        "alt": "Arbre isolé dans un champ sec, sous un soleil bas et un ciel voilé en Tunisie.",
+        "categoryId": "tunisia"
+      },
+      {
+        "id": "world-img-5537-2b2c3426",
+        "src": "/images/photography/world/world-img-5537-2b2c3426.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-5537-2b2c3426-thumb.webp",
+        "width": 1536,
+        "height": 2048,
+        "alt": "Voiture chargée sur le toit roulant sur une piste sinueuse dans un paysage rocheux de Tunisie.",
+        "categoryId": "tunisia"
+      },
+      {
+        "id": "world-img-5539-22e85500",
+        "src": "/images/photography/world/world-img-5539-22e85500.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-5539-22e85500-thumb.webp",
+        "width": 2048,
+        "height": 1536,
+        "alt": "Panorama de collines désertiques et de végétation clairsemée sous un ciel bleu en Tunisie.",
+        "categoryId": "tunisia"
+      },
+      {
+        "id": "world-img-5540-1471d221",
+        "src": "/images/photography/world/world-img-5540-1471d221.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-5540-1471d221-thumb.webp",
+        "width": 1536,
+        "height": 2048,
+        "alt": "Relief rocheux isolé au-dessus d’une colline aride sous un ciel légèrement nuageux en Tunisie.",
+        "categoryId": "tunisia"
+      },
+      {
+        "id": "world-img-5544-2dc0ffe6",
+        "src": "/images/photography/world/world-img-5544-2dc0ffe6.webp",
+        "thumbnailSrc": "/images/photography/world/world-img-5544-2dc0ffe6-thumb.webp",
+        "width": 2048,
+        "height": 1536,
+        "alt": "Route traversant un paysage désertique en direction du soleil couchant en Tunisie.",
+        "categoryId": "tunisia"
+      }
+    ]
+  }
+]
