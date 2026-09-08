@@ -3,7 +3,6 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { allProjects } from '@/data/projects';
-import { useLenis } from '@/hooks/useLenis';
 import { BorderedImage } from '@/components/BorderedImage';
 import { GSAPFlipLightbox } from '@/components/GSAPFlipLightbox';
 import { generateStandardImageId } from '@/utils/generateId';
@@ -188,16 +187,7 @@ function MarkdownContent({ content }: { content: string }) {
 
 export function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
-  const { lenis } = useLenis();
-  
-  useEffect(() => {
-    if (lenis) {
-      lenis.scrollTo(0, { immediate: true });
-    } else {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    }
-  }, [id, lenis]);
-  
+
   const project = allProjects.find(p => p.id === id);
   
   const [selectedImage, setSelectedImage] = useState<ImageDescription | null>(null);

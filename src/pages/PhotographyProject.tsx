@@ -1,9 +1,8 @@
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { photographyProjects } from '@/data/photography';
 import { PhotoLightbox } from '@/components/PhotoLightbox';
-import { useLenis } from '@/hooks/useLenis';
 import type { Photograph, PhotographyProject } from '@/types';
 import './photography.css';
 
@@ -52,7 +51,6 @@ function PhotoTile({ photo, index, onOpen }: {
 }
 
 function ProjectGallery({ project }: { project: PhotographyProject }) {
-  const { lenis } = useLenis();
   const [categoryId, setCategoryId] = useState<string | null>(null);
   const [selection, setSelection] = useState<{ index: number; origin: DOMRect } | null>(null);
   const photos = categoryId === null
@@ -60,11 +58,6 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
     : project.photos.filter((photo) => (photo.categoryId ?? '') === categoryId);
   const hasRootPhotos = project.photos.some((photo) => !photo.categoryId);
   const categories = project.categories.filter((category) => project.photos.some((photo) => photo.categoryId === category.id));
-
-  useEffect(() => {
-    if (lenis) lenis.scrollTo(0, { immediate: true });
-    else window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  }, [lenis]);
 
   return (
     <main className="photography-page">

@@ -8,6 +8,7 @@ import { Footer } from '@/components/Footer';
 import { CursorFollowImage } from '@/components/CursorFollowImage';
 import { HoverImageProvider } from '@/context/HoverImageContext';
 import { CustomCursor } from '@/components/CustomCursor';
+import { RouteScrollManager } from '@/components/RouteScrollManager';
 import { LenisProvider } from '@/context/LenisContext';
 import { uxUiProjects, otherProjects } from '@/data/projects';
 import { photographyProjectCards } from '@/data/photography';
@@ -86,6 +87,7 @@ function App() {
         <LenisProvider>
           <CustomCursor />
           <BrowserRouter>
+            <RouteScrollManager />
             <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
               <Routes>
                 <Route path="/" element={<HomePage />} />
