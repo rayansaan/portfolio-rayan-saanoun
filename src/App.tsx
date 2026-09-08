@@ -70,6 +70,7 @@ function HomePage() {
             <ProjectSection
               title="Explorations"
               projects={additionalProjects}
+              enableCursorPreview={false}
             />
           </motion.div>
         </div>

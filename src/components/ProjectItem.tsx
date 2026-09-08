@@ -5,6 +5,7 @@ import type { ProjectCard } from '@/types';
 
 interface ProjectItemProps {
   project: ProjectCard;
+  enableCursorPreview?: boolean;
 }
 
 // Mapping des projets vers leurs icônes de survol
@@ -15,13 +16,18 @@ const projectIcons: Record<string, string> = {
   'rakoono': '/logos/Hover/Rakoono.svg',
 };
 
-export function ProjectItem({ project }: ProjectItemProps) {
+export function ProjectItem({ project, enableCursorPreview = true }: ProjectItemProps) {
   const { setCurrentImage, setMousePosition } = useHoverImage();
 
   // Détecter si l'appareil est tactile (mobile/tablette)
   const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
 
   const handleMouseEnter = () => {
+    if (!enableCursorPreview) {
+      setCurrentImage(null, 'image');
+      return;
+    }
+
     if (!isTouchDevice) {
       // Utiliser l'icône du projet si elle existe, sinon l'image du projet
       const iconUrl = projectIcons[project.id];
@@ -40,7 +46,7 @@ export function ProjectItem({ project }: ProjectItemProps) {
   };
 
   const handleMouseMove = (e: MouseEvent<HTMLAnchorElement>) => {
-    if (!isTouchDevice) {
+    if (enableCursorPreview && !isTouchDevice) {
       setMousePosition(e.clientX, e.clientY);
     }
   };
