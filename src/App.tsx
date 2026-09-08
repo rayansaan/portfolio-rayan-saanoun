@@ -9,6 +9,7 @@ import { CursorFollowImage } from '@/components/CursorFollowImage';
 import { HoverImageProvider } from '@/context/HoverImageContext';
 import { CustomCursor } from '@/components/CustomCursor';
 import { RouteScrollManager } from '@/components/RouteScrollManager';
+import { RouteHoverReset } from '@/components/RouteHoverReset';
 import { LenisProvider } from '@/context/LenisContext';
 import { uxUiProjects, otherProjects } from '@/data/projects';
 import { photographyProjectCards } from '@/data/photography';
@@ -88,6 +89,7 @@ function App() {
           <CustomCursor />
           <BrowserRouter>
             <RouteScrollManager />
+            <RouteHoverReset />
             <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
               <Routes>
                 <Route path="/" element={<HomePage />} />

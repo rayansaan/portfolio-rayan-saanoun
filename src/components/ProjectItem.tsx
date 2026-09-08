@@ -52,6 +52,7 @@ export function ProjectItem({ project }: ProjectItemProps) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
+      onClick={handleMouseLeave}
     >
       {/* Image avec aspect 16:9, bordure 2px noire à 5% et radius 8px */}
       <div className="aspect-[16/9] rounded-[8px] overflow-hidden mb-4 border-2 border-black/5">
