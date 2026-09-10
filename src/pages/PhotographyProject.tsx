@@ -278,6 +278,7 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
         ref={galleryRef}
         className="photo-scatter"
         data-zoom={zoomLevel}
+        data-layout={photos.length <= 3 ? 'horizontal' : 'spatial'}
         aria-label={`Photographies de ${project.name} — espace navigable horizontalement et verticalement. Molette vers l'avant pour zoomer, vers l'arrière pour dézoomer.`}
         tabIndex={0}
       >
