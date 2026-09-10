@@ -53,6 +53,7 @@ function PhotoTile({ photo, index, onOpen }: {
         alt={photo.alt}
         width={photo.width}
         height={photo.height}
+        draggable={false}
         loading={index < 4 ? 'eager' : 'lazy'}
         decoding="async"
         onError={() => setFailed(true)}
@@ -70,6 +71,7 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
   const [categoryId, setCategoryId] = useState<string | null>(null);
   const [selection, setSelection] = useState<{ index: number; origin: DOMRect } | null>(null);
   const [zoomLevel, setZoomLevel] = useState(MAX_ZOOM_LEVEL);
+  const [showNavigationHint, setShowNavigationHint] = useState(true);
   const photos = categoryId === null
     ? project.photos
     : project.photos.filter((photo) => (photo.categoryId ?? '') === categoryId);
@@ -108,6 +110,7 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
 
       if (!hasDragged) {
         hasDragged = true;
+        setShowNavigationHint(false);
         gallery.setPointerCapture(event.pointerId);
         gallery.classList.add('is-dragging');
       }
@@ -149,6 +152,18 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
       gallery.removeEventListener('pointerup', stopDragging);
       gallery.removeEventListener('pointercancel', stopDragging);
       gallery.removeEventListener('click', preventClickAfterDrag, true);
+    };
+  }, []);
+
+  useEffect(() => {
+    const gallery = galleryRef.current;
+    const hideHint = () => setShowNavigationHint(false);
+    const timeout = window.setTimeout(hideHint, 4500);
+
+    gallery?.addEventListener('scroll', hideHint, { passive: true, once: true });
+    return () => {
+      window.clearTimeout(timeout);
+      gallery?.removeEventListener('scroll', hideHint);
     };
   }, []);
 
@@ -297,6 +312,14 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
         <span>Zoom</span>
         <strong>{ZOOM_PERCENTAGES[zoomLevel]}%</strong>
       </output>
+
+      <p
+        className={`photo-navigation-hint${showNavigationHint ? ' is-visible' : ''}`}
+        aria-hidden={!showNavigationHint}
+      >
+        <span className="photo-navigation-hint-desktop">Maintenez et glissez pour explorer</span>
+        <span className="photo-navigation-hint-mobile">Glissez pour explorer</span>
+      </p>
 
       {selection && (
         <PhotoLightbox
