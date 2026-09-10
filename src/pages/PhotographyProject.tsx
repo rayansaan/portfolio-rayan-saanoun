@@ -313,13 +313,15 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
         <strong>{ZOOM_PERCENTAGES[zoomLevel]}%</strong>
       </output>
 
-      <p
-        className={`photo-navigation-hint${showNavigationHint ? ' is-visible' : ''}`}
+      <div
+        className={`photo-navigation-overlay${showNavigationHint ? ' is-visible' : ''}`}
         aria-hidden={!showNavigationHint}
       >
-        <span className="photo-navigation-hint-desktop">Maintenez et glissez pour explorer</span>
-        <span className="photo-navigation-hint-mobile">Glissez pour explorer</span>
-      </p>
+        <p className="photo-navigation-hint">
+          <span className="photo-navigation-hint-desktop">Maintenez et glissez pour explorer</span>
+          <span className="photo-navigation-hint-mobile">Glissez pour explorer</span>
+        </p>
+      </div>
 
       {selection && (
         <PhotoLightbox
