@@ -1,10 +1,22 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { photographyProjects } from '@/data/photography';
 import { PhotoLightbox } from '@/components/PhotoLightbox';
 import type { Photograph, PhotographyProject } from '@/types';
 import './photography.css';
+
+const MIN_ZOOM_LEVEL = 0;
+const MAX_ZOOM_LEVEL = 3;
+const ZOOM_PERCENTAGES = [70, 80, 90, 100] as const;
+const WHEEL_STEP_THRESHOLD = 45;
+
+type ZoomAnchor = {
+  x: number;
+  y: number;
+  ratioX: number;
+  ratioY: number;
+};
 
 // Les positions dépendent de l'identifiant, pas d'un tirage à chaque rendu.
 function scatterStyle(id: string): CSSProperties {
@@ -52,8 +64,12 @@ function PhotoTile({ photo, index, onOpen }: {
 
 function ProjectGallery({ project }: { project: PhotographyProject }) {
   const galleryRef = useRef<HTMLDivElement>(null);
+  const zoomLevelRef = useRef(MAX_ZOOM_LEVEL);
+  const zoomAnchorRef = useRef<ZoomAnchor | null>(null);
+  const zoomAnimationFrameRef = useRef<number | null>(null);
   const [categoryId, setCategoryId] = useState<string | null>(null);
   const [selection, setSelection] = useState<{ index: number; origin: DOMRect } | null>(null);
+  const [zoomLevel, setZoomLevel] = useState(MAX_ZOOM_LEVEL);
   const photos = categoryId === null
     ? project.photos
     : project.photos.filter((photo) => (photo.categoryId ?? '') === categoryId);
@@ -137,6 +153,93 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
   }, []);
 
   useEffect(() => {
+    const gallery = galleryRef.current;
+    if (!gallery) return;
+
+    let accumulatedDelta = 0;
+    let lastDirection = 0;
+
+    const handleWheel = (event: WheelEvent) => {
+      // Le geste horizontal reste disponible pour parcourir la galerie.
+      if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+
+      event.preventDefault();
+
+      const multiplier = event.deltaMode === 1
+        ? 16
+        : event.deltaMode === 2
+          ? gallery.clientHeight
+          : 1;
+      const delta = event.deltaY * multiplier;
+      const direction = Math.sign(delta);
+
+      if (direction !== lastDirection) accumulatedDelta = 0;
+      lastDirection = direction;
+      accumulatedDelta += delta;
+
+      if (Math.abs(accumulatedDelta) < WHEEL_STEP_THRESHOLD) return;
+
+      // Molette vers l'avant (delta négatif) = zoom avant.
+      const zoomDirection = accumulatedDelta < 0 ? 1 : -1;
+      accumulatedDelta = 0;
+
+      const currentLevel = zoomLevelRef.current;
+      const nextLevel = Math.min(MAX_ZOOM_LEVEL, Math.max(MIN_ZOOM_LEVEL, currentLevel + zoomDirection));
+      if (nextLevel === currentLevel) return;
+
+      const bounds = gallery.getBoundingClientRect();
+      const x = Math.min(bounds.width, Math.max(0, event.clientX - bounds.left));
+      const y = Math.min(bounds.height, Math.max(0, event.clientY - bounds.top));
+
+      zoomAnchorRef.current = {
+        x,
+        y,
+        ratioX: (gallery.scrollLeft + x) / Math.max(gallery.scrollWidth, 1),
+        ratioY: (gallery.scrollTop + y) / Math.max(gallery.scrollHeight, 1),
+      };
+      zoomLevelRef.current = nextLevel;
+      setZoomLevel(nextLevel);
+    };
+
+    gallery.addEventListener('wheel', handleWheel, { passive: false });
+    return () => gallery.removeEventListener('wheel', handleWheel);
+  }, []);
+
+  useLayoutEffect(() => {
+    const gallery = galleryRef.current;
+    const anchor = zoomAnchorRef.current;
+    if (!gallery || !anchor) return;
+
+    if (zoomAnimationFrameRef.current !== null) {
+      window.cancelAnimationFrame(zoomAnimationFrameRef.current);
+    }
+
+    const startedAt = performance.now();
+    const preserveAnchor = (now: number) => {
+      const maxLeft = Math.max(0, gallery.scrollWidth - gallery.clientWidth);
+      const maxTop = Math.max(0, gallery.scrollHeight - gallery.clientHeight);
+
+      gallery.scrollLeft = Math.min(maxLeft, Math.max(0, anchor.ratioX * gallery.scrollWidth - anchor.x));
+      gallery.scrollTop = Math.min(maxTop, Math.max(0, anchor.ratioY * gallery.scrollHeight - anchor.y));
+
+      if (now - startedAt < 340) {
+        zoomAnimationFrameRef.current = window.requestAnimationFrame(preserveAnchor);
+      } else {
+        zoomAnimationFrameRef.current = null;
+        zoomAnchorRef.current = null;
+      }
+    };
+
+    zoomAnimationFrameRef.current = window.requestAnimationFrame(preserveAnchor);
+    return () => {
+      if (zoomAnimationFrameRef.current !== null) {
+        window.cancelAnimationFrame(zoomAnimationFrameRef.current);
+        zoomAnimationFrameRef.current = null;
+      }
+    };
+  }, [zoomLevel]);
+
+  useEffect(() => {
     galleryRef.current?.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
   }, [categoryId]);
 
@@ -174,7 +277,8 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
       <div
         ref={galleryRef}
         className="photo-scatter"
-        aria-label={`Photographies de ${project.name} — espace navigable horizontalement et verticalement`}
+        data-zoom={zoomLevel}
+        aria-label={`Photographies de ${project.name} — espace navigable horizontalement et verticalement. Molette vers l'avant pour zoomer, vers l'arrière pour dézoomer.`}
         tabIndex={0}
       >
         {photos.map((photo, index) => (
@@ -187,6 +291,11 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
           </div>
         ))}
       </div>
+
+      <output className="photo-zoom-status" aria-live="polite" aria-atomic="true">
+        <span>Zoom</span>
+        <strong>{ZOOM_PERCENTAGES[zoomLevel]}%</strong>
+      </output>
 
       {selection && (
         <PhotoLightbox
