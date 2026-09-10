@@ -10,9 +10,9 @@ import './photography.css';
 function scatterStyle(id: string): CSSProperties {
   const seed = Array.from(id).reduce((value, char) => (value * 31 + char.charCodeAt(0)) >>> 0, 7);
   return {
-    '--photo-angle': `${(seed % 900) / 100 - 4.5}deg`,
-    '--photo-width': `${90 + (seed % 11)}%`,
-    '--photo-shift': `${((seed % 7) - 3) * 0.7}rem`,
+    '--photo-angle': `${(seed % 500) / 100 - 2.5}deg`,
+    '--photo-width': `${92 + (seed % 9)}%`,
+    '--photo-shift': `${((seed % 5) - 2) * 0.35}rem`,
     '--photo-align': seed % 2 === 0 ? 'start' : 'end',
   } as CSSProperties;
 }
@@ -178,12 +178,13 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
         tabIndex={0}
       >
         {photos.map((photo, index) => (
-          <PhotoTile
-            key={photo.id}
-            photo={photo}
-            index={index}
-            onOpen={(origin) => setSelection({ index, origin })}
-          />
+          <div className="photo-slot" key={photo.id}>
+            <PhotoTile
+              photo={photo}
+              index={index}
+              onOpen={(origin) => setSelection({ index, origin })}
+            />
+          </div>
         ))}
       </div>
 
