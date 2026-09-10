@@ -106,21 +106,18 @@
   --gallery-column: clamp(25.2rem, 37.8vw, 41.4rem);
   --gallery-row: clamp(25.2rem, 52.2svh, 36rem);
   --gallery-column-gap: clamp(4.5rem, 6.3vw, 7.2rem);
-  --gallery-row-gap: clamp(4.5rem, 8.1svh, 7.2rem);
 }
 
 .photo-scatter[data-zoom="1"] {
   --gallery-column: clamp(22.4rem, 33.6vw, 36.8rem);
   --gallery-row: clamp(22.4rem, 46.4svh, 32rem);
   --gallery-column-gap: clamp(4rem, 5.6vw, 6.4rem);
-  --gallery-row-gap: clamp(4rem, 7.2svh, 6.4rem);
 }
 
 .photo-scatter[data-zoom="0"] {
   --gallery-column: clamp(19.6rem, 29.4vw, 32.2rem);
   --gallery-row: clamp(19.6rem, 40.6svh, 28rem);
   --gallery-column-gap: clamp(3.5rem, 4.9vw, 5.6rem);
-  --gallery-row-gap: clamp(3.5rem, 6.3svh, 5.6rem);
 }
 
 .photo-scatter.is-dragging { cursor: grabbing; user-select: none; }
@@ -165,8 +162,8 @@
 
 .photo-tile img {
   display: block;
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
@@ -351,27 +348,24 @@
     --gallery-column: min(84vw, 32rem);
     --gallery-row: clamp(26rem, 60svh, 34rem);
     --gallery-column-gap: 3rem;
-    --gallery-row-gap: 4rem;
   }
   .photo-scatter[data-zoom="2"] {
     --gallery-column: min(75.6vw, 28.8rem);
     --gallery-row: clamp(23.4rem, 54svh, 30.6rem);
     --gallery-column-gap: 2.7rem;
-    --gallery-row-gap: 3.6rem;
   }
   .photo-scatter[data-zoom="1"] {
     --gallery-column: min(67.2vw, 25.6rem);
     --gallery-row: clamp(20.8rem, 48svh, 27.2rem);
     --gallery-column-gap: 2.4rem;
-    --gallery-row-gap: 3.2rem;
   }
   .photo-scatter[data-zoom="0"] {
     --gallery-column: min(58.8vw, 22.4rem);
     --gallery-row: clamp(18.2rem, 42svh, 23.8rem);
     --gallery-column-gap: 2.1rem;
-    --gallery-row-gap: 2.8rem;
   }
   .photo-scatter {
+    --gallery-row-gap: 4rem;
     height: 100%;
     min-height: 0;
     padding: clamp(13.5rem, 32svh, 16rem) 1rem 4rem;
