@@ -1,153 +1,143 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerClose,
-} from '@/components/ui/drawer';
-import { ButtonClassic } from './ButtonClassic';
 
+const navLinks = [
+  { name: 'Work', href: '/#projects' },
+  { name: 'About', href: '/about', isRoute: true },
+  { name: 'Contact', href: 'mailto:rayansaan.pro@gmail.com' },
+];
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+    const closeOnHistoryNavigation = () => setIsOpen(false);
+    window.addEventListener('popstate', closeOnHistoryNavigation);
+    window.addEventListener('hashchange', closeOnHistoryNavigation);
+    return () => {
+      window.removeEventListener('popstate', closeOnHistoryNavigation);
+      window.removeEventListener('hashchange', closeOnHistoryNavigation);
     };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: 'Work', href: '/#projects' },
-    { name: 'About', href: '/about', isRoute: true },
-    { name: 'Contact', href: 'mailto:rayansaan.pro@gmail.com' },
-  ];
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const closeOnOutsideClick = (event: PointerEvent) => {
+      if (!headerRef.current?.contains(event.target as Node)) setIsOpen(false);
+    };
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+
+    document.addEventListener('pointerdown', closeOnOutsideClick);
+    document.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.removeEventListener('pointerdown', closeOnOutsideClick);
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [isOpen]);
 
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 w-full px-4 sm:px-6 lg:px-32 xl:px-48 transition-all duration-300 ease-in-out ${
-        isScrolled 
-          ? 'py-2 sm:py-3 bg-white/80 backdrop-blur-md shadow-sm border-b border-black/5' 
-          : 'py-4 sm:py-5 bg-transparent'
-      }`}
-    >
-      <div className="flex items-center justify-between">
-        {/* Logo - Always visible */}
-        <Link 
-          to="/" 
-          className="transition-transform duration-300 hover:scale-105"
+    <header ref={headerRef} className="site-header">
+      <div className="site-navbar">
+        <Link
+          to="/"
+          className="site-logo"
+          aria-label="Retour à l'accueil"
+          onClick={() => setIsOpen(false)}
         >
-          <img 
-            src="/icons/logo-rayan-saan.svg" 
-            alt="Rayan Saanoun" 
-            decoding="async"
-            className={`w-auto transition-all duration-300 ${
-              isScrolled ? 'h-5' : 'h-6'
-            }`}
-          />
+          <img src="/icons/logo-rayan-saan.svg" alt="Rayan Saanoun" decoding="async" />
         </Link>
-        
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
+
+        <nav className="site-desktop-nav" aria-label="Navigation principale">
+          {navLinks.map((link) =>
             link.isRoute ? (
-              <Link
-                key={link.name}
-                to={link.href}
-                className="text-base transition-opacity duration-200 hover:opacity-70"
-              >
+              <Link key={link.name} to={link.href} className="site-nav-link">
                 {link.name}
               </Link>
             ) : (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-base transition-opacity duration-200 hover:opacity-70"
-              >
+              <a key={link.name} href={link.href} className="site-nav-link">
                 {link.name}
               </a>
-            )
-          ))}
+            ),
+          )}
           <a
             href="/cv/CV-Rayan-Saanoun-2026.pdf"
             target="_blank"
             rel="noopener noreferrer"
+            className="site-cv-link"
           >
-            <ButtonClassic>
-              Mon CV
-            </ButtonClassic>
+            Mon CV
           </a>
-        </div>
+        </nav>
 
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsOpen(true)}
-          className="md:hidden p-2 -mr-2 transition-opacity duration-200 hover:opacity-70"
-          aria-label="Ouvrir le menu"
-        >
-          <Menu className="w-6 h-6" />
-        </button>
+        <div className="site-mobile-actions">
+          <a
+            href="/cv/CV-Rayan-Saanoun-2026.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="site-cv-link"
+          >
+            Mon CV
+          </a>
+          <button
+            ref={menuButtonRef}
+            type="button"
+            className={`site-menu-button${isOpen ? ' is-open' : ''}`}
+            onClick={() => setIsOpen((current) => !current)}
+            aria-label={isOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+            aria-expanded={isOpen}
+            aria-controls="mobile-navigation"
+          >
+            <span className="site-menu-icon" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </span>
+          </button>
+        </div>
       </div>
 
-      {/* Mobile Drawer */}
-      <Drawer open={isOpen} onOpenChange={setIsOpen} direction="right">
-        <DrawerContent className="w-3/4 max-w-sm bg-white">
-          <DrawerHeader className="border-b border-black/5">
-            <div className="flex items-center justify-between">
-              <DrawerTitle className="text-lg font-medium">Menu</DrawerTitle>
-              <DrawerClose asChild>
-                <button
-                  className="p-2 -mr-2 transition-opacity duration-200 hover:opacity-70"
-                  aria-label="Fermer le menu"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </DrawerClose>
-            </div>
-          </DrawerHeader>
-          <nav className="flex flex-col p-6">
-            {navLinks.map((link) => (
-              link.isRoute ? (
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-2xl font-medium py-4 transition-opacity duration-200 hover:opacity-70"
-                >
-                  {link.name}
-                </Link>
-              ) : (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-2xl font-medium py-4 transition-opacity duration-200 hover:opacity-70"
-                >
-                  {link.name}
-                </a>
-              )
+      <AnimatePresence>
+        {isOpen && (
+          <motion.nav
+            id="mobile-navigation"
+            className="site-mobile-menu"
+            aria-label="Navigation mobile"
+            initial={{ opacity: 0, y: -8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {navLinks.map((link, index) => (
+              <motion.div
+                key={link.name}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.04 + index * 0.04 }}
+              >
+                {link.isRoute ? (
+                  <Link to={link.href} className="site-mobile-link" onClick={() => setIsOpen(false)}>
+                    {link.name}
+                  </Link>
+                ) : (
+                  <a href={link.href} className="site-mobile-link" onClick={() => setIsOpen(false)}>
+                    {link.name}
+                  </a>
+                )}
+              </motion.div>
             ))}
-            <a
-              href="/cv/CV-Rayan-Saanoun-2026.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setIsOpen(false)}
-              className="block mt-4"
-            >
-              <ButtonClassic className="w-full">
-                Mon CV
-              </ButtonClassic>
-            </a>
-          </nav>
-        </DrawerContent>
-      </Drawer>
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
