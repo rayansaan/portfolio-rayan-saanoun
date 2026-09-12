@@ -70,16 +70,6 @@
   background: #e7e7e4;
 }
 
-.about-profile-card::after {
-  position: absolute;
-  inset: auto -18% -48% 38%;
-  height: 105%;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
-  content: '';
-  filter: blur(4px);
-}
-
 .about-profile-copy {
   position: relative;
   z-index: 2;
@@ -368,7 +358,7 @@
   text-align: right;
 }
 
-/* Marquees */
+/* Stack gravity */
 .about-stack-card {
   grid-column: span 12;
   padding: 21px 0;
@@ -379,6 +369,37 @@
 .about-companies-card > .about-card-label {
   margin-left: 24px;
 }
+
+.about-stack-gravity {
+  position: absolute;
+  inset: 39px 14px 7px;
+}
+
+.about-stack-row {
+  position: absolute;
+  left: 50%;
+  display: flex;
+  width: max-content;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transform: translateX(-50%);
+}
+
+.about-stack-row-base {
+  bottom: 3px;
+}
+
+.about-stack-row-top {
+  bottom: 39px;
+}
+
+.about-stack-pill {
+  box-shadow: 0 7px 15px rgba(17, 15, 15, 0.065), inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  will-change: transform, opacity;
+}
+
+/* Marquees */
 
 .about-marquee {
   position: absolute;
@@ -399,10 +420,6 @@
   will-change: transform;
 }
 
-.about-tools-track {
-  animation: about-marquee-left 28s linear infinite;
-}
-
 .about-pill {
   display: inline-flex;
   min-height: 31px;
@@ -418,7 +435,6 @@
   white-space: nowrap;
 }
 
-.about-stack-card:hover .about-marquee-track,
 .about-companies-card:hover .about-marquee-track {
   animation-play-state: paused;
 }
@@ -525,26 +541,26 @@
   background: #f7f7f5;
 }
 
-.about-company-marquee { bottom: 23px; }
+.about-company-marquee { bottom: 18px; }
 
 .about-companies-track {
-  gap: 30px;
-  padding-right: 30px;
+  gap: 36px;
+  padding-right: 36px;
   animation: about-marquee-right 31s linear infinite;
 }
 
 .about-company-logo {
   display: grid;
-  min-width: 92px;
-  height: 34px;
+  min-width: 108px;
+  height: 42px;
   place-items: center;
 }
 
 .about-company-logo img {
   display: block;
   width: auto;
-  max-width: 96px;
-  height: 26px;
+  max-width: 112px;
+  height: 31px;
   object-fit: contain;
   filter: grayscale(1);
   opacity: 0.63;
@@ -566,9 +582,9 @@
 }
 
 .about-skills-list .about-pill {
-  min-height: 25px;
-  padding: 5px 9px;
-  font-size: 10px;
+  min-height: 31px;
+  padding: 7px 12px;
+  font-size: 11px;
 }
 
 /* Contact */
@@ -627,11 +643,6 @@
 @keyframes about-availability-breathe {
   0% { opacity: 0.62; transform: scale(0.8); }
   70%, 100% { opacity: 0; transform: scale(2.6); }
-}
-
-@keyframes about-marquee-left {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
 }
 
 @keyframes about-marquee-right {
@@ -724,6 +735,19 @@
   .about-profile-portrait { right: -82px; width: 82%; opacity: 0.7; }
   .about-experience-list time { max-width: 72px; }
   .about-contact-icon { display: none; }
+
+  .about-stack-row { gap: 5px; }
+  .about-stack-pill {
+    min-height: 29px;
+    padding: 6px 9px;
+    font-size: 10px;
+  }
+
+  .about-skills-list .about-pill {
+    min-height: 29px;
+    padding: 6px 10px;
+    font-size: 10px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
