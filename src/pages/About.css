@@ -1,0 +1,751 @@
+.about-page {
+  width: 100%;
+  padding: 136px 16px 96px;
+}
+
+.about-bento {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-flow: dense;
+  grid-auto-rows: 148px;
+  gap: 12px;
+  width: min(896px, 100%);
+  margin: 0 auto;
+}
+
+.about-card {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid rgba(17, 15, 15, 0.055);
+  border-radius: 20px;
+  color: #110f0f;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  transition: box-shadow 300ms ease, border-color 300ms ease;
+}
+
+.about-interactive-card:hover,
+.about-interactive-card:focus-visible {
+  border-color: rgba(17, 15, 15, 0.1);
+  box-shadow: 0 14px 40px rgba(17, 15, 15, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.about-interactive-card:focus-visible {
+  outline: 2px solid #110f0f;
+  outline-offset: 3px;
+}
+
+.about-card-label {
+  margin: 0;
+  color: rgba(17, 15, 15, 0.5);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.about-card-arrow {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 18px;
+  height: 18px;
+  opacity: 0.42;
+  transition: opacity 250ms ease, transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-interactive-card:hover .about-card-arrow,
+.about-interactive-card:focus-visible .about-card-arrow {
+  opacity: 1;
+  transform: translate(2px, -2px);
+}
+
+/* Profile */
+.about-profile-card {
+  grid-column: span 7;
+  grid-row: span 2;
+  padding: 28px;
+  background: #e4ecef;
+}
+
+.about-profile-card::after {
+  position: absolute;
+  inset: auto -18% -48% 38%;
+  height: 105%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  content: '';
+  filter: blur(4px);
+}
+
+.about-profile-copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  width: 61%;
+  height: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.about-profile-copy h1 {
+  margin: 26px 0 2px;
+  font-size: clamp(2rem, 4.2vw, 2.75rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+
+.about-profile-role {
+  margin: 0;
+  color: rgba(17, 15, 15, 0.58);
+  font-size: 16px;
+}
+
+.about-profile-bio {
+  max-width: 320px;
+  margin: 22px 0 0;
+  font-size: 14px;
+  line-height: 1.48;
+}
+
+.about-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  color: rgba(17, 15, 15, 0.56);
+  font-size: 12px;
+}
+
+.about-location svg {
+  width: 14px;
+  height: 14px;
+}
+
+.about-profile-portrait {
+  position: absolute;
+  z-index: 1;
+  right: -62px;
+  bottom: -42px;
+  width: 61%;
+  height: auto;
+  pointer-events: none;
+  filter: contrast(1.04);
+}
+
+/* Availability */
+.about-availability-card {
+  grid-column: span 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px;
+  background: #e7f3e8;
+}
+
+.about-availability-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #16803a;
+  font-size: clamp(1.45rem, 3vw, 1.85rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.about-availability-card > p {
+  margin: 11px 0 0 24px;
+  color: rgba(22, 128, 58, 0.7);
+  font-size: 12px;
+}
+
+.about-availability-dot {
+  position: relative;
+  display: grid;
+  width: 12px;
+  height: 12px;
+  flex: none;
+  place-items: center;
+}
+
+.about-availability-dot > span {
+  position: relative;
+  z-index: 2;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #20a94e;
+  box-shadow: 0 0 0 3px rgba(32, 169, 78, 0.12);
+}
+
+.about-availability-dot::after {
+  position: absolute;
+  inset: 1px;
+  border: 1px solid #20a94e;
+  border-radius: 50%;
+  content: '';
+  animation: about-availability-breathe 2.4s ease-out infinite;
+}
+
+/* LinkedIn and years */
+.about-linkedin-card {
+  grid-column: span 2;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: #e8eef8;
+}
+
+.about-linkedin-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: #0a66c2;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.about-linkedin-content svg {
+  width: 25px;
+  height: 25px;
+  stroke-width: 1.6;
+}
+
+.about-linkedin-card .about-card-arrow {
+  top: 12px;
+  right: 12px;
+  width: 14px;
+  height: 14px;
+}
+
+.about-years-card {
+  grid-column: span 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: #f4eee5;
+  text-align: center;
+}
+
+.about-years-card strong {
+  font-size: clamp(2.8rem, 6vw, 4rem);
+  font-weight: 600;
+  line-height: 0.85;
+  letter-spacing: -0.07em;
+}
+
+.about-years-card span {
+  margin-top: 13px;
+  color: rgba(17, 15, 15, 0.62);
+  font-size: 12px;
+}
+
+/* Approach */
+.about-statement-card {
+  grid-column: span 7;
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  background: #f3e9dd;
+}
+
+.about-statement-card h2 {
+  max-width: 470px;
+  margin: auto 0;
+  font-size: clamp(2rem, 4.4vw, 3rem);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+}
+
+.about-statement-card h2 span {
+  background: linear-gradient(100deg, #ce8b25 0%, #8b77cd 45%, #ce8b25 100%);
+  background-size: 220% 100%;
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+  animation: about-gradient-shift 7s ease-in-out infinite;
+}
+
+.about-approach-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.about-approach-steps span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 11px;
+  border: 1px solid rgba(17, 15, 15, 0.06);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.52);
+  font-size: 12px;
+}
+
+.about-approach-steps i {
+  color: rgba(17, 15, 15, 0.38);
+  font-size: 9px;
+  font-style: normal;
+}
+
+/* Experience */
+.about-experience-card {
+  grid-column: span 5;
+  grid-row: span 2;
+  padding: 24px;
+  background: #eee9f4;
+}
+
+.about-card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.about-card-heading > svg {
+  width: 17px;
+  height: 17px;
+  color: rgba(17, 15, 15, 0.38);
+  stroke-width: 1.6;
+}
+
+.about-experience-list {
+  display: flex;
+  margin: 22px 0 0;
+  padding: 0;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+}
+
+.about-experience-list li {
+  display: flex;
+  min-height: 65px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 12px;
+  border: 1px solid rgba(17, 15, 15, 0.045);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.56);
+  transition: background-color 220ms ease, transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-experience-list li:hover {
+  background: rgba(255, 255, 255, 0.82);
+  transform: translateX(3px);
+}
+
+.about-experience-list li div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.about-experience-list strong {
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.about-experience-list span,
+.about-experience-list time {
+  color: rgba(17, 15, 15, 0.52);
+  font-size: 10px;
+}
+
+.about-experience-list time {
+  flex: none;
+  text-align: right;
+}
+
+/* Marquees */
+.about-stack-card {
+  grid-column: span 12;
+  padding: 21px 0;
+  background: #edf0e5;
+}
+
+.about-stack-card > .about-card-label,
+.about-companies-card > .about-card-label {
+  margin-left: 24px;
+}
+
+.about-marquee {
+  position: absolute;
+  right: 0;
+  bottom: 20px;
+  left: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.about-marquee-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 9px;
+  padding-right: 9px;
+  will-change: transform;
+}
+
+.about-tools-track {
+  animation: about-marquee-left 28s linear infinite;
+}
+
+.about-pill {
+  display: inline-flex;
+  min-height: 31px;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 12px;
+  border: 1px solid rgba(17, 15, 15, 0.055);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.68);
+  box-shadow: 0 3px 10px rgba(17, 15, 15, 0.035);
+  font-size: 12px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.about-stack-card:hover .about-marquee-track,
+.about-companies-card:hover .about-marquee-track {
+  animation-play-state: paused;
+}
+
+/* CV */
+.about-cv-card {
+  grid-column: span 5;
+  grid-row: span 2;
+  padding: 24px;
+  background: #e8eeec;
+}
+
+.about-cv-copy {
+  position: relative;
+  z-index: 2;
+  margin-top: 26px;
+}
+
+.about-cv-copy h2 {
+  margin: 0;
+  font-size: 27px;
+  font-weight: 550;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.about-cv-copy p {
+  max-width: 190px;
+  margin: 8px 0 0;
+  color: rgba(17, 15, 15, 0.52);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.about-cv-paper {
+  position: absolute;
+  right: 28px;
+  bottom: -104px;
+  left: 28px;
+  min-height: 210px;
+  padding: 22px;
+  border: 1px solid rgba(17, 15, 15, 0.07);
+  border-radius: 14px 14px 0 0;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 -12px 36px rgba(17, 15, 15, 0.07);
+  transform: rotate(-1.5deg);
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1), bottom 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-cv-card:hover .about-cv-paper,
+.about-cv-card:focus-visible .about-cv-paper {
+  bottom: -88px;
+  transform: rotate(0deg);
+}
+
+.about-cv-paper-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.about-cv-paper-head > span {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 50%;
+  background: #110f0f;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.about-cv-paper-head div {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-cv-paper-head strong { font-size: 10px; }
+.about-cv-paper-head small { color: rgba(17, 15, 15, 0.45); font-size: 7px; }
+.about-cv-paper > small { color: rgba(17, 15, 15, 0.42); font-size: 6px; letter-spacing: 0.08em; }
+
+.about-cv-paper-rule {
+  height: 1px;
+  margin: 16px 0 12px;
+  background: rgba(17, 15, 15, 0.08);
+}
+
+.about-cv-paper-line {
+  width: 72%;
+  height: 5px;
+  margin-top: 8px;
+  border-radius: 99px;
+  background: rgba(17, 15, 15, 0.08);
+}
+
+.about-cv-paper-line-long { width: 100%; }
+.about-cv-paper-line-short { width: 44%; }
+
+/* Companies */
+.about-companies-card {
+  grid-column: span 7;
+  padding: 21px 0;
+  background: #f3eee7;
+}
+
+.about-company-marquee { bottom: 23px; }
+
+.about-companies-track {
+  gap: 30px;
+  padding-right: 30px;
+  animation: about-marquee-right 31s linear infinite;
+}
+
+.about-company-logo {
+  display: grid;
+  min-width: 92px;
+  height: 34px;
+  place-items: center;
+}
+
+.about-company-logo img {
+  display: block;
+  width: auto;
+  max-width: 96px;
+  height: 26px;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.63;
+}
+
+/* Skills */
+.about-skills-card {
+  grid-column: span 7;
+  padding: 20px 24px;
+  background: #eaedf4;
+}
+
+.about-skills-list {
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 17px;
+}
+
+.about-skills-list .about-pill {
+  min-height: 25px;
+  padding: 5px 9px;
+  font-size: 10px;
+}
+
+/* Contact */
+.about-contact-card {
+  grid-column: span 12;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 24px 28px;
+  background: #110f0f;
+  color: #f6f3f0;
+}
+
+.about-contact-card .about-card-label { color: rgba(246, 243, 240, 0.46); }
+
+.about-contact-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  flex: none;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.about-contact-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.6;
+}
+
+.about-contact-card h2 {
+  margin: 8px 0 0;
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.about-contact-arrow {
+  width: 31px;
+  height: 31px;
+  margin-left: auto;
+  opacity: 0.72;
+  stroke-width: 1.4;
+  transition: opacity 250ms ease, transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-contact-card:hover .about-contact-arrow,
+.about-contact-card:focus-visible .about-contact-arrow {
+  opacity: 1;
+  transform: translate(4px, -4px);
+}
+
+@keyframes about-availability-breathe {
+  0% { opacity: 0.62; transform: scale(0.8); }
+  70%, 100% { opacity: 0; transform: scale(2.6); }
+}
+
+@keyframes about-gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes about-marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes about-marquee-right {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+@media (max-width: 720px) {
+  .about-page {
+    padding: 112px 12px 72px;
+  }
+
+  .about-bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: auto;
+    gap: 10px;
+  }
+
+  .about-profile-card,
+  .about-availability-card,
+  .about-statement-card,
+  .about-experience-card,
+  .about-stack-card,
+  .about-cv-card,
+  .about-companies-card,
+  .about-skills-card,
+  .about-contact-card {
+    grid-column: span 2;
+    grid-row: auto;
+  }
+
+  .about-profile-card {
+    min-height: 360px;
+    padding: 22px;
+  }
+
+  .about-profile-copy { width: 78%; }
+  .about-profile-copy h1 { margin-top: 22px; }
+  .about-profile-bio { max-width: 270px; font-size: 13px; }
+  .about-profile-portrait { right: -72px; bottom: -36px; width: 76%; opacity: 0.82; }
+
+  .about-availability-card { min-height: 126px; padding: 22px; }
+  .about-availability-card > p { margin-left: 24px; }
+
+  .about-linkedin-card,
+  .about-years-card {
+    min-height: 142px;
+  }
+
+  .about-linkedin-card { grid-column: span 1; }
+  .about-years-card { grid-column: span 1; }
+
+  .about-statement-card {
+    min-height: 360px;
+    padding: 24px;
+  }
+
+  .about-statement-card h2 {
+    margin: auto 0;
+    font-size: clamp(2.15rem, 10vw, 3.1rem);
+  }
+
+  .about-experience-card { min-height: 318px; padding: 22px; }
+  .about-experience-list li { min-height: 64px; }
+
+  .about-stack-card,
+  .about-companies-card { min-height: 146px; }
+
+  .about-cv-card { min-height: 320px; padding: 22px; }
+  .about-cv-paper { right: 24px; left: 24px; }
+
+  .about-skills-card { min-height: 190px; padding: 22px; }
+
+  .about-contact-card {
+    min-height: 154px;
+    align-items: flex-start;
+    padding: 24px;
+  }
+
+  .about-contact-arrow {
+    position: absolute;
+    right: 22px;
+    bottom: 22px;
+  }
+}
+
+@media (max-width: 390px) {
+  .about-profile-copy { width: 88%; }
+  .about-profile-bio { max-width: 240px; }
+  .about-profile-portrait { right: -82px; width: 82%; opacity: 0.7; }
+  .about-experience-list time { max-width: 72px; }
+  .about-contact-icon { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-availability-dot::after,
+  .about-statement-card h2 span,
+  .about-marquee-track {
+    animation: none;
+  }
+
+  .about-cv-paper,
+  .about-card-arrow,
+  .about-contact-arrow,
+  .about-experience-list li {
+    transition-duration: 0.01ms;
+  }
+}

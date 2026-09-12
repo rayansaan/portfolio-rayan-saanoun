@@ -1,193 +1,332 @@
-import { motion } from 'framer-motion';
-import { Mail, MapPin, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import type { ReactNode } from 'react';
+import { motion, type Variants } from 'framer-motion';
+import {
+  ArrowUpRight,
+  BriefcaseBusiness,
+  Download,
+  Linkedin,
+  Mail,
+  MapPin,
+} from 'lucide-react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-
-const services = [
-  'UX Research',
-  'UX/UI Design',
-  'Design System',
-  'Prototyping',
-  'Design Thinking',
-  'Product Strategy',
-  'User Testing',
-  'Workshop Facilitation',
-];
+import './About.css';
 
 const experiences = [
   {
     title: 'Product Designer',
     company: 'Moove',
-    location: 'Paris',
-    period: '2022 – 2024',
+    period: '2022 — 2024',
   },
   {
     title: 'Designer OPS',
     company: 'Cdiscount',
-    location: 'Bordeaux',
-    period: 'Stage',
+    period: '2024',
   },
   {
     title: 'UX/UI Designer',
     company: 'Nash, Veeton & Rakoono',
-    location: 'Paris',
-    period: '2023 – 2024',
+    period: '2023 — 2024',
   },
 ];
+
+const tools = ['Figma', 'FigJam', 'Miro', 'Notion', 'Maze', 'Jira', 'Webflow', 'Bubble.io'];
+
+const skills = [
+  'UX Research',
+  'UX/UI Design',
+  'Product Strategy',
+  'Prototyping',
+  'Design System',
+  'Design Ops',
+  'User Testing',
+  'Workshops',
+];
+
+const companies = [
+  { name: 'Cdiscount', src: '/logos/carousel/C discount.svg' },
+  { name: 'Michelin', src: '/logos/carousel/Michelin.svg' },
+  { name: 'Moove', src: '/logos/carousel/moove.svg' },
+  { name: 'Nash', src: '/logos/carousel/Nash.svg' },
+  { name: 'Rakoono', src: '/logos/carousel/Rakoono.svg' },
+  { name: 'Veeton', src: '/logos/carousel/Veeton.svg' },
+];
+
+interface CardOrigin {
+  x?: number;
+  y?: number;
+  rotate?: number;
+  delay?: number;
+}
+
+const cardVariants: Variants = {
+  hidden: (origin: CardOrigin = {}) => ({
+    opacity: 0,
+    x: origin.x ?? 0,
+    y: origin.y ?? 28,
+    rotate: origin.rotate ?? 0,
+    scale: 0.96,
+    filter: 'blur(10px)',
+  }),
+  visible: (origin: CardOrigin = {}) => ({
+    opacity: 1,
+    x: 0,
+    y: 0,
+    rotate: 0,
+    scale: 1,
+    filter: 'blur(0px)',
+    transition: {
+      type: 'spring',
+      stiffness: 115,
+      damping: 18,
+      mass: 0.82,
+      delay: origin.delay ?? 0,
+      opacity: { duration: 0.45, delay: origin.delay ?? 0 },
+      filter: { duration: 0.5, delay: origin.delay ?? 0 },
+      delayChildren: 0.22,
+      staggerChildren: 0.07,
+    },
+  }),
+};
+
+const revealVariants: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const listVariants: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+
+const cardMotion = (origin: CardOrigin) => ({
+  custom: origin,
+  variants: cardVariants,
+  initial: 'hidden' as const,
+  whileInView: 'visible' as const,
+  viewport: { once: true, amount: 0.2 },
+});
+
+function CardLabel({ children }: { children: ReactNode }) {
+  return <motion.p variants={revealVariants} className="about-card-label">{children}</motion.p>;
+}
 
 export function About() {
   return (
     <div className="min-h-screen">
       <Header />
-      
-      <main className="pt-32 pb-20">
-        {/* Back Button */}
-        <div className="px-4 sm:px-6 lg:px-32 xl:px-48 mb-12">
-          <Link 
-            to="/" 
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors duration-300 group"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
-            <span>Retour</span>
-          </Link>
-        </div>
 
-        <div className="px-4 sm:px-6 lg:px-32 xl:px-48">
-          <div className="max-w-4xl mx-auto">
-            {/* Hero Section */}
-            <motion.div
-              className="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-12 mb-16"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-muted overflow-hidden flex-shrink-0">
-                <img
-                  src="/images/profile/portrait-rayan-portfolio.png"
-                  alt="Portrait de Rayan Saanoun"
-                  className="h-full w-full object-cover object-top"
-                  decoding="async"
-                />
-              </div>
-              
-              {/* Title & Info */}
-              <div className="flex flex-col gap-4">
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight">
-                  Rayan Saanoun
-                </h1>
-                <div className="flex flex-col gap-2 text-muted-foreground">
-                  <span className="text-lg">Product Designer</span>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4" />
-                    <span>Bordeaux, France</span>
+      <main className="about-page">
+        <section className="about-bento" aria-label="À propos de Rayan Saanoun">
+          <motion.article
+            className="about-card about-profile-card"
+            {...cardMotion({ x: -34, y: 24, rotate: -1.2 })}
+          >
+            <div className="about-profile-copy">
+              <CardLabel>About me</CardLabel>
+              <motion.h1 variants={revealVariants}>Rayan Saanoun</motion.h1>
+              <motion.p variants={revealVariants} className="about-profile-role">
+                Product Designer
+              </motion.p>
+              <motion.p variants={revealVariants} className="about-profile-bio">
+                Je transforme des sujets complexes en expériences digitales simples, utiles et alignées avec les
+                objectifs business.
+              </motion.p>
+              <motion.div variants={revealVariants} className="about-location">
+                <MapPin aria-hidden="true" />
+                Bordeaux, France
+              </motion.div>
+            </div>
+            <motion.img
+              variants={{
+                hidden: { opacity: 0, y: 70, scale: 0.9 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] },
+                },
+              }}
+              src="/images/profile/portrait-rayan-portfolio.png"
+              alt="Portrait de Rayan Saanoun"
+              className="about-profile-portrait"
+              decoding="async"
+            />
+          </motion.article>
+
+          <motion.a
+            href="mailto:rayansaan.pro@gmail.com"
+            className="about-card about-availability-card about-interactive-card"
+            aria-label="Rayan est disponible, envoyer un e-mail"
+            {...cardMotion({ x: 30, y: -18, rotate: 1, delay: 0.08 })}
+          >
+            <motion.div variants={revealVariants} className="about-availability-status">
+              <span className="about-availability-dot" aria-hidden="true">
+                <span />
+              </span>
+              <span>Available</span>
+            </motion.div>
+            <motion.p variants={revealVariants}>Pour des missions Product Design</motion.p>
+            <ArrowUpRight className="about-card-arrow" aria-hidden="true" />
+          </motion.a>
+
+          <motion.a
+            href="https://www.linkedin.com/in/rayan-saanoun-72baa4146/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="about-card about-linkedin-card about-interactive-card"
+            aria-label="Voir le profil LinkedIn de Rayan Saanoun"
+            {...cardMotion({ x: 24, y: 24, rotate: -0.8, delay: 0.14 })}
+          >
+            <motion.div variants={revealVariants} className="about-linkedin-content">
+              <Linkedin aria-hidden="true" />
+              <span>LinkedIn</span>
+            </motion.div>
+            <ArrowUpRight className="about-card-arrow" aria-hidden="true" />
+          </motion.a>
+
+          <motion.article
+            className="about-card about-years-card"
+            {...cardMotion({ x: 28, y: 26, rotate: 1.1, delay: 0.18 })}
+          >
+            <motion.strong variants={revealVariants}>4+</motion.strong>
+            <motion.span variants={revealVariants}>années d’expérience</motion.span>
+          </motion.article>
+
+          <motion.article
+            className="about-card about-statement-card"
+            {...cardMotion({ x: -28, y: 36, rotate: 0.8 })}
+          >
+            <CardLabel>Mon approche</CardLabel>
+            <motion.h2 variants={revealVariants}>
+              Transformer la complexité en produits <span>simples et utiles.</span>
+            </motion.h2>
+            <motion.div variants={listVariants} className="about-approach-steps" aria-label="Recherche, stratégie et design">
+              {['Recherche', 'Stratégie', 'Design'].map((step, index) => (
+                <motion.span variants={revealVariants} key={step}>
+                  <i>{String(index + 1).padStart(2, '0')}</i>
+                  {step}
+                </motion.span>
+              ))}
+            </motion.div>
+          </motion.article>
+
+          <motion.article
+            className="about-card about-experience-card"
+            {...cardMotion({ x: 32, y: 30, rotate: -1 })}
+          >
+            <div className="about-card-heading">
+              <CardLabel>Expérience</CardLabel>
+              <BriefcaseBusiness aria-hidden="true" />
+            </div>
+            <motion.ul variants={listVariants} className="about-experience-list">
+              {experiences.map((experience) => (
+                <motion.li variants={revealVariants} key={`${experience.company}-${experience.title}`}>
+                  <div>
+                    <strong>{experience.title}</strong>
+                    <span>{experience.company}</span>
                   </div>
-                </div>
+                  <time>{experience.period}</time>
+                </motion.li>
+              ))}
+            </motion.ul>
+          </motion.article>
+
+          <motion.article
+            className="about-card about-stack-card"
+            {...cardMotion({ x: -20, y: 28, rotate: -0.5 })}
+          >
+            <CardLabel>Stack</CardLabel>
+            <span className="sr-only">{tools.join(', ')}</span>
+            <motion.div variants={revealVariants} className="about-marquee" aria-hidden="true">
+              <div className="about-marquee-track about-tools-track">
+                {[...tools, ...tools].map((tool, index) => (
+                  <span className="about-pill" key={`${tool}-${index}`}>{tool}</span>
+                ))}
               </div>
             </motion.div>
+          </motion.article>
 
-            {/* Bio Section */}
-            <motion.section
-              className="mb-16"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <h2 className="text-2xl sm:text-3xl font-medium mb-6">À propos</h2>
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
-                <p>
-                  Product Designer basé à Bordeaux, je transforme des sujets complexes en expériences digitales
-                  simples, utiles et alignées avec les objectifs business.
-                </p>
-                <p>
-                  Ma méthode combine recherche utilisateur, cadrage produit, prototypage et tests. Je travaille
-                  au plus près des développeurs et des équipes métier pour construire des solutions réalistes,
-                  cohérentes et faciles à faire évoluer.
-                </p>
-                <p>
-                  J'ai notamment travaillé sur des produits liés à l'aviation d'affaires, aux énergies
-                  renouvelables, à la mode et à l'intelligence artificielle.
-                </p>
+          <motion.a
+            href="/cv/CV-Rayan-Saanoun-2026.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="about-card about-cv-card about-interactive-card"
+            aria-label="Ouvrir le CV de Rayan Saanoun"
+            {...cardMotion({ x: -28, y: 38, rotate: 1 })}
+          >
+            <div className="about-card-heading">
+              <CardLabel>Mon parcours</CardLabel>
+              <Download aria-hidden="true" />
+            </div>
+            <motion.div variants={revealVariants} className="about-cv-copy">
+              <h2>Voir mon CV</h2>
+              <p>Expériences, formation et compétences</p>
+            </motion.div>
+            <motion.div variants={revealVariants} className="about-cv-paper" aria-hidden="true">
+              <div className="about-cv-paper-head">
+                <span>RS</span>
+                <div>
+                  <strong>Rayan Saanoun</strong>
+                  <small>Product Designer</small>
+                </div>
               </div>
-            </motion.section>
+              <div className="about-cv-paper-rule" />
+              <small>EXPÉRIENCE</small>
+              <div className="about-cv-paper-line about-cv-paper-line-long" />
+              <div className="about-cv-paper-line" />
+              <div className="about-cv-paper-line about-cv-paper-line-short" />
+            </motion.div>
+          </motion.a>
 
-            {/* Services Section */}
-            <motion.section
-              className="mb-16"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <h2 className="text-2xl sm:text-3xl font-medium mb-6">Services</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {services.map((service, index) => (
-                  <motion.div
-                    key={service}
-                    className="px-4 py-3 bg-muted rounded-lg text-center"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.2 + index * 0.05 }}
-                  >
-                    <span className="text-sm font-medium">{service}</span>
-                  </motion.div>
+          <motion.article
+            className="about-card about-companies-card"
+            {...cardMotion({ x: 30, y: 26, rotate: -0.6, delay: 0.06 })}
+          >
+            <CardLabel>Collaborations</CardLabel>
+            <span className="sr-only">{companies.map((company) => company.name).join(', ')}</span>
+            <motion.div variants={revealVariants} className="about-marquee about-company-marquee" aria-hidden="true">
+              <div className="about-marquee-track about-companies-track">
+                {[...companies, ...companies].map((company, index) => (
+                  <span className="about-company-logo" key={`${company.name}-${index}`}>
+                    <img src={company.src} alt="" decoding="async" />
+                  </span>
                 ))}
               </div>
-            </motion.section>
+            </motion.div>
+          </motion.article>
 
-            {/* Experience Section */}
-            <motion.section
-              className="mb-16"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <h2 className="text-2xl sm:text-3xl font-medium mb-6">Expérience</h2>
-              <div className="space-y-6">
-                {experiences.map((exp, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex flex-col sm:flex-row sm:items-center justify-between py-4 border-b border-border"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                  >
-                    <div className="flex flex-col gap-1">
-                      <h3 className="text-lg font-medium">{exp.title}</h3>
-                      <span className="text-muted-foreground">
-                        {exp.company} — {exp.location}
-                      </span>
-                    </div>
-                    <span className="text-muted-foreground text-sm mt-2 sm:mt-0">
-                      {exp.period}
-                    </span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.section>
+          <motion.article
+            className="about-card about-skills-card"
+            {...cardMotion({ x: 26, y: 34, rotate: 0.7, delay: 0.1 })}
+          >
+            <CardLabel>Compétences</CardLabel>
+            <motion.div variants={listVariants} className="about-skills-list">
+              {skills.map((skill) => (
+                <motion.span variants={revealVariants} className="about-pill" key={skill}>{skill}</motion.span>
+              ))}
+            </motion.div>
+          </motion.article>
 
-            {/* Contact CTA */}
-            <motion.section
-              className="text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              <h2 className="text-2xl sm:text-3xl font-medium mb-4">
-                Travaillons ensemble
-              </h2>
-              <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-                Vous avez un projet en tête ? Discutons-en autour d'un café.
-              </p>
-              <Button asChild size="lg">
-                <a href="mailto:rayansaan.pro@gmail.com" className="inline-flex items-center gap-2">
-                  <Mail className="w-4 h-4" />
-                  Me contacter
-                </a>
-              </Button>
-            </motion.section>
-          </div>
-        </div>
+          <motion.a
+            href="mailto:rayansaan.pro@gmail.com"
+            className="about-card about-contact-card about-interactive-card"
+            {...cardMotion({ y: 36, rotate: -0.5 })}
+          >
+            <motion.div variants={revealVariants} className="about-contact-icon">
+              <Mail aria-hidden="true" />
+            </motion.div>
+            <motion.div variants={revealVariants}>
+              <CardLabel>Contact</CardLabel>
+              <h2>Un projet en tête ? Parlons-en.</h2>
+            </motion.div>
+            <ArrowUpRight className="about-contact-arrow" aria-hidden="true" />
+          </motion.a>
+        </section>
       </main>
 
       <Footer />
