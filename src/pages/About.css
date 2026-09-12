@@ -361,7 +361,6 @@
 /* Stack gravity */
 .about-stack-card {
   grid-column: span 12;
-  grid-row: span 2;
   padding: 21px 0;
   background: #f7f7f5;
 }
@@ -720,7 +719,7 @@
   .about-experience-card { min-height: 318px; padding: 22px; }
   .about-experience-list li { min-height: 64px; }
 
-  .about-stack-card { min-height: 260px; }
+  .about-stack-card,
   .about-companies-card { min-height: 146px; }
 
   .about-cv-card { min-height: 320px; padding: 22px; }

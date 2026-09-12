@@ -13,7 +13,7 @@ interface PillBody {
   height: number;
 }
 
-const spawnPositions = [0.44, 0.56, 0.49, 0.4, 0.59, 0.46, 0.54, 0.43];
+const spawnPositions = [0.18, 0.38, 0.58, 0.78, 0.18, 0.38, 0.58, 0.78];
 const startAngles = [-0.22, 0.18, -0.14, 0.24, -0.19, 0.12, -0.25, 0.2];
 
 export function GravityPills({ items }: GravityPillsProps) {
