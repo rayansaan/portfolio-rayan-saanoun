@@ -361,6 +361,7 @@
 /* Stack gravity */
 .about-stack-card {
   grid-column: span 12;
+  grid-row: span 2;
   padding: 21px 0;
   background: #f7f7f5;
 }
@@ -372,31 +373,10 @@
 
 .about-stack-gravity {
   position: absolute;
-  inset: 39px 14px 7px;
-}
-
-.about-stack-row {
-  position: absolute;
-  left: 50%;
-  display: flex;
-  width: max-content;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  transform: translateX(-50%);
-}
-
-.about-stack-row-base {
-  bottom: 3px;
-}
-
-.about-stack-row-top {
-  bottom: 39px;
-}
-
-.about-stack-pill {
-  box-shadow: 0 7px 15px rgba(17, 15, 15, 0.065), inset 0 1px 0 rgba(255, 255, 255, 0.82);
-  will-change: transform, opacity;
+  inset: 40px 8px 6px;
+  overflow: hidden;
+  contain: layout paint;
+  pointer-events: none;
 }
 
 /* Marquees */
@@ -433,6 +413,38 @@
   font-size: 12px;
   line-height: 1;
   white-space: nowrap;
+}
+
+.about-pill.about-stack-pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 44px;
+  padding: 11px 18px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 9px 20px rgba(17, 15, 15, 0.075), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0;
+  transform-origin: center;
+  will-change: transform, opacity;
+  user-select: none;
+}
+
+.about-stack-gravity.is-static {
+  display: flex;
+  align-content: flex-end;
+  align-items: flex-end;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  padding: 14px 18px;
+}
+
+.about-stack-gravity.is-static .about-stack-pill {
+  position: relative;
+  opacity: 1;
+  transform: none !important;
 }
 
 .about-companies-card:hover .about-marquee-track {
@@ -708,7 +720,7 @@
   .about-experience-card { min-height: 318px; padding: 22px; }
   .about-experience-list li { min-height: 64px; }
 
-  .about-stack-card,
+  .about-stack-card { min-height: 260px; }
   .about-companies-card { min-height: 146px; }
 
   .about-cv-card { min-height: 320px; padding: 22px; }
@@ -736,11 +748,10 @@
   .about-experience-list time { max-width: 72px; }
   .about-contact-icon { display: none; }
 
-  .about-stack-row { gap: 5px; }
-  .about-stack-pill {
-    min-height: 29px;
-    padding: 6px 9px;
-    font-size: 10px;
+  .about-pill.about-stack-pill {
+    min-height: 40px;
+    padding: 9px 13px;
+    font-size: 12px;
   }
 
   .about-skills-list .about-pill {

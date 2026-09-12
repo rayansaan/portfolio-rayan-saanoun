@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { GravityPills } from '@/components/GravityPills';
 import './About.css';
 
 const experiences = [
@@ -30,37 +31,7 @@ const experiences = [
   },
 ];
 
-interface StackPill {
-  name: string;
-  dropX: number;
-  startRotate: number;
-  restRotate: number;
-}
-
-const stackRows: Array<{ className: string; delay: number; tools: StackPill[] }> = [
-  {
-    className: 'about-stack-row-base',
-    delay: 0.08,
-    tools: [
-      { name: 'Figma', dropX: -28, startRotate: -16, restRotate: -3 },
-      { name: 'Notion', dropX: 22, startRotate: 13, restRotate: 2 },
-      { name: 'Webflow', dropX: -16, startRotate: -11, restRotate: -2 },
-      { name: 'Bubble.io', dropX: 30, startRotate: 17, restRotate: 3 },
-    ],
-  },
-  {
-    className: 'about-stack-row-top',
-    delay: 0.52,
-    tools: [
-      { name: 'FigJam', dropX: 24, startRotate: 15, restRotate: 3 },
-      { name: 'Miro', dropX: -22, startRotate: -14, restRotate: -2 },
-      { name: 'Maze', dropX: 18, startRotate: 12, restRotate: 2 },
-      { name: 'Jira', dropX: -18, startRotate: -12, restRotate: -3 },
-    ],
-  },
-];
-
-const tools = stackRows.flatMap((row) => row.tools.map((tool) => tool.name));
+const tools = ['Figma', 'FigJam', 'Miro', 'Notion', 'Maze', 'Jira', 'Webflow', 'Bubble.io'];
 
 const skills = [
   'UX Research',
@@ -131,45 +102,6 @@ const revealVariants: Variants = {
 const listVariants: Variants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.08 } },
-};
-
-const stackPileVariants: Variants = {
-  hidden: {},
-  visible: {},
-};
-
-const stackRowVariants: Variants = {
-  hidden: {},
-  visible: (delay = 0) => ({
-    transition: {
-      delayChildren: delay,
-      staggerChildren: 0.11,
-    },
-  }),
-};
-
-const stackPillVariants: Variants = {
-  hidden: (tool: StackPill) => ({
-    opacity: 0,
-    x: tool.dropX,
-    y: -150,
-    rotate: tool.startRotate,
-    scale: 0.92,
-  }),
-  visible: (tool: StackPill) => ({
-    opacity: 1,
-    x: 0,
-    y: 0,
-    rotate: tool.restRotate,
-    scale: 1,
-    transition: {
-      opacity: { duration: 0.12 },
-      x: { type: 'spring', stiffness: 150, damping: 14, mass: 0.72 },
-      y: { type: 'spring', stiffness: 185, damping: 13, mass: 0.78 },
-      rotate: { type: 'spring', stiffness: 145, damping: 12, mass: 0.7 },
-      scale: { type: 'spring', stiffness: 180, damping: 15, mass: 0.72 },
-    },
-  }),
 };
 
 const cardMotion = (origin: CardOrigin) => ({
@@ -311,34 +243,7 @@ export function About() {
           >
             <CardLabel>Stack</CardLabel>
             <span className="sr-only">{tools.join(', ')}</span>
-            <motion.div
-              className="about-stack-gravity"
-              variants={stackPileVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.7 }}
-              aria-hidden="true"
-            >
-              {stackRows.map((row) => (
-                <motion.div
-                  className={`about-stack-row ${row.className}`}
-                  custom={row.delay}
-                  variants={stackRowVariants}
-                  key={row.className}
-                >
-                  {row.tools.map((tool) => (
-                    <motion.span
-                      className="about-pill about-stack-pill"
-                      custom={tool}
-                      variants={stackPillVariants}
-                      key={tool.name}
-                    >
-                      {tool.name}
-                    </motion.span>
-                  ))}
-                </motion.div>
-              ))}
-            </motion.div>
+            <GravityPills items={tools} />
           </motion.article>
 
           <motion.a
