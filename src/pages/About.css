@@ -67,7 +67,7 @@
   grid-column: span 7;
   grid-row: span 2;
   padding: 28px;
-  background: #e4ecef;
+  background: #e7e7e4;
 }
 
 .about-profile-card::after {
@@ -143,7 +143,7 @@
   flex-direction: column;
   justify-content: center;
   padding: 24px;
-  background: #e7f3e8;
+  background: #edf2ed;
 }
 
 .about-availability-status {
@@ -197,7 +197,7 @@
   display: grid;
   place-items: center;
   padding: 18px;
-  background: #e8eef8;
+  background: #f7f7f5;
 }
 
 .about-linkedin-content {
@@ -205,7 +205,7 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  color: #0a66c2;
+  color: #110f0f;
   font-size: 14px;
   font-weight: 500;
 }
@@ -230,7 +230,7 @@
   align-items: center;
   justify-content: center;
   padding: 18px;
-  background: #f4eee5;
+  background: #e7e7e4;
   text-align: center;
 }
 
@@ -254,7 +254,7 @@
   display: flex;
   flex-direction: column;
   padding: 28px;
-  background: #f3e9dd;
+  background: #f7f7f5;
 }
 
 .about-statement-card h2 {
@@ -267,12 +267,8 @@
 }
 
 .about-statement-card h2 span {
-  background: linear-gradient(100deg, #ce8b25 0%, #8b77cd 45%, #ce8b25 100%);
-  background-size: 220% 100%;
-  background-clip: text;
-  color: transparent;
-  -webkit-background-clip: text;
-  animation: about-gradient-shift 7s ease-in-out infinite;
+  color: inherit;
+  font-weight: 600;
 }
 
 .about-approach-steps {
@@ -303,7 +299,7 @@
   grid-column: span 5;
   grid-row: span 2;
   padding: 24px;
-  background: #eee9f4;
+  background: #e7e7e4;
 }
 
 .about-card-heading {
@@ -376,7 +372,7 @@
 .about-stack-card {
   grid-column: span 12;
   padding: 21px 0;
-  background: #edf0e5;
+  background: #f7f7f5;
 }
 
 .about-stack-card > .about-card-label,
@@ -432,7 +428,7 @@
   grid-column: span 5;
   grid-row: span 2;
   padding: 24px;
-  background: #e8eeec;
+  background: #e7e7e4;
 }
 
 .about-cv-copy {
@@ -526,7 +522,7 @@
 .about-companies-card {
   grid-column: span 7;
   padding: 21px 0;
-  background: #f3eee7;
+  background: #f7f7f5;
 }
 
 .about-company-marquee { bottom: 23px; }
@@ -558,7 +554,7 @@
 .about-skills-card {
   grid-column: span 7;
   padding: 20px 24px;
-  background: #eaedf4;
+  background: #e7e7e4;
 }
 
 .about-skills-list {
@@ -631,11 +627,6 @@
 @keyframes about-availability-breathe {
   0% { opacity: 0.62; transform: scale(0.8); }
   70%, 100% { opacity: 0; transform: scale(2.6); }
-}
-
-@keyframes about-gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
 }
 
 @keyframes about-marquee-left {
@@ -737,7 +728,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .about-availability-dot::after,
-  .about-statement-card h2 span,
   .about-marquee-track {
     animation: none;
   }
