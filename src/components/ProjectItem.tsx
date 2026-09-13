@@ -1,64 +1,15 @@
-import type { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { useHoverImage } from '@/hooks/useHoverImage';
 import type { ProjectCard } from '@/types';
 
 interface ProjectItemProps {
   project: ProjectCard;
-  enableCursorPreview?: boolean;
 }
 
-// Mapping des projets vers leurs icônes de survol
-const projectIcons: Record<string, string> = {
-  'moove': '/logos/Hover/Moove.svg',
-  'nash': '/logos/Hover/Nash.svg',
-  'veeton': '/logos/Hover/Veeton.svg',
-  'rakoono': '/logos/Hover/Rakoono.svg',
-};
-
-export function ProjectItem({ project, enableCursorPreview = true }: ProjectItemProps) {
-  const { setCurrentImage, setMousePosition } = useHoverImage();
-
-  // Détecter si l'appareil est tactile (mobile/tablette)
-  const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
-
-  const handleMouseEnter = () => {
-    if (!enableCursorPreview) {
-      setCurrentImage(null, 'image');
-      return;
-    }
-
-    if (!isTouchDevice) {
-      // Utiliser l'icône du projet si elle existe, sinon l'image du projet
-      const iconUrl = projectIcons[project.id];
-      if (iconUrl) {
-        setCurrentImage(iconUrl, 'icon');
-      } else {
-        setCurrentImage(project.imageUrl, 'image');
-      }
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (!isTouchDevice) {
-      setCurrentImage(null, 'image');
-    }
-  };
-
-  const handleMouseMove = (e: MouseEvent<HTMLAnchorElement>) => {
-    if (enableCursorPreview && !isTouchDevice) {
-      setMousePosition(e.clientX, e.clientY);
-    }
-  };
-
+export function ProjectItem({ project }: ProjectItemProps) {
   return (
     <Link
       to={project.href || '#'}
       className="block group cursor-pointer transition-all duration-300 mx-4 md:mx-0"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onMouseMove={handleMouseMove}
-      onClick={handleMouseLeave}
     >
       {/* Image avec aspect 16:9, bordure 2px noire à 5% et radius 8px */}
       <div className="aspect-[16/9] rounded-[8px] overflow-hidden mb-4 border-2 border-black/5">

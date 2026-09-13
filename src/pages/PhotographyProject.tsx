@@ -77,6 +77,7 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
     : project.photos.filter((photo) => (photo.categoryId ?? '') === categoryId);
   const hasRootPhotos = project.photos.some((photo) => !photo.categoryId);
   const categories = project.categories.filter((category) => project.photos.some((photo) => photo.categoryId === category.id));
+  const [overviewLayout, setOverviewLayout] = useState({ columns: 1, rows: Math.max(1, photos.length) });
 
   useEffect(() => {
     const gallery = galleryRef.current;
@@ -222,6 +223,64 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
 
   useLayoutEffect(() => {
     const gallery = galleryRef.current;
+    if (!gallery) return;
+
+    let resizeFrame = 0;
+
+    const calculateOverviewLayout = () => {
+      const styles = window.getComputedStyle(gallery);
+      const horizontalPadding = Number.parseFloat(styles.paddingLeft) + Number.parseFloat(styles.paddingRight);
+      const verticalPadding = Number.parseFloat(styles.paddingTop) + Number.parseFloat(styles.paddingBottom);
+      const gap = Number.parseFloat(styles.columnGap) || 0;
+      const availableWidth = Math.max(1, gallery.clientWidth - horizontalPadding);
+      const availableHeight = Math.max(1, gallery.clientHeight - verticalPadding);
+      const photoCount = Math.max(1, photos.length);
+
+      let bestColumns = photoCount <= 3 ? photoCount : 1;
+      let bestRows = Math.ceil(photoCount / bestColumns);
+      let bestCellSize = -1;
+
+      if (photoCount > 3) {
+        for (let columns = 1; columns <= photoCount; columns += 1) {
+          const rows = Math.ceil(photoCount / columns);
+          const cellWidth = (availableWidth - gap * (columns - 1)) / columns;
+          const cellHeight = (availableHeight - gap * (rows - 1)) / rows;
+          if (cellWidth <= 0 || cellHeight <= 0) continue;
+
+          const emptyCells = columns * rows - photoCount;
+          const cellSize = Math.min(cellWidth, cellHeight) - emptyCells * 0.2;
+          if (cellSize > bestCellSize) {
+            bestCellSize = cellSize;
+            bestColumns = columns;
+            bestRows = rows;
+          }
+        }
+      }
+
+      setOverviewLayout((current) => (
+        current.columns === bestColumns && current.rows === bestRows
+          ? current
+          : { columns: bestColumns, rows: bestRows }
+      ));
+    };
+
+    const scheduleCalculation = () => {
+      window.cancelAnimationFrame(resizeFrame);
+      resizeFrame = window.requestAnimationFrame(calculateOverviewLayout);
+    };
+
+    calculateOverviewLayout();
+    const resizeObserver = new ResizeObserver(scheduleCalculation);
+    resizeObserver.observe(gallery);
+
+    return () => {
+      window.cancelAnimationFrame(resizeFrame);
+      resizeObserver.disconnect();
+    };
+  }, [photos.length, zoomLevel]);
+
+  useLayoutEffect(() => {
+    const gallery = galleryRef.current;
     const anchor = zoomAnchorRef.current;
     if (!gallery || !anchor) return;
 
@@ -294,6 +353,10 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
         className="photo-scatter"
         data-zoom={zoomLevel}
         data-layout={photos.length <= 3 ? 'horizontal' : 'spatial'}
+        style={{
+          '--overview-columns': overviewLayout.columns,
+          '--overview-rows': overviewLayout.rows,
+        } as CSSProperties}
         aria-label={`Photographies de ${project.name} — espace navigable horizontalement et verticalement. Molette vers l'avant pour zoomer, vers l'arrière pour dézoomer.`}
         tabIndex={0}
       >

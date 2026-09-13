@@ -5,14 +5,12 @@ interface ProjectSectionProps {
   title: string;
   projects: ProjectCard[];
   className?: string;
-  enableCursorPreview?: boolean;
 }
 
 export function ProjectSection({
   title,
   projects,
   className = '',
-  enableCursorPreview = true,
 }: ProjectSectionProps) {
   return (
     <section className={`w-full px-4 sm:px-6 lg:px-32 xl:px-48 py-16 sm:py-24 ${className}`}>
@@ -25,11 +23,7 @@ export function ProjectSection({
         {/* Project Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
           {projects.map((project) => (
-            <ProjectItem
-              key={project.id}
-              project={project}
-              enableCursorPreview={enableCursorPreview}
-            />
+            <ProjectItem key={project.id} project={project} />
           ))}
         </div>
       </div>

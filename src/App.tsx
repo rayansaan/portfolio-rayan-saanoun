@@ -5,11 +5,8 @@ import { Header } from '@/components/Header';
 import { HeroSection } from '@/components/HeroSection';
 import { ProjectSection } from '@/components/ProjectSection';
 import { Footer } from '@/components/Footer';
-import { CursorFollowImage } from '@/components/CursorFollowImage';
-import { HoverImageProvider } from '@/context/HoverImageContext';
 import { CustomCursor } from '@/components/CustomCursor';
 import { RouteScrollManager } from '@/components/RouteScrollManager';
-import { RouteHoverReset } from '@/components/RouteHoverReset';
 import { LenisProvider } from '@/context/LenisContext';
 import { uxUiProjects, otherProjects } from '@/data/projects';
 import { photographyProjectCards } from '@/data/photography';
@@ -39,9 +36,6 @@ function HomePage() {
 
   return (
     <div className="min-h-screen">
-      {/* Cursor follow image */}
-      <CursorFollowImage />
-      
       {/* Header */}
       <Header />
       
@@ -70,7 +64,6 @@ function HomePage() {
             <ProjectSection
               title="Explorations"
               projects={additionalProjects}
-              enableCursorPreview={false}
             />
           </motion.div>
         </div>
@@ -85,23 +78,20 @@ function HomePage() {
 function App() {
   return (
     <MotionConfig reducedMotion="user">
-      <HoverImageProvider>
-        <LenisProvider>
-          <CustomCursor />
-          <BrowserRouter>
-            <RouteScrollManager />
-            <RouteHoverReset />
-            <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/project/:id" element={<ProjectDetail />} />
-                <Route path="/photography/:id" element={<PhotographyProject />} />
-              </Routes>
-            </Suspense>
-          </BrowserRouter>
-        </LenisProvider>
-      </HoverImageProvider>
+      <LenisProvider>
+        <CustomCursor />
+        <BrowserRouter>
+          <RouteScrollManager />
+          <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/project/:id" element={<ProjectDetail />} />
+              <Route path="/photography/:id" element={<PhotographyProject />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </LenisProvider>
     </MotionConfig>
   );
 }
