@@ -1,6 +1,6 @@
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ZoomIn, ZoomOut } from 'lucide-react';
 import { photographyProjects } from '@/data/photography';
 import { PhotoLightbox } from '@/components/PhotoLightbox';
 import type { Photograph, PhotographyProject } from '@/types';
@@ -78,6 +78,25 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
   const hasRootPhotos = project.photos.some((photo) => !photo.categoryId);
   const categories = project.categories.filter((category) => project.photos.some((photo) => photo.categoryId === category.id));
   const [overviewLayout, setOverviewLayout] = useState({ columns: 1, rows: Math.max(1, photos.length) });
+
+  const updateZoom = useCallback((requestedLevel: number, anchorX?: number, anchorY?: number) => {
+    const gallery = galleryRef.current;
+    if (!gallery) return;
+
+    const nextLevel = Math.min(MAX_ZOOM_LEVEL, Math.max(MIN_ZOOM_LEVEL, requestedLevel));
+    if (nextLevel === zoomLevelRef.current) return;
+
+    const x = anchorX ?? gallery.clientWidth / 2;
+    const y = anchorY ?? gallery.clientHeight / 2;
+    zoomAnchorRef.current = {
+      x,
+      y,
+      ratioX: (gallery.scrollLeft + x) / Math.max(gallery.scrollWidth, 1),
+      ratioY: (gallery.scrollTop + y) / Math.max(gallery.scrollHeight, 1),
+    };
+    zoomLevelRef.current = nextLevel;
+    setZoomLevel(nextLevel);
+  }, []);
 
   useEffect(() => {
     const gallery = galleryRef.current;
@@ -200,26 +219,17 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
       accumulatedDelta = 0;
 
       const currentLevel = zoomLevelRef.current;
-      const nextLevel = Math.min(MAX_ZOOM_LEVEL, Math.max(MIN_ZOOM_LEVEL, currentLevel + zoomDirection));
-      if (nextLevel === currentLevel) return;
+      const nextLevel = currentLevel + zoomDirection;
 
       const bounds = gallery.getBoundingClientRect();
       const x = Math.min(bounds.width, Math.max(0, event.clientX - bounds.left));
       const y = Math.min(bounds.height, Math.max(0, event.clientY - bounds.top));
-
-      zoomAnchorRef.current = {
-        x,
-        y,
-        ratioX: (gallery.scrollLeft + x) / Math.max(gallery.scrollWidth, 1),
-        ratioY: (gallery.scrollTop + y) / Math.max(gallery.scrollHeight, 1),
-      };
-      zoomLevelRef.current = nextLevel;
-      setZoomLevel(nextLevel);
+      updateZoom(nextLevel, x, y);
     };
 
     gallery.addEventListener('wheel', handleWheel, { passive: false });
     return () => gallery.removeEventListener('wheel', handleWheel);
-  }, []);
+  }, [updateZoom]);
 
   useLayoutEffect(() => {
     const gallery = galleryRef.current;
@@ -371,10 +381,44 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
         ))}
       </div>
 
-      <output className="photo-zoom-status" aria-live="polite" aria-atomic="true">
-        <span>Zoom</span>
-        <strong>{ZOOM_PERCENTAGES[zoomLevel]}%</strong>
-      </output>
+      <div className="photo-zoom-control">
+        <button
+          type="button"
+          onClick={() => updateZoom(zoomLevel - 1)}
+          disabled={zoomLevel === MIN_ZOOM_LEVEL}
+          aria-label="Dézoomer"
+        >
+          <ZoomOut size={16} aria-hidden="true" />
+        </button>
+        <div
+          className="photo-zoom-track"
+          style={{ '--zoom-progress': `${(zoomLevel / MAX_ZOOM_LEVEL) * 100}%` } as CSSProperties}
+        >
+          <span className="photo-zoom-track-fill" aria-hidden="true" />
+          <input
+            className="photo-zoom-slider"
+            type="range"
+            min={MIN_ZOOM_LEVEL}
+            max={MAX_ZOOM_LEVEL}
+            step="1"
+            value={zoomLevel}
+            onChange={(event) => updateZoom(Number(event.currentTarget.value))}
+            aria-label="Niveau de zoom"
+            aria-valuetext={`${ZOOM_PERCENTAGES[zoomLevel]} %`}
+          />
+        </div>
+        <button
+          type="button"
+          onClick={() => updateZoom(zoomLevel + 1)}
+          disabled={zoomLevel === MAX_ZOOM_LEVEL}
+          aria-label="Zoomer"
+        >
+          <ZoomIn size={16} aria-hidden="true" />
+        </button>
+        <output className="sr-only" aria-live="polite" aria-atomic="true">
+          Zoom {ZOOM_PERCENTAGES[zoomLevel]} %
+        </output>
+      </div>
 
       <div
         className={`photo-navigation-overlay${showNavigationHint ? ' is-visible' : ''}`}

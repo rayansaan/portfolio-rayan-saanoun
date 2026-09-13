@@ -74,6 +74,8 @@
   --gallery-column: clamp(28rem, 42vw, 46rem);
   --gallery-row: clamp(28rem, 58svh, 40rem);
   --gallery-gap: clamp(4rem, 5vw, 6rem);
+  --overview-tile-width: calc(clamp(19.6rem, 29.4vw, 32.2rem) - clamp(3rem, 4vw, 4rem));
+  --overview-tile-height: calc(clamp(19.6rem, 40.6svh, 28rem) - clamp(3rem, 4vw, 4rem));
   --overview-columns: 1;
   --overview-rows: 1;
   position: absolute;
@@ -138,6 +140,12 @@
   grid-template-rows: repeat(var(--overview-rows), minmax(0, 1fr));
   align-content: stretch;
   justify-content: stretch;
+}
+
+.photo-scatter[data-layout="horizontal"][data-zoom="0"] .photo-tile {
+  width: min(100%, var(--overview-tile-width));
+  height: min(100%, var(--overview-tile-height));
+  justify-self: center;
 }
 
 .photo-scatter.is-dragging { cursor: grabbing; user-select: none; }
@@ -238,29 +246,112 @@
   transition-timing-function: ease-in-out;
 }
 
-.photo-zoom-status {
+.photo-zoom-control {
   position: absolute;
   z-index: 2;
   right: max(1.5rem, env(safe-area-inset-right));
   bottom: max(1.5rem, env(safe-area-inset-bottom));
   display: inline-flex;
-  align-items: baseline;
-  gap: 0.55rem;
-  padding: 0.6rem 0.85rem;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem;
   border: 1px solid rgb(17 17 17 / 12%);
   border-radius: 999px;
   background: rgb(240 240 240 / 76%);
   backdrop-filter: blur(0.75rem);
-  font-size: 0.75rem;
-  line-height: 1;
+  box-shadow: 0 0.25rem 1rem rgb(17 17 17 / 5%);
+}
+
+.photo-zoom-control button {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  transition: background-color 180ms ease, opacity 180ms ease;
+}
+
+.photo-zoom-control button:hover:not(:disabled),
+.photo-zoom-control button:focus-visible {
+  background: rgb(17 17 17 / 8%);
+}
+
+.photo-zoom-control button:disabled {
+  opacity: 0.28;
+  cursor: default;
+}
+
+.photo-zoom-track {
+  --zoom-progress: 100%;
+  position: relative;
+  width: clamp(5.5rem, 9vw, 7.5rem);
+  height: 2rem;
+}
+
+.photo-zoom-track::before,
+.photo-zoom-track-fill {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 2px;
+  border-radius: 999px;
+  transform: translateY(-50%);
   pointer-events: none;
 }
 
-.photo-zoom-status strong {
-  min-width: 2.4rem;
-  font-size: 0.8125rem;
-  font-variant-numeric: tabular-nums;
-  text-align: right;
+.photo-zoom-track::before {
+  right: 0;
+  background: rgb(17 17 17 / 18%);
+}
+
+.photo-zoom-track-fill {
+  width: var(--zoom-progress);
+  background: var(--text-color);
+}
+
+.photo-zoom-slider {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.photo-zoom-slider::-webkit-slider-runnable-track {
+  height: 2px;
+  background: transparent;
+}
+
+.photo-zoom-slider::-webkit-slider-thumb {
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-top: -0.375rem;
+  border: 2px solid var(--bg-color);
+  border-radius: 50%;
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--text-color);
+  box-shadow: 0 0 0 1px rgb(17 17 17 / 16%);
+}
+
+.photo-zoom-slider::-moz-range-track,
+.photo-zoom-slider::-moz-range-progress {
+  height: 2px;
+  background: transparent;
+}
+
+.photo-zoom-slider::-moz-range-thumb {
+  width: 0.875rem;
+  height: 0.875rem;
+  border: 2px solid var(--bg-color);
+  border-radius: 50%;
+  background: var(--text-color);
+  box-shadow: 0 0 0 1px rgb(17 17 17 / 16%);
 }
 
 .photo-navigation-overlay {
@@ -438,6 +529,8 @@
   }
   .photo-scatter[data-zoom="0"] {
     --gallery-gap: 1.9rem;
+    --overview-tile-width: calc(min(58.8vw, 22.4rem) - 2rem);
+    --overview-tile-height: calc(clamp(18.2rem, 42svh, 23.8rem) - 2rem);
   }
   .photo-scatter {
     height: 100%;
@@ -445,7 +538,11 @@
     padding: clamp(13.5rem, 32svh, 16rem) 1rem 4rem;
   }
   .photo-slot { padding: 1rem; }
-  .photo-zoom-status { display: none; }
+  .photo-zoom-control {
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  .photo-zoom-track { width: 5.5rem; }
 }
 @media (max-width: 380px) {
   .photo-lightbox-footer { flex-direction: column; }
