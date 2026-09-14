@@ -1,45 +1,63 @@
 import { useEffect, useRef, useState } from 'react';
+import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from 'lucide-react';
 
 const CURSOR_SIZE = 24;
 const HALF_SIZE = CURSOR_SIZE / 2;
 const DIRECTION_RESET_DELAY = 120;
+const PROJECT_LABEL = 'VOIR';
 
 type CursorDirection = 'up' | 'right' | 'down' | 'left' | 'idle';
 
 export function CustomCursor() {
-  const cursorRef = useRef<HTMLDivElement>(null);
+  const pointerX = useMotionValue(-CURSOR_SIZE);
+  const pointerY = useMotionValue(-CURSOR_SIZE);
+  const smoothX = useSpring(pointerX, { stiffness: 1050, damping: 62, mass: 0.18, restDelta: 0.01 });
+  const smoothY = useSpring(pointerY, { stiffness: 1050, damping: 62, mass: 0.18, restDelta: 0.01 });
+  const prefersReducedMotion = useReducedMotion();
   const previousPositionRef = useRef<{ x: number; y: number } | null>(null);
   const directionResetRef = useRef<number | null>(null);
-  const [isHoveringLink, setIsHoveringLink] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
+  const [isHoveringInteractive, setIsHoveringInteractive] = useState(false);
+  const [isHoveringProject, setIsHoveringProject] = useState(false);
   const [isOverPhotoGallery, setIsOverPhotoGallery] = useState(false);
   const [direction, setDirection] = useState<CursorDirection>('idle');
-  
+
   useEffect(() => {
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
     if (isTouchDevice) return;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate3d(${e.clientX - HALF_SIZE}px, ${e.clientY - HALF_SIZE}px, 0)`;
-      }
+    const hideCursor = () => {
+      setIsVisible(false);
+      setIsPressed(false);
+      setDirection('idle');
+      previousPositionRef.current = null;
+    };
 
-      const target = e.target as HTMLElement;
-      const isLink = target.closest('a, button, [role="button"], input, textarea, select, [data-cursor-hover]');
+    const handleMouseMove = (event: MouseEvent) => {
+      pointerX.set(event.clientX - HALF_SIZE);
+      pointerY.set(event.clientY - HALF_SIZE);
+      setIsVisible(true);
+
+      const target = event.target as HTMLElement;
+      const isInteractive = Boolean(target.closest('a, button, [role="button"], input, textarea, select, [data-cursor-hover]'));
+      const isProject = Boolean(target.closest('[data-cursor-project]'));
       const isPhotoGallery = Boolean(target.closest('.photo-scatter'));
-      setIsHoveringLink(!!isLink);
+      setIsHoveringInteractive(isInteractive);
+      setIsHoveringProject(isProject);
       setIsOverPhotoGallery(isPhotoGallery);
 
       const previousPosition = previousPositionRef.current;
-      previousPositionRef.current = { x: e.clientX, y: e.clientY };
+      previousPositionRef.current = { x: event.clientX, y: event.clientY };
 
       if (!isPhotoGallery || !previousPosition) {
         setDirection('idle');
         return;
       }
 
-      const deltaX = e.clientX - previousPosition.x;
-      const deltaY = e.clientY - previousPosition.y;
+      const deltaX = event.clientX - previousPosition.x;
+      const deltaY = event.clientY - previousPosition.y;
       if (Math.hypot(deltaX, deltaY) < 1.5) return;
 
       const nextDirection: CursorDirection = Math.abs(deltaX) >= Math.abs(deltaY)
@@ -54,40 +72,94 @@ export function CustomCursor() {
       }, DIRECTION_RESET_DELAY);
     };
 
+    const handleMouseOut = (event: MouseEvent) => {
+      if (event.relatedTarget === null) hideCursor();
+    };
+
+    const handleMouseDown = () => setIsPressed(true);
+    const handleMouseUp = () => setIsPressed(false);
+
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('mousedown', handleMouseDown, { passive: true });
+    window.addEventListener('mouseup', handleMouseUp, { passive: true });
+    window.addEventListener('mouseout', handleMouseOut);
+    window.addEventListener('blur', hideCursor);
 
     return () => {
       if (directionResetRef.current !== null) window.clearTimeout(directionResetRef.current);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('mouseout', handleMouseOut);
+      window.removeEventListener('blur', hideCursor);
     };
-  }, []);
+  }, [pointerX, pointerY]);
 
   if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
     return null;
   }
 
+  const coreScale = isHoveringProject
+    ? isPressed ? 2.4 : 2.7
+    : isPressed
+      ? 0.82
+      : isHoveringInteractive ? 1.14 : 1;
+
   return (
     <>
-      <div
-        ref={cursorRef}
-        className="custom-cursor fixed top-0 left-0 pointer-events-none z-[10000] opacity-100"
+      <motion.div
+        className="custom-cursor fixed top-0 left-0 pointer-events-none z-[10000]"
         data-photo-gallery={isOverPhotoGallery}
+        data-project={isHoveringProject}
         data-direction={direction}
+        animate={{ opacity: isVisible ? 1 : 0 }}
+        transition={{ opacity: { duration: 0.16 } }}
         style={{
-          width: `${CURSOR_SIZE}px`,
-          height: `${CURSOR_SIZE}px`,
+          x: prefersReducedMotion ? pointerX : smoothX,
+          y: prefersReducedMotion ? pointerY : smoothY,
+          width: CURSOR_SIZE,
+          height: CURSOR_SIZE,
           willChange: 'transform',
         }}
       >
-        <span className={`custom-cursor-core${isHoveringLink ? ' is-hovering' : ''}`} />
+        <motion.span
+          className="custom-cursor-core"
+          animate={{ scale: coreScale }}
+          transition={{ type: 'spring', stiffness: 520, damping: 32, mass: 0.3 }}
+        />
+
+        <span className="custom-cursor-project-label-frame" aria-hidden="true">
+          <svg className="custom-cursor-project-label" viewBox="0 0 80 80">
+            <defs>
+              <path
+                id="custom-cursor-project-path"
+                d="M 40 40 m -31 0 a 31 31 0 1 1 62 0 a 31 31 0 1 1 -62 0"
+              />
+            </defs>
+            <text>
+              <textPath href="#custom-cursor-project-path" startOffset="25%" textAnchor="middle">
+                {Array.from(PROJECT_LABEL).map((letter, index) => (
+                  <tspan
+                    className="custom-cursor-project-letter"
+                    key={`${letter}-${index}`}
+                    style={{ animationDelay: `${70 + index * 65}ms` }}
+                  >
+                    {letter}
+                  </tspan>
+                ))}
+              </textPath>
+            </text>
+          </svg>
+        </span>
+
         <span className="custom-cursor-directions" aria-hidden="true">
           <ArrowUp className="custom-cursor-arrow custom-cursor-arrow-up" />
           <ArrowRight className="custom-cursor-arrow custom-cursor-arrow-right" />
           <ArrowDown className="custom-cursor-arrow custom-cursor-arrow-down" />
           <ArrowLeft className="custom-cursor-arrow custom-cursor-arrow-left" />
         </span>
-      </div>
-      
+      </motion.div>
+
       <style>{`
         .custom-cursor-core {
           position: absolute;
@@ -98,11 +170,48 @@ export function CustomCursor() {
           background: #ffffff;
           box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
           mix-blend-mode: difference;
-          transition: transform 180ms ease;
         }
 
-        .custom-cursor-core.is-hovering {
-          transform: scale(1.1);
+        .custom-cursor-project-label-frame {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 80px;
+          height: 80px;
+          opacity: 0;
+          transform: translate(-50%, -50%) rotate(-16deg) scale(0.82);
+          transition:
+            opacity 180ms ease,
+            transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .custom-cursor[data-project="true"] .custom-cursor-project-label-frame {
+          opacity: 1;
+          transform: translate(-50%, -50%) rotate(0deg) scale(1);
+        }
+
+        .custom-cursor-project-label {
+          display: block;
+          width: 100%;
+          height: 100%;
+          overflow: visible;
+          fill: #ffffff;
+          font-family: inherit;
+          font-size: 8px;
+          font-weight: 600;
+          letter-spacing: 3px;
+          mix-blend-mode: difference;
+        }
+
+        .custom-cursor-project-letter { opacity: 0; }
+
+        .custom-cursor[data-project="true"] .custom-cursor-project-letter {
+          animation: custom-cursor-letter-in 240ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes custom-cursor-letter-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
 
         .custom-cursor-directions {
@@ -114,9 +223,7 @@ export function CustomCursor() {
           transition: opacity 180ms ease;
         }
 
-        .custom-cursor[data-photo-gallery="true"] .custom-cursor-directions {
-          opacity: 0.86;
-        }
+        .custom-cursor[data-photo-gallery="true"] .custom-cursor-directions { opacity: 0.86; }
 
         .custom-cursor-arrow {
           position: absolute;
@@ -166,21 +273,22 @@ export function CustomCursor() {
           transform: translateY(-50%) translateX(-2px) scale(1.24);
         }
 
-        * {
-          cursor: none !important;
-        }
-        
+        * { cursor: none !important; }
+
         @media (pointer: coarse) {
-          * {
-            cursor: auto !important;
-          }
+          * { cursor: auto !important; }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .custom-cursor-core,
+          .custom-cursor-project-label-frame,
           .custom-cursor-directions,
           .custom-cursor-arrow {
             transition: none;
+          }
+
+          .custom-cursor[data-project="true"] .custom-cursor-project-letter {
+            opacity: 1;
+            animation: none;
           }
         }
       `}</style>

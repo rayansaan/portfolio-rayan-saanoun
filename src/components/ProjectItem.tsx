@@ -10,6 +10,7 @@ export function ProjectItem({ project }: ProjectItemProps) {
     <Link
       to={project.href || '#'}
       className="block group cursor-pointer transition-all duration-300 mx-4 md:mx-0"
+      data-cursor-project
     >
       {/* Image avec aspect 16:9, bordure 2px noire à 5% et radius 8px */}
       <div className="aspect-[16/9] rounded-[8px] overflow-hidden mb-4 border-2 border-black/5">
