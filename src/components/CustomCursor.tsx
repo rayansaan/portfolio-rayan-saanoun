@@ -179,11 +179,9 @@ export function CustomCursor() {
           position: absolute;
           inset: 0;
           display: block;
-          border: 2px solid rgba(17, 15, 15, 0.7);
           border-radius: 999px;
           overflow: hidden;
           background: rgba(255, 255, 255, 0.01);
-          box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
           -webkit-backdrop-filter: invert(1) grayscale(1) contrast(1.06) blur(0.45px);
           backdrop-filter: invert(1) grayscale(1) contrast(1.06) blur(0.45px);
         }
@@ -221,11 +219,12 @@ export function CustomCursor() {
           width: 100%;
           height: 100%;
           overflow: visible;
-          fill: #110f0f;
+          fill: #ffffff;
           font-family: inherit;
           font-size: 11px;
           font-weight: 700;
           letter-spacing: 2px;
+          mix-blend-mode: difference;
         }
 
         .custom-cursor-project-letter { opacity: 0; }
