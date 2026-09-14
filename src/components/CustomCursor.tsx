@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from 'lucide-react';
+import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
 
 const CURSOR_SIZE = 24;
 const HALF_SIZE = CURSOR_SIZE / 2;
@@ -143,10 +143,10 @@ export function CustomCursor() {
         </motion.span>
 
         <span className="custom-cursor-directions" aria-hidden="true">
-          <ArrowUp className="custom-cursor-arrow custom-cursor-arrow-up" />
-          <ArrowRight className="custom-cursor-arrow custom-cursor-arrow-right" />
-          <ArrowDown className="custom-cursor-arrow custom-cursor-arrow-down" />
-          <ArrowLeft className="custom-cursor-arrow custom-cursor-arrow-left" />
+          <ChevronUp className="custom-cursor-arrow custom-cursor-arrow-up" />
+          <ChevronRight className="custom-cursor-arrow custom-cursor-arrow-right" />
+          <ChevronDown className="custom-cursor-arrow custom-cursor-arrow-down" />
+          <ChevronLeft className="custom-cursor-arrow custom-cursor-arrow-left" />
         </span>
       </motion.div>
 
