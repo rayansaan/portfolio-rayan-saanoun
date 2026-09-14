@@ -100,7 +100,7 @@ export function CustomCursor() {
   }
 
   const coreScale = isHoveringProject
-    ? isPressed ? 2.4 : 2.7
+    ? isPressed ? 1.82 : 2
     : isPressed
       ? 0.82
       : isHoveringInteractive ? 1.14 : 1;
@@ -165,11 +165,10 @@ export function CustomCursor() {
           position: absolute;
           inset: 0;
           display: block;
-          border: 2px solid rgba(255, 255, 255, 0.6);
+          border: 2px solid rgba(17, 15, 15, 0.7);
           border-radius: 999px;
-          background: #ffffff;
-          box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
-          mix-blend-mode: difference;
+          background: #110f0f;
+          box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
         }
 
         .custom-cursor-project-label-frame {
@@ -195,12 +194,11 @@ export function CustomCursor() {
           width: 100%;
           height: 100%;
           overflow: visible;
-          fill: #ffffff;
+          fill: #110f0f;
           font-family: inherit;
-          font-size: 8px;
-          font-weight: 600;
-          letter-spacing: 3px;
-          mix-blend-mode: difference;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 2px;
         }
 
         .custom-cursor-project-letter { opacity: 0; }
@@ -217,9 +215,8 @@ export function CustomCursor() {
         .custom-cursor-directions {
           position: absolute;
           inset: 0;
-          color: #ffffff;
+          color: #110f0f;
           opacity: 0;
-          mix-blend-mode: difference;
           transition: opacity 180ms ease;
         }
 
