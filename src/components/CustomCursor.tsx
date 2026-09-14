@@ -142,7 +142,29 @@ export function CustomCursor() {
           </svg>
         </motion.span>
 
-        <span className="custom-cursor-project-label-frame" aria-hidden="true">
+        <span className="custom-cursor-directions" aria-hidden="true">
+          <ArrowUp className="custom-cursor-arrow custom-cursor-arrow-up" />
+          <ArrowRight className="custom-cursor-arrow custom-cursor-arrow-right" />
+          <ArrowDown className="custom-cursor-arrow custom-cursor-arrow-down" />
+          <ArrowLeft className="custom-cursor-arrow custom-cursor-arrow-left" />
+        </span>
+      </motion.div>
+
+      <motion.div
+        className="custom-cursor-project-label-layer fixed top-0 left-0 pointer-events-none z-[10001]"
+        data-project={isHoveringProject}
+        aria-hidden="true"
+        animate={{ opacity: isVisible ? 1 : 0 }}
+        transition={{ opacity: { duration: 0.16 } }}
+        style={{
+          x: prefersReducedMotion ? pointerX : smoothX,
+          y: prefersReducedMotion ? pointerY : smoothY,
+          width: CURSOR_SIZE,
+          height: CURSOR_SIZE,
+          willChange: 'transform',
+        }}
+      >
+        <span className="custom-cursor-project-label-frame">
           <svg className="custom-cursor-project-label" viewBox="0 0 80 80">
             <defs>
               <path
@@ -164,13 +186,6 @@ export function CustomCursor() {
               </textPath>
             </text>
           </svg>
-        </span>
-
-        <span className="custom-cursor-directions" aria-hidden="true">
-          <ArrowUp className="custom-cursor-arrow custom-cursor-arrow-up" />
-          <ArrowRight className="custom-cursor-arrow custom-cursor-arrow-right" />
-          <ArrowDown className="custom-cursor-arrow custom-cursor-arrow-down" />
-          <ArrowLeft className="custom-cursor-arrow custom-cursor-arrow-left" />
         </span>
       </motion.div>
 
@@ -209,7 +224,11 @@ export function CustomCursor() {
             transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        .custom-cursor[data-project="true"] .custom-cursor-project-label-frame {
+        .custom-cursor-project-label-layer {
+          mix-blend-mode: difference;
+        }
+
+        .custom-cursor-project-label-layer[data-project="true"] .custom-cursor-project-label-frame {
           opacity: 1;
           transform: translate(-50%, -50%) rotate(0deg) scale(1);
         }
@@ -224,12 +243,11 @@ export function CustomCursor() {
           font-size: 11px;
           font-weight: 700;
           letter-spacing: 2px;
-          mix-blend-mode: difference;
         }
 
         .custom-cursor-project-letter { opacity: 0; }
 
-        .custom-cursor[data-project="true"] .custom-cursor-project-letter {
+        .custom-cursor-project-label-layer[data-project="true"] .custom-cursor-project-letter {
           animation: custom-cursor-letter-in 240ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
@@ -309,7 +327,7 @@ export function CustomCursor() {
             transition: none;
           }
 
-          .custom-cursor[data-project="true"] .custom-cursor-project-letter {
+          .custom-cursor-project-label-layer[data-project="true"] .custom-cursor-project-letter {
             opacity: 1;
             animation: none;
           }
