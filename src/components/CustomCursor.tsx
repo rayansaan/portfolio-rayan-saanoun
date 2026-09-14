@@ -126,7 +126,21 @@ export function CustomCursor() {
           className="custom-cursor-core"
           animate={{ scale: coreScale }}
           transition={{ type: 'spring', stiffness: 520, damping: 32, mass: 0.3 }}
-        />
+        >
+          <svg className="custom-cursor-grain" viewBox="0 0 64 64" aria-hidden="true">
+            <filter id="custom-cursor-grain-filter">
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.82"
+                numOctaves="3"
+                seed="7"
+                stitchTiles="stitch"
+              />
+              <feColorMatrix type="saturate" values="0" />
+            </filter>
+            <rect width="100%" height="100%" filter="url(#custom-cursor-grain-filter)" />
+          </svg>
+        </motion.span>
 
         <span className="custom-cursor-project-label-frame" aria-hidden="true">
           <svg className="custom-cursor-project-label" viewBox="0 0 80 80">
@@ -167,8 +181,21 @@ export function CustomCursor() {
           display: block;
           border: 2px solid rgba(17, 15, 15, 0.7);
           border-radius: 999px;
-          background: #110f0f;
+          overflow: hidden;
+          background: rgba(255, 255, 255, 0.01);
           box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+          -webkit-backdrop-filter: invert(1) grayscale(1) contrast(1.06) blur(0.45px);
+          backdrop-filter: invert(1) grayscale(1) contrast(1.06) blur(0.45px);
+        }
+
+        .custom-cursor-grain {
+          position: absolute;
+          inset: 0;
+          display: block;
+          width: 100%;
+          height: 100%;
+          opacity: 0.14;
+          mix-blend-mode: soft-light;
         }
 
         .custom-cursor-project-label-frame {
