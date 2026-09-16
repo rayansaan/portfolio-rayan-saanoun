@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { LayoutGrid, Mail, UserRound } from 'lucide-react';
 
 const navLinks = [
-  { name: 'Work', href: '/#projects' },
-  { name: 'About', href: '/about', isRoute: true },
-  { name: 'Contact', href: 'mailto:rayansaan.pro@gmail.com' },
+  { name: 'Work', href: '/#projects', icon: LayoutGrid },
+  { name: 'About', href: '/about', icon: UserRound, isRoute: true },
+  { name: 'Contact', href: 'mailto:rayansaan.pro@gmail.com', icon: Mail },
 ];
 
 export function Header() {
@@ -58,17 +59,25 @@ export function Header() {
         </Link>
 
         <nav className="site-desktop-nav" aria-label="Navigation principale">
-          {navLinks.map((link) =>
-            link.isRoute ? (
+          {navLinks.map((link) => {
+            const Icon = link.icon;
+            const content = (
+              <>
+                <Icon className="site-nav-icon" aria-hidden="true" />
+                <span>{link.name}</span>
+              </>
+            );
+
+            return link.isRoute ? (
               <Link key={link.name} to={link.href} className="site-nav-link">
-                {link.name}
+                {content}
               </Link>
             ) : (
               <a key={link.name} href={link.href} className="site-nav-link">
-                {link.name}
+                {content}
               </a>
-            ),
-          )}
+            );
+          })}
           <a
             href="/cv/CV-Rayan-Saanoun-2026.pdf"
             target="_blank"
@@ -126,11 +135,13 @@ export function Header() {
               >
                 {link.isRoute ? (
                   <Link to={link.href} className="site-mobile-link" onClick={() => setIsOpen(false)}>
-                    {link.name}
+                    <link.icon className="site-mobile-link-icon" aria-hidden="true" />
+                    <span>{link.name}</span>
                   </Link>
                 ) : (
                   <a href={link.href} className="site-mobile-link" onClick={() => setIsOpen(false)}>
-                    {link.name}
+                    <link.icon className="site-mobile-link-icon" aria-hidden="true" />
+                    <span>{link.name}</span>
                   </a>
                 )}
               </motion.div>
