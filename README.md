@@ -32,7 +32,7 @@ Les pages `/photography/:id` utilisent `src/data/photography.ts` et le manifeste
 
 La galerie est pleine largeur, avec une disposition éparpillée stable, des filtres par catégorie et un dialogue plein écran (fond sombre, image entière, Échap, flèches, balayage tactile et retour du focus). Le défilement Lenis est suspendu pendant l'agrandissement, puis restauré.
 
-L'archive fournie contient **35 photos** : Cars (3), Portrait (3) et World (29). World conserve les catégories Shanghai (10), Suzhou (8) et Tunisia (11), y compris les variantes retouchées fournies.
+Les galeries contiennent **36 photos** : Cars (4), Portrait (3) et World (29). World conserve les catégories Shanghai (10), Suzhou (8) et Tunisia (11), y compris les variantes retouchées fournies.
 
 Les images du site sont des copies WebP (grand côté jusqu'à 2 560 px) avec des miniatures jusqu'à 1 024 px. Leur orientation et leurs proportions sont conservées, les couleurs sont converties en sRGB et les métadonnées EXIF/GPS sont retirées. Les originaux et l'archive ne sont pas ajoutés au dépôt. Il n'y a pas de dépendance à des liens Drive ni de synchronisation automatique avec Drive.
 
