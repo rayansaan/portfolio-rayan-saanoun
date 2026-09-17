@@ -12,7 +12,7 @@ import {
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { GravityPills } from '@/components/GravityPills';
-import { CV_URL } from '@/constants/links';
+import { CV_PREVIEW_URL, CV_URL } from '@/constants/links';
 import './About.css';
 
 const experiences = [
@@ -280,18 +280,7 @@ export function About() {
               <p>Expériences, formation et compétences</p>
             </motion.div>
             <motion.div variants={revealVariants} className="about-cv-paper" aria-hidden="true">
-              <div className="about-cv-paper-head">
-                <span>RS</span>
-                <div>
-                  <strong>Rayan Saanoun</strong>
-                  <small>Product Designer</small>
-                </div>
-              </div>
-              <div className="about-cv-paper-rule" />
-              <small>EXPÉRIENCE</small>
-              <div className="about-cv-paper-line about-cv-paper-line-long" />
-              <div className="about-cv-paper-line" />
-              <div className="about-cv-paper-line about-cv-paper-line-short" />
+              <img src={CV_PREVIEW_URL} alt="" decoding="async" />
             </motion.div>
           </motion.a>
 

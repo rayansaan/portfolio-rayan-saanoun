@@ -497,11 +497,11 @@
   right: 28px;
   bottom: -104px;
   left: 28px;
-  min-height: 210px;
-  padding: 22px;
+  height: 210px;
+  overflow: hidden;
   border: 1px solid rgba(17, 15, 15, 0.07);
   border-radius: 14px 14px 0 0;
-  background: rgba(255, 255, 255, 0.9);
+  background: #fff;
   box-shadow: 0 -12px 36px rgba(17, 15, 15, 0.07);
   transform: rotate(-1.5deg);
   transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1), bottom 500ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -513,49 +513,11 @@
   transform: rotate(0deg);
 }
 
-.about-cv-paper-head {
-  display: flex;
-  align-items: center;
-  gap: 9px;
+.about-cv-paper img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
-
-.about-cv-paper-head > span {
-  display: grid;
-  width: 30px;
-  height: 30px;
-  place-items: center;
-  border-radius: 50%;
-  background: #110f0f;
-  color: #fff;
-  font-size: 9px;
-  font-weight: 600;
-}
-
-.about-cv-paper-head div {
-  display: flex;
-  flex-direction: column;
-}
-
-.about-cv-paper-head strong { font-size: 10px; }
-.about-cv-paper-head small { color: rgba(17, 15, 15, 0.45); font-size: 7px; }
-.about-cv-paper > small { color: rgba(17, 15, 15, 0.42); font-size: 6px; letter-spacing: 0.08em; }
-
-.about-cv-paper-rule {
-  height: 1px;
-  margin: 16px 0 12px;
-  background: rgba(17, 15, 15, 0.08);
-}
-
-.about-cv-paper-line {
-  width: 72%;
-  height: 5px;
-  margin-top: 8px;
-  border-radius: 99px;
-  background: rgba(17, 15, 15, 0.08);
-}
-
-.about-cv-paper-line-long { width: 100%; }
-.about-cv-paper-line-short { width: 44%; }
 
 /* Companies */
 .about-companies-card {
