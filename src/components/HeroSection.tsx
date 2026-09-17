@@ -59,7 +59,7 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
         >
-          Concevoir des expériences digitales où la complexité s'efface pour laisser place à l'intuitif.
+          Concevoir des produits utiles, compréhensibles et pensés pour leurs utilisateurs.
         </motion.p>
         
         {/* Logo Carousel */}
