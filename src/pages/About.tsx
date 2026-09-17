@@ -139,8 +139,8 @@ export function About() {
                 Product Designer
               </motion.p>
               <motion.p variants={revealVariants} className="about-profile-bio">
-                Je transforme des sujets complexes en expériences digitales simples, utiles et alignées avec les
-                objectifs business.
+                J'allie UX/UI design, approche centrée utilisateur et design systems pour soutenir la croissance et
+                renforcer la satisfaction client.
               </motion.p>
               <motion.div variants={revealVariants} className="about-location">
                 <MapPin aria-hidden="true" />
@@ -209,7 +209,7 @@ export function About() {
           >
             <CardLabel>Mon approche</CardLabel>
             <motion.h2 variants={revealVariants}>
-              Transformer la complexité en produits <span>simples et utiles.</span>
+              Concevoir des produits <span>utiles, compréhensibles et pensés pour leurs utilisateurs.</span>
             </motion.h2>
             <motion.div variants={listVariants} className="about-approach-steps" aria-label="Recherche, stratégie et design">
               {['Recherche', 'Stratégie', 'Design'].map((step, index) => (
