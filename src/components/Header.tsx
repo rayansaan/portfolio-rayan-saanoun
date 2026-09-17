@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { LayoutGrid, Mail, UserRound } from 'lucide-react';
+import { CV_URL } from '@/constants/links';
 
 const navLinks = [
   { name: 'Work', href: '/#projects', icon: LayoutGrid },
@@ -79,7 +80,7 @@ export function Header() {
             );
           })}
           <a
-            href="/cv/CV-Rayan-Saanoun-2026.pdf"
+            href={CV_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="site-cv-link"
@@ -90,7 +91,7 @@ export function Header() {
 
         <div className="site-mobile-actions">
           <a
-            href="/cv/CV-Rayan-Saanoun-2026.pdf"
+            href={CV_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="site-cv-link"

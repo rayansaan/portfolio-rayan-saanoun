@@ -12,6 +12,7 @@ import {
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { GravityPills } from '@/components/GravityPills';
+import { CV_URL } from '@/constants/links';
 import './About.css';
 
 const experiences = [
@@ -263,7 +264,7 @@ export function About() {
           </motion.article>
 
           <motion.a
-            href="/cv/CV-Rayan-Saanoun-2026.pdf"
+            href={CV_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="about-card about-cv-card about-interactive-card"
