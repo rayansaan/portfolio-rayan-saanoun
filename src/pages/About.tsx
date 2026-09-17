@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { motion, type Variants } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import {
   ArrowUpRight,
   BriefcaseBusiness,
@@ -18,16 +19,19 @@ const experiences = [
     title: 'Product Designer',
     company: 'Moove',
     period: '2022 — 2024',
+    href: '/project/moove',
   },
   {
     title: 'Designer OPS',
     company: 'Cdiscount',
     period: '2024',
+    href: null,
   },
   {
     title: 'UX/UI Designer',
     company: 'Nash, Veeton & Rakoono',
     period: '2023 — 2024',
+    href: '/#projects',
   },
 ];
 
@@ -227,11 +231,23 @@ export function About() {
             <motion.ul variants={listVariants} className="about-experience-list">
               {experiences.map((experience) => (
                 <motion.li variants={revealVariants} key={`${experience.company}-${experience.title}`}>
-                  <div>
-                    <strong>{experience.title}</strong>
-                    <span>{experience.company}</span>
-                  </div>
-                  <time>{experience.period}</time>
+                  {experience.href ? (
+                    <Link to={experience.href} className="about-experience-link">
+                      <div>
+                        <strong>{experience.title}</strong>
+                        <span>{experience.company}</span>
+                      </div>
+                      <time>{experience.period}</time>
+                    </Link>
+                  ) : (
+                    <div className="about-experience-static">
+                      <div>
+                        <strong>{experience.title}</strong>
+                        <span>{experience.company}</span>
+                      </div>
+                      <time>{experience.period}</time>
+                    </div>
+                  )}
                 </motion.li>
               ))}
             </motion.ul>

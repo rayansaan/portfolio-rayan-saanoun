@@ -315,6 +315,11 @@
 }
 
 .about-experience-list li {
+  min-height: 65px;
+}
+
+.about-experience-link,
+.about-experience-static {
   display: flex;
   min-height: 65px;
   align-items: center;
@@ -327,12 +332,19 @@
   transition: background-color 220ms ease, transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.about-experience-list li:hover {
+.about-experience-link:hover,
+.about-experience-link:focus-visible {
   background: rgba(255, 255, 255, 0.82);
   transform: translateX(3px);
 }
 
-.about-experience-list li div {
+.about-experience-link:focus-visible {
+  outline: 2px solid #110f0f;
+  outline-offset: 2px;
+}
+
+.about-experience-link > div,
+.about-experience-static > div {
   display: flex;
   min-width: 0;
   flex-direction: column;
@@ -769,7 +781,8 @@
   .about-cv-paper,
   .about-card-arrow,
   .about-contact-arrow,
-  .about-experience-list li {
+  .about-experience-link,
+  .about-experience-static {
     transition-duration: 0.01ms;
   }
 }
