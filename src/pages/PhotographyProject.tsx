@@ -10,6 +10,7 @@ const MIN_ZOOM_LEVEL = 0;
 const MAX_ZOOM_LEVEL = 3;
 const ZOOM_PERCENTAGES = [70, 80, 90, 100] as const;
 const WHEEL_STEP_THRESHOLD = 45;
+const PINCH_STEP_RATIO = 1.18;
 
 type ZoomAnchor = {
   x: number;
@@ -231,6 +232,90 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
     return () => gallery.removeEventListener('wheel', handleWheel);
   }, [updateZoom]);
 
+  useEffect(() => {
+    const gallery = galleryRef.current;
+    if (!gallery) return;
+
+    let pinchStartDistance = 0;
+    let pinchStartLevel = zoomLevelRef.current;
+    let isPinching = false;
+    let resetPinchTimeout: number | null = null;
+
+    const getDistance = (touches: TouchList) => {
+      const deltaX = touches[1].clientX - touches[0].clientX;
+      const deltaY = touches[1].clientY - touches[0].clientY;
+      return Math.hypot(deltaX, deltaY);
+    };
+
+    const startPinch = (event: TouchEvent) => {
+      if (event.touches.length < 2) return;
+
+      event.preventDefault();
+      if (resetPinchTimeout !== null) {
+        window.clearTimeout(resetPinchTimeout);
+        resetPinchTimeout = null;
+      }
+
+      pinchStartDistance = Math.max(getDistance(event.touches), 1);
+      pinchStartLevel = zoomLevelRef.current;
+      isPinching = true;
+      setShowNavigationHint(false);
+      gallery.classList.add('is-pinching');
+    };
+
+    const movePinch = (event: TouchEvent) => {
+      if (!isPinching || event.touches.length < 2 || pinchStartDistance === 0) return;
+
+      event.preventDefault();
+      const distanceRatio = Math.max(getDistance(event.touches), 1) / pinchStartDistance;
+      const levelOffset = Math.round(Math.log(distanceRatio) / Math.log(PINCH_STEP_RATIO));
+      const bounds = gallery.getBoundingClientRect();
+      const midpointX = (event.touches[0].clientX + event.touches[1].clientX) / 2 - bounds.left;
+      const midpointY = (event.touches[0].clientY + event.touches[1].clientY) / 2 - bounds.top;
+
+      updateZoom(pinchStartLevel + levelOffset, midpointX, midpointY);
+    };
+
+    const stopPinch = (event: TouchEvent) => {
+      if (!isPinching) return;
+
+      if (event.touches.length >= 2) {
+        pinchStartDistance = Math.max(getDistance(event.touches), 1);
+        pinchStartLevel = zoomLevelRef.current;
+        return;
+      }
+
+      pinchStartDistance = 0;
+      gallery.classList.remove('is-pinching');
+      resetPinchTimeout = window.setTimeout(() => {
+        isPinching = false;
+        resetPinchTimeout = null;
+      }, 0);
+    };
+
+    const preventClickAfterPinch = (event: MouseEvent) => {
+      if (!isPinching) return;
+      event.preventDefault();
+      event.stopPropagation();
+    };
+
+    gallery.addEventListener('touchstart', startPinch, { passive: false });
+    gallery.addEventListener('touchmove', movePinch, { passive: false });
+    gallery.addEventListener('touchend', stopPinch);
+    gallery.addEventListener('touchcancel', stopPinch);
+    gallery.addEventListener('click', preventClickAfterPinch, true);
+
+    return () => {
+      if (resetPinchTimeout !== null) window.clearTimeout(resetPinchTimeout);
+      gallery.classList.remove('is-pinching');
+      gallery.removeEventListener('touchstart', startPinch);
+      gallery.removeEventListener('touchmove', movePinch);
+      gallery.removeEventListener('touchend', stopPinch);
+      gallery.removeEventListener('touchcancel', stopPinch);
+      gallery.removeEventListener('click', preventClickAfterPinch, true);
+    };
+  }, [updateZoom]);
+
   useLayoutEffect(() => {
     const gallery = galleryRef.current;
     if (!gallery) return;
@@ -367,7 +452,7 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
           '--overview-columns': overviewLayout.columns,
           '--overview-rows': overviewLayout.rows,
         } as CSSProperties}
-        aria-label={`Photographies de ${project.name} — espace navigable horizontalement et verticalement. Molette vers l'avant pour zoomer, vers l'arrière pour dézoomer.`}
+        aria-label={`Photographies de ${project.name} — espace navigable horizontalement et verticalement. Molette ou pincement à deux doigts pour contrôler le zoom.`}
         tabIndex={0}
       >
         {photos.map((photo, index) => (
@@ -426,7 +511,17 @@ function ProjectGallery({ project }: { project: PhotographyProject }) {
       >
         <p className="photo-navigation-hint">
           <span className="photo-navigation-hint-desktop">Maintenez et glissez pour explorer</span>
-          <span className="photo-navigation-hint-mobile">Glissez pour explorer</span>
+          <span className="photo-navigation-hint-mobile">
+            <svg className="photo-pinch-icon" viewBox="0 0 48 28" aria-hidden="true">
+              <g className="photo-pinch-finger photo-pinch-finger-left">
+                <rect x="9" y="6" width="7" height="17" rx="3.5" transform="rotate(-28 12.5 14.5)" />
+              </g>
+              <g className="photo-pinch-finger photo-pinch-finger-right">
+                <rect x="32" y="6" width="7" height="17" rx="3.5" transform="rotate(28 35.5 14.5)" />
+              </g>
+            </svg>
+            <span>Pincez pour zoomer ou dézoomer</span>
+          </span>
         </p>
       </div>
 

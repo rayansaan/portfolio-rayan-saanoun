@@ -149,6 +149,7 @@
 }
 
 .photo-scatter.is-dragging { cursor: grabbing; user-select: none; }
+.photo-scatter.is-pinching { user-select: none; }
 .photo-scatter::-webkit-scrollbar { display: none; }
 
 .photo-scatter:focus-visible {
@@ -390,6 +391,37 @@
 
 .photo-navigation-hint-mobile { display: none; }
 
+.photo-pinch-icon {
+  width: 2.5rem;
+  height: 1.5rem;
+  flex: none;
+  overflow: visible;
+  fill: currentColor;
+}
+
+.photo-pinch-finger {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.photo-pinch-finger-left {
+  animation: photo-pinch-left 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.photo-pinch-finger-right {
+  animation: photo-pinch-right 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes photo-pinch-left {
+  0%, 100% { transform: translateX(0.2rem); }
+  50% { transform: translateX(-0.2rem); }
+}
+
+@keyframes photo-pinch-right {
+  0%, 100% { transform: translateX(-0.2rem); }
+  50% { transform: translateX(0.2rem); }
+}
+
 .photography-page :focus-visible,
 .photography-missing :focus-visible,
 .photo-lightbox :focus-visible {
@@ -551,9 +583,10 @@
 
 @media (pointer: coarse) {
   .photo-navigation-hint-desktop { display: none; }
-  .photo-navigation-hint-mobile { display: inline; }
+  .photo-navigation-hint-mobile { display: inline-flex; align-items: center; gap: 0.55rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .photo-scatter, .photo-tile, .photography-filters button, .photo-navigation-overlay, .photo-navigation-hint { transition: none; }
+  .photo-pinch-finger { animation: none; }
 }
