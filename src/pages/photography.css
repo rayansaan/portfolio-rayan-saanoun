@@ -497,6 +497,14 @@
   user-select: none;
 }
 
+.photo-lightbox .photo-lightbox-image.is-navigable {
+  cursor: e-resize !important;
+}
+
+.photo-lightbox .photo-lightbox-image.is-previous-side {
+  cursor: w-resize !important;
+}
+
 .photo-lightbox-status {
   position: absolute;
   text-align: center;

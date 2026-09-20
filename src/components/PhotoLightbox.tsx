@@ -14,7 +14,11 @@ interface PhotoLightboxProps {
   onClose: () => void;
 }
 
-function LightboxImage({ photo, imageRef }: { photo: Photograph; imageRef: RefObject<HTMLImageElement | null> }) {
+function LightboxImage({ photo, imageRef, onNavigate }: {
+  photo: Photograph;
+  imageRef: RefObject<HTMLImageElement | null>;
+  onNavigate?: (direction: number) => void;
+}) {
   const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
 
   return (
@@ -26,12 +30,24 @@ function LightboxImage({ photo, imageRef }: { photo: Photograph; imageRef: RefOb
       )}
       <img
         ref={imageRef}
-        className="photo-lightbox-image"
+        className={`photo-lightbox-image${onNavigate ? ' is-navigable' : ''}`}
         src={photo.src}
         alt={photo.alt}
         width={photo.width}
         height={photo.height}
         decoding="async"
+        onClick={onNavigate ? (event) => {
+          const bounds = event.currentTarget.getBoundingClientRect();
+          onNavigate(event.clientX < bounds.left + bounds.width / 2 ? -1 : 1);
+        } : undefined}
+        onPointerMove={onNavigate ? (event) => {
+          const bounds = event.currentTarget.getBoundingClientRect();
+          event.currentTarget.classList.toggle(
+            'is-previous-side',
+            event.clientX < bounds.left + bounds.width / 2,
+          );
+        } : undefined}
+        onPointerLeave={onNavigate ? (event) => event.currentTarget.classList.remove('is-previous-side') : undefined}
         onLoad={() => setStatus('loaded')}
         onError={() => setStatus('error')}
         style={{
@@ -53,6 +69,7 @@ export function PhotoLightbox({ photos, categories, projectName, initialIndex, o
   const hasAnimated = useRef(false);
   const isClosing = useRef(false);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const lastSwipeAt = useRef(Number.NEGATIVE_INFINITY);
   const photo = photos[index];
   const category = categories.find((item) => item.id === photo.categoryId);
 
@@ -161,7 +178,7 @@ export function PhotoLightbox({ photos, categories, projectName, initialIndex, o
         ease: 'power2.inOut',
       }, 0);
     }
-  }, [onClose, reduceMotion]);
+  }, [onClose, origin.height, origin.left, origin.top, origin.width, reduceMotion]);
 
   const navigate = (direction: number) => {
     if (!isClosing.current) setIndex((current) => (current + direction + photos.length) % photos.length);
@@ -202,10 +219,21 @@ export function PhotoLightbox({ photos, categories, projectName, initialIndex, o
           if (!start || !end) return;
           const dx = end.clientX - start.x;
           const dy = end.clientY - start.y;
-          if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 2) navigate(dx > 0 ? -1 : 1);
+          if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 2) {
+            lastSwipeAt.current = performance.now();
+            navigate(dx > 0 ? -1 : 1);
+          }
         }}
       >
-        <LightboxImage key={photo.id} photo={photo} imageRef={imageRef} />
+        <LightboxImage
+          key={photo.id}
+          photo={photo}
+          imageRef={imageRef}
+          onNavigate={photos.length > 1 ? (direction) => {
+            if (performance.now() - lastSwipeAt.current < 500) return;
+            navigate(direction);
+          } : undefined}
+        />
       </div>
       <footer className="photo-lightbox-footer">
         <p id="photo-lightbox-caption">{category?.path.join(' / ') || projectName}</p>
