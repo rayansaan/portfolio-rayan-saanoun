@@ -11,6 +11,8 @@ import type { ImageDescription } from '@/types';
 // Composant Table des matières
 function TableOfContents({ content }: { content: string }) {
   const [activeId, setActiveId] = useState<string>('');
+  const pendingHeadingRef = useRef<string | null>(null);
+  const pendingTimeoutRef = useRef<number | null>(null);
   
   // Extraire les titres H2 du markdown
   const headings = useMemo(() => content.split('\n')
@@ -25,28 +27,60 @@ function TableOfContents({ content }: { content: string }) {
       return { title, id };
     }), [content]);
 
-  // Observer les sections pour la mise en évidence
+  // Garder l'index synchronisé avec la section réellement visible.
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: '-20% 0px -80% 0px' }
-    );
+    const updateActiveHeading = () => {
+      const elements = headings
+        .map(({ id }) => document.getElementById(id))
+        .filter((element): element is HTMLElement => element !== null);
 
-    headings.forEach(({ id }) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
-    });
+      if (elements.length === 0) return;
 
-    return () => observer.disconnect();
+      const activationLine = 120;
+      const isAtPageBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+
+      if (pendingHeadingRef.current) {
+        const pendingElement = document.getElementById(pendingHeadingRef.current);
+        const hasReachedTarget = pendingElement
+          ? Math.abs(pendingElement.getBoundingClientRect().top - activationLine) <= 8
+          : true;
+
+        if (!hasReachedTarget && !isAtPageBottom) return;
+        pendingHeadingRef.current = null;
+      }
+
+      if (isAtPageBottom) {
+        setActiveId(elements[elements.length - 1].id);
+        return;
+      }
+
+      const current = elements.reduce((active, element) =>
+        element.getBoundingClientRect().top <= activationLine ? element : active
+      , elements[0]);
+
+      setActiveId(current.id);
+    };
+
+    updateActiveHeading();
+    window.addEventListener('scroll', updateActiveHeading, { passive: true });
+    window.addEventListener('resize', updateActiveHeading);
+
+    return () => {
+      window.removeEventListener('scroll', updateActiveHeading);
+      window.removeEventListener('resize', updateActiveHeading);
+      if (pendingTimeoutRef.current !== null) window.clearTimeout(pendingTimeoutRef.current);
+    };
   }, [headings]);
 
   const scrollToSection = (id: string) => {
+    pendingHeadingRef.current = id;
+    setActiveId(id);
+
+    if (pendingTimeoutRef.current !== null) window.clearTimeout(pendingTimeoutRef.current);
+    pendingTimeoutRef.current = window.setTimeout(() => {
+      pendingHeadingRef.current = null;
+    }, 1000);
+
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
