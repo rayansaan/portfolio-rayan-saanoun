@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { lazy, Suspense, useState, useEffect } from 'react';
 import { motion, MotionConfig } from 'framer-motion';
+import { Analytics } from '@vercel/analytics/react';
 import { Header } from '@/components/Header';
 import { HeroSection } from '@/components/HeroSection';
 import { ProjectSection } from '@/components/ProjectSection';
@@ -81,6 +82,7 @@ function App() {
       <LenisProvider>
         <CustomCursor />
         <BrowserRouter>
+          <Analytics />
           <RouteScrollManager />
           <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
             <Routes>
