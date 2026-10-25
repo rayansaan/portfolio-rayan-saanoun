@@ -19,7 +19,7 @@ export interface ProjectSection {
 export interface ProjectResult {
   value: string;
   label: string;
-  kind: 'metric' | 'delivery';
+  kind: 'metric' | 'delivery' | 'target';
 }
 
 export interface Project {

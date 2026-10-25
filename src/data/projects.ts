@@ -3,7 +3,11 @@ import type { Project } from '@/types';
 export const uxUiProjects: Project[] = [
   {
     id: 'moove',
-    results: [{ value: '+60 %', label: 'Recherches effectuées sur la plateforme', kind: 'metric' }],
+    results: [
+      { value: '3 000+', label: 'Entreprises qui font confiance à Moove après deux ans, contre une dizaine au départ', kind: 'metric' },
+      { value: '300 000', label: 'Utilisateurs après deux ans, contre une cinquantaine au départ', kind: 'metric' },
+      { value: '+60 %', label: 'Recherches effectuées sur la plateforme', kind: 'metric' },
+    ],
     name: 'Moove',
     imageUrl: '/images/projects/moove/Moove_header.png',
     href: '/project/moove',
@@ -77,7 +81,10 @@ Les retours ont également montré l’importance de la relation entre pilote et
   },
   {
     id: 'nash',
-    results: [{ value: '1 semaine', label: 'Pour concevoir et livrer le prototype du nouvel onboarding', kind: 'delivery' }],
+    results: [
+      { value: '8 sur 10', label: 'Participants capables de terminer l’onboarding sans assistance — objectif de test', kind: 'target' },
+      { value: '−30 %', label: 'De temps jusqu’à la première action utile — scénario cible : de 5 min à 3 min 30', kind: 'target' },
+    ],
     name: 'Nash',
     imageUrl: '/images/projects/nash/Nash_header.png',
     href: '/project/nash',
@@ -179,7 +186,10 @@ La donnée utilisateur (UX Research) bat toujours l'intuition. Sans ce sondage r
   },
   {
     id: 'veeton',
-    results: [{ value: 'Identité & interface', label: 'Une direction visuelle et un parcours repensés pour la mode et l’IA', kind: 'delivery' }],
+    results: [
+      { value: '9 sur 10', label: 'Participants capables d’expliquer l’offre et ses possibilités de personnalisation — objectif de test', kind: 'target' },
+      { value: '5 %', label: 'Des visiteurs envoyant une demande de démonstration — objectif de conversion', kind: 'target' },
+    ],
     name: 'Veeton',
     imageUrl: '/images/projects/veeton/Slide_-_16.png',
     href: '/project/veeton',
@@ -274,7 +284,10 @@ Je remercie l'équipe fondatrice de Veeton et les résidents de Station F pour n
   },
   {
     id: 'rakoono',
-    results: [{ value: 'Prototype interactif', label: 'Un parcours complet sur Figma intégrant les mécaniques de gamification', kind: 'delivery' }],
+    results: [
+      { value: '8 sur 10', label: 'Participants capables de trouver et d’interpréter une donnée sportive sans aide — objectif de test', kind: 'target' },
+      { value: '−40 %', label: 'De temps pour accéder à une information clé — scénario cible : de 2 min à 1 min 12', kind: 'target' },
+    ],
     name: 'Rakoono',
     imageUrl: '/images/projects/rakoono/Miniature_Rakoono.png',
     href: '/project/rakoono',

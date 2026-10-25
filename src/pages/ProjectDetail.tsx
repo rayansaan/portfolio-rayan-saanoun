@@ -1,12 +1,12 @@
 import { useState, useEffect, useMemo, useRef, useCallback, memo, type RefObject } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown, { type Components } from 'react-markdown';
 import { allProjects } from '@/data/projects';
 import { projectImageSizes } from '@/data/projectImageSizes';
 import { GSAPFlipLightbox } from '@/components/GSAPFlipLightbox';
 import { generateStandardImageId } from '@/utils/generateId';
-import type { ImageDescription } from '@/types';
+import type { ImageDescription, ProjectResult } from '@/types';
 
 // Composant Table des matières
 function TableOfContents({ content }: { content: string }) {
@@ -176,17 +176,35 @@ function cleanMarkdown(content: string): string {
   return content;
 }
 
+function ProjectResults({ results }: { results?: ProjectResult[] }) {
+  return <>
+        {results && results.length > 0 && (
+          <section className="my-8 sm:my-10" aria-label="Résultats et objectifs du projet">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))]">
+              {results.map((result) => (
+                <div key={result.value} className="rounded-2xl border border-black/15 bg-white/50 p-6 sm:p-8">
+                  <p className="text-xs text-muted-foreground mb-4">{result.kind === 'target' ? 'Objectif à valider' : result.kind === 'metric' ? 'Résultat mesuré' : 'Livraison'}</p>
+                  <p className={`${result.kind !== 'delivery' ? 'text-5xl sm:text-6xl' : 'text-3xl sm:text-4xl'} font-medium tracking-tight leading-tight break-words`}>{result.value}</p>
+                  <p className="mt-3 max-w-xl text-base text-muted-foreground leading-relaxed">{result.label}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+  </>;
+}
+
 // Composant pour parser le markdown avec IDs
-const MarkdownContent = memo(function MarkdownContent({ content, onImageClick, projectId }: {
+const MarkdownContent = memo(function MarkdownContent({ content, onImageClick, projectId, results }: {
   content: string;
   projectId: string;
+  results?: ProjectResult[];
   onImageClick: (src: string, alt: string, layoutId: string, rect: DOMRect) => void;
 }) {
   const cleanContent = cleanMarkdown(content);
   
-  return (
-    <ReactMarkdown
-      components={{
+  const components: Components = {
         h2: ({ children }) => {
           const text = String(children);
           const id = text.toLowerCase()
@@ -234,10 +252,18 @@ const MarkdownContent = memo(function MarkdownContent({ content, onImageClick, p
             </figure>
           );
         },
-      }}
-    >
-      {cleanContent}
-    </ReactMarkdown>
+  };
+  // Place results after the opening summary and before its first illustration
+  // (or before the next section when the summary has no illustration).
+  const boundaries = [cleanContent.indexOf('\n!['), cleanContent.indexOf('\n## ')]
+    .filter((index) => index >= 0);
+  const summaryEnd = boundaries.length ? Math.min(...boundaries) : cleanContent.length;
+  return (
+    <>
+      <ReactMarkdown components={components}>{cleanContent.slice(0, summaryEnd)}</ReactMarkdown>
+      <ProjectResults results={results} />
+      <ReactMarkdown components={components}>{cleanContent.slice(summaryEnd)}</ReactMarkdown>
+    </>
   );
 });
 
@@ -324,19 +350,6 @@ export function ProjectDetail() {
           </div>
         </section>
 
-        {project.results && project.results.length > 0 && (
-          <section className="mb-10 sm:mb-16" aria-label="Résultats du projet">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))]">
-              {project.results.map((result) => (
-                <div key={result.value} className="rounded-2xl border border-black/15 bg-white/50 p-6 sm:p-8">
-                  <p className="text-xs text-muted-foreground mb-4">{result.kind === 'metric' ? 'Résultat mesuré' : 'Livraison'}</p>
-                  <p className={`${result.kind === 'metric' ? 'text-5xl sm:text-6xl' : 'text-3xl sm:text-4xl'} font-medium tracking-tight leading-tight break-words`}>{result.value}</p>
-                  <p className="mt-3 max-w-xl text-base text-muted-foreground leading-relaxed">{result.label}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
 
         <button
           type="button"
@@ -357,7 +370,7 @@ export function ProjectDetail() {
           <article className="min-w-0 max-w-[840px]">
             {hasMarkdown && project.markdownContent ? (
               <>
-                <MarkdownContent content={project.markdownContent} projectId={project.id} onImageClick={handleImageClick} />
+                <MarkdownContent content={project.markdownContent} projectId={project.id} results={project.results} onImageClick={handleImageClick} />
 
               </>
             ) : <p className="text-muted-foreground">Contenu en cours de rédaction.</p>}
