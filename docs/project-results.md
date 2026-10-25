@@ -21,3 +21,13 @@ Prototype interactif Figma et mécaniques de gamification documentés. Aucun gai
 ## Compléments utiles
 
 Pour remplacer les résultats qualitatifs par des KPI : valeur avant/après, définition de la mesure, période, population/échantillon et source. Le modèle distingue explicitement une mesure (`metric`) d’une livraison (`delivery`).
+
+## Objectifs illustratifs approuvés pour affichage
+
+À la demande de Rayan, les six valeurs proposées dans la conversation sont affichées pour Nash, Veeton et Rakoono sous la mention « Objectif à valider ». Elles ne proviennent pas de mesures historiques et ne doivent pas être présentées comme atteintes. Les temps de départ sont des scénarios illustratifs, pas des mesures de l’ancienne interface.
+
+- Nash : 8 participants sur 10 terminant l’onboarding sans aide ; réduction cible de 30 % du temps jusqu’à la première action utile (scénario 5 min → 3 min 30).
+- Veeton : 9 participants sur 10 comprenant l’offre et la personnalisation ; conversion cible de 5 % en demandes de démonstration.
+- Rakoono : 8 participants sur 10 réussissant une tâche d’analyse ; réduction cible de 40 % du temps d’accès à une information clé (scénario 2 min → 1 min 12).
+
+La mention ne peut devenir « Résultat mesuré » qu’après confirmation des données observées, du périmètre et de la période. Le modèle inclut désormais le type `target` pour préserver cette distinction.

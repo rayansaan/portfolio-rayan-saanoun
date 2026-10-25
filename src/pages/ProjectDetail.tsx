@@ -179,12 +179,12 @@ function cleanMarkdown(content: string): string {
 function ProjectResults({ results }: { results?: ProjectResult[] }) {
   return <>
         {results && results.length > 0 && (
-          <section className="my-8 sm:my-10" aria-label="Résultats du projet">
+          <section className="my-8 sm:my-10" aria-label="Résultats et objectifs du projet">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))]">
               {results.map((result) => (
                 <div key={result.value} className="rounded-2xl border border-black/15 bg-white/50 p-6 sm:p-8">
-                  <p className="text-xs text-muted-foreground mb-4">{result.kind === 'metric' ? 'Résultat mesuré' : 'Livraison'}</p>
-                  <p className={`${result.kind === 'metric' ? 'text-5xl sm:text-6xl' : 'text-3xl sm:text-4xl'} font-medium tracking-tight leading-tight break-words`}>{result.value}</p>
+                  <p className="text-xs text-muted-foreground mb-4">{result.kind === 'target' ? 'Objectif à valider' : result.kind === 'metric' ? 'Résultat mesuré' : 'Livraison'}</p>
+                  <p className={`${result.kind !== 'delivery' ? 'text-5xl sm:text-6xl' : 'text-3xl sm:text-4xl'} font-medium tracking-tight leading-tight break-words`}>{result.value}</p>
                   <p className="mt-3 max-w-xl text-base text-muted-foreground leading-relaxed">{result.label}</p>
                 </div>
               ))}
