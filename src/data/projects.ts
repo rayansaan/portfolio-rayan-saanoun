@@ -3,6 +3,7 @@ import type { Project } from '@/types';
 export const uxUiProjects: Project[] = [
   {
     id: 'moove',
+    results: [{ value: '+60 %', label: 'Recherches effectuées sur la plateforme', kind: 'metric' }],
     name: 'Moove',
     imageUrl: '/images/projects/moove/Moove_header.png',
     href: '/project/moove',
@@ -76,6 +77,7 @@ Les retours ont également montré l’importance de la relation entre pilote et
   },
   {
     id: 'nash',
+    results: [{ value: '1 semaine', label: 'Pour concevoir et livrer le prototype du nouvel onboarding', kind: 'delivery' }],
     name: 'Nash',
     imageUrl: '/images/projects/nash/Nash_header.png',
     href: '/project/nash',
@@ -177,6 +179,7 @@ La donnée utilisateur (UX Research) bat toujours l'intuition. Sans ce sondage r
   },
   {
     id: 'veeton',
+    results: [{ value: 'Identité & interface', label: 'Une direction visuelle et un parcours repensés pour la mode et l’IA', kind: 'delivery' }],
     name: 'Veeton',
     imageUrl: '/images/projects/veeton/Slide_-_16.png',
     href: '/project/veeton',
@@ -271,6 +274,7 @@ Je remercie l'équipe fondatrice de Veeton et les résidents de Station F pour n
   },
   {
     id: 'rakoono',
+    results: [{ value: 'Prototype interactif', label: 'Un parcours complet sur Figma intégrant les mécaniques de gamification', kind: 'delivery' }],
     name: 'Rakoono',
     imageUrl: '/images/projects/rakoono/Miniature_Rakoono.png',
     href: '/project/rakoono',

@@ -16,6 +16,12 @@ export interface ProjectSection {
   images?: (string | ImageWithDescription)[];
 }
 
+export interface ProjectResult {
+  value: string;
+  label: string;
+  kind: 'metric' | 'delivery';
+}
+
 export interface Project {
   id: string;
   name: string;
@@ -28,6 +34,7 @@ export interface Project {
   tags: string[];
   tools: string[];
   description: string;
+  results?: ProjectResult[];
   context?: string;
   website?: string;
   useCases?: string[];
