@@ -18,7 +18,7 @@ export function ProjectSection({
         <div className="mb-10 sm:mb-14 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">
-              {title === 'UX/UI Design' ? '01 / Projets sélectionnés' : '02 / Regards personnels'}
+              {title === 'UX/UI Design' ? '03 / Projets sélectionnés' : '03 / Regards personnels'}
             </p>
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight">{title}</h2>
           </div>
