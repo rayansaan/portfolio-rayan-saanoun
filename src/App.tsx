@@ -4,6 +4,7 @@ import { motion, MotionConfig } from 'framer-motion';
 import { Analytics } from '@vercel/analytics/react';
 import { Header } from '@/components/Header';
 import { HeroSection } from '@/components/HeroSection';
+import { LandingIntroduction, LandingProcess, LandingContact } from '@/components/LandingStory';
 import { ProjectSection } from '@/components/ProjectSection';
 import { Footer } from '@/components/Footer';
 import { CustomCursor } from '@/components/CustomCursor';
@@ -43,6 +44,7 @@ function HomePage() {
       <main>
         {/* Hero Section */}
         <HeroSection />
+        <LandingIntroduction />
         
         {/* Projects Sections - appear after first scroll */}
         <div id="projects">
@@ -68,6 +70,8 @@ function HomePage() {
           </motion.div>
         </div>
         
+        <LandingProcess />
+        <LandingContact />
         {/* Footer */}
         <Footer />
       </main>
