@@ -1,8 +1,9 @@
-import { useState, useEffect, useMemo, useRef, type RefObject } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback, memo, type RefObject } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { allProjects } from '@/data/projects';
+import { projectImageSizes } from '@/data/projectImageSizes';
 import { GSAPFlipLightbox } from '@/components/GSAPFlipLightbox';
 import { generateStandardImageId } from '@/utils/generateId';
 import type { ImageDescription } from '@/types';
@@ -176,7 +177,7 @@ function cleanMarkdown(content: string): string {
 }
 
 // Composant pour parser le markdown avec IDs
-function MarkdownContent({ content, onImageClick, projectId }: {
+const MarkdownContent = memo(function MarkdownContent({ content, onImageClick, projectId }: {
   content: string;
   projectId: string;
   onImageClick: (src: string, alt: string, layoutId: string, rect: DOMRect) => void;
@@ -218,6 +219,7 @@ function MarkdownContent({ content, onImageClick, projectId }: {
         img: ({ src, alt }) => {
           const imageSrc = String(src || '');
           const caption = String(alt || 'Image du projet');
+          const dimensions = projectImageSizes[decodeURI(imageSrc)];
           return (
             <figure className="my-10 sm:my-14">
               <button
@@ -226,7 +228,7 @@ function MarkdownContent({ content, onImageClick, projectId }: {
                 onClick={(event) => onImageClick(imageSrc, caption, `${projectId}-${imageSrc}`, event.currentTarget.getBoundingClientRect())}
                 aria-label={`Agrandir : ${caption}`}
               >
-                <img src={imageSrc} alt={caption} loading="lazy" decoding="async" className="block w-full h-auto" />
+                <img src={imageSrc} {...dimensions} alt={caption} loading="lazy" decoding="async" className="block w-full h-auto" />
               </button>
               <figcaption className="mt-3 text-sm text-muted-foreground">{caption}</figcaption>
             </figure>
@@ -237,7 +239,7 @@ function MarkdownContent({ content, onImageClick, projectId }: {
       {cleanContent}
     </ReactMarkdown>
   );
-}
+});
 
 export function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
@@ -250,6 +252,16 @@ export function ProjectDetail() {
   const contentRef = useRef<HTMLDivElement>(null);
   const scrollProgress = useScrollProgress(contentRef);
   
+  const handleImageClick = useCallback((src: string, alt: string, layoutId: string, rect: DOMRect, description?: string) => {
+    setSelectedImage({ id: layoutId, src, alt, description: description || '' });
+    setImageRect(rect);
+  }, []);
+
+  const handleCloseImage = useCallback(() => {
+    setSelectedImage(null);
+    setImageRect(null);
+  }, []);
+
   if (!project) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -267,15 +279,6 @@ export function ProjectDetail() {
     .filter(p => p.id !== id)
     .slice(0, 3);
 
-  const handleImageClick = (src: string, alt: string, layoutId: string, rect: DOMRect, description?: string) => {
-    setSelectedImage({ id: layoutId, src, alt, description: description || '' });
-    setImageRect(rect);
-  };
-
-  const handleCloseImage = () => {
-    setSelectedImage(null);
-    setImageRect(null);
-  };
 
   const hasMarkdown = !!project.markdownContent;
 
@@ -327,7 +330,7 @@ export function ProjectDetail() {
           onClick={(event) => handleImageClick(project.imageUrl, project.name, generateStandardImageId(project.id, 0), event.currentTarget.getBoundingClientRect())}
           aria-label={`Agrandir l’image d’ouverture du projet ${project.name}`}
         >
-          <img src={project.imageUrl} alt={`${project.name} — visuel d’ouverture`} className="block w-full h-auto" />
+          <img src={project.imageUrl} {...projectImageSizes[project.imageUrl]} alt={`${project.name} — visuel d’ouverture`} className="block w-full h-auto" />
         </button>
 
         <div ref={contentRef} className="grid lg:grid-cols-[220px_minmax(0,1fr)] gap-10 lg:gap-20 pt-12 sm:pt-20 pb-24">

@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { X } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import type { ImageDescription } from '@/types';
+import { useLenis } from '@/hooks/useLenis';
 
 interface GSAPFlipLightboxProps {
   image: ImageDescription | null;
@@ -19,6 +20,7 @@ export function GSAPFlipLightbox({
   onClose,
   showDescription = false,
 }: GSAPFlipLightboxProps) {
+  const { lenis } = useLenis();
   const overlayRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -235,18 +237,18 @@ export function GSAPFlipLightbox({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, animateClose]);
 
-  // Prevent body scroll when open
+  // Lock both native and smooth scrolling so the opening position stays stable.
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-
+    if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    const resumeLenis = lenis && !lenis.isStopped;
+    lenis?.stop();
+    document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = previousOverflow;
+      if (resumeLenis) lenis.start();
     };
-  }, [isOpen]);
+  }, [isOpen, lenis]);
 
   if (!isOpen || !image || !originRect) return null;
 
