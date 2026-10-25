@@ -6,16 +6,16 @@ import { LogoCarousel } from './LogoCarousel';
 import './landing.css';
 
 const services = [
-  ['01', 'Product design', 'Comprendre les usages, simplifier les parcours et concevoir des interfaces utiles. De la recherche utilisateur au prototype, je relie les besoins aux décisions de design.'],
-  ['02', 'Branding', 'Donner une direction et une cohérence visuelle à une marque. Une identité pensée pour son public, puis déclinée sur ses points de contact.'],
-  ['03', 'Photographie', 'Observer les détails, travailler la lumière et raconter autrement. Un regard personnel que je développe à travers les portraits, les voitures et les voyages.'],
+  { number: '01', title: 'Design de produit', text: 'Recherche utilisateur, architecture des parcours, interfaces et prototypes. Je conçois avec les équipes produit et accompagne la mise en œuvre avec les développeurs.', href: '/project/moove', link: 'Voir le projet Moove' },
+  { number: '02', title: 'Identité visuelle', text: 'Direction visuelle, typographie et déclinaisons digitales. Je construis une identité cohérente avec le positionnement de la marque et les attentes de son public.', href: '/project/veeton', link: 'Découvrir Veeton' },
+  { number: '03', title: 'Photographie', text: 'Portraits, voitures et voyages : une pratique personnelle pour explorer la lumière, la composition et les détails. Un autre regard qui nourrit mon travail de designer.', href: '/#explorations', link: 'Explorer mes photographies' },
 ];
 const steps = [
-  ['Écouter', 'Comprendre le contexte, les personnes et ce qui bloque aujourd’hui. Poser les bonnes questions avant de dessiner.'],
-  ['Cadrer', 'Croiser les observations, préciser le problème et choisir les priorités avec l’équipe.'],
-  ['Concevoir', 'Explorer plusieurs pistes, structurer les parcours et donner forme aux idées dans des prototypes.'],
-  ['Éprouver', 'Confronter les propositions aux utilisateurs et aux contraintes réelles. Ajuster ce qui ne fonctionne pas.'],
-  ['Accompagner', 'Préparer la livraison avec les développeurs et faire évoluer le produit à partir des retours.'],
+  ['Comprendre', 'Recueillir les besoins à travers les entretiens, l’observation des parcours et l’analyse des contraintes.', 'Des observations et des besoins identifiés'],
+  ['Cadrer', 'Partager les enseignements avec l’équipe, préciser le problème à résoudre et choisir les priorités.', 'Un problème prioritaire et des critères de réussite'],
+  ['Concevoir', 'Explorer les parcours et les pistes d’interface, puis donner forme aux propositions pour pouvoir les discuter.', 'Des parcours, des wireframes et un prototype'],
+  ['Tester et ajuster', 'Confronter les propositions aux utilisateurs et aux contraintes techniques. Revoir les décisions à partir des retours.', 'Des retours et des pistes d’amélioration'],
+  ['Accompagner', 'Préparer la livraison avec les développeurs et suivre les retours après la mise en ligne.', 'Une livraison documentée et des évolutions à prioriser'],
 ];
 
 export function LandingIntroduction() {
@@ -24,25 +24,25 @@ export function LandingIntroduction() {
       <div className="landing-about-portrait"><img src="/images/profile/portrait-rayan-portfolio.png" alt="Rayan Saanoun" loading="lazy" className="mask-gradient-portrait" /></div>
       <div>
         <p className="landing-label">01 / Qui je suis</p>
-        <h2 id="intro-title">Un regard curieux.<br />Une approche concrète.</h2>
-        <p>Je suis Rayan, Product Designer basé à Bordeaux. J’allie UX/UI design, approche centrée utilisateur et design systems pour rendre les produits plus compréhensibles.</p>
-        <p>De l’aviation d’affaires à la mode et aux énergies renouvelables, j’aime comprendre des univers différents et travailler avec les équipes pour traduire leur complexité en expériences claires.</p>
+        <h2 id="intro-title">Comprendre les usages.<br />Concevoir avec les équipes.</h2>
+        <p>Chez Moove, j’ai travaillé pendant 16 mois sur la recherche et la comparaison de trajets dans l’aviation d’affaires, de la compréhension des besoins à l’accompagnement du déploiement.</p>
+        <p>Chez Cdiscount, en Design Ops, j’ai contribué à formaliser les façons de travailler des équipes à travers des handbooks et des ateliers. Ces expériences m’ont appris à concevoir l’interface tout en prenant soin de la collaboration qui la rend possible.</p>
         <Link to="/about" className="landing-text-link">En savoir plus sur mon parcours <ArrowUpRight size={16} aria-hidden="true" /></Link>
       </div>
     </section>
     <section className="landing-shell landing-section" aria-labelledby="services-title">
       <p className="landing-label">02 / Ce que je fais</p>
       <h2 id="services-title" className="landing-section-title">Trois façons de<br />donner forme aux idées.</h2>
-      <div className="landing-services">{services.map(([number, title, text]) => <article key={number}><span className="landing-label">{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
-      <div className="landing-trust"><p className="landing-label">Des équipes avec lesquelles j’ai travaillé</p><LogoCarousel /></div>
+      <div className="landing-services">{services.map(({ number, title, text, href, link }) => <article key={number}><span className="landing-label">{number}</span><h3>{title}</h3><p>{text}</p><Link className="landing-text-link" to={href}>{link} <ArrowUpRight size={16} aria-hidden="true" /></Link></article>)}</div>
+      <div className="landing-trust"><p className="landing-label">Des équipes avec lesquelles j’ai travaillé</p><LogoCarousel compact /></div>
     </section>
   </>;
 }
 
 export function LandingProcess() {
   return <section id="process" className="landing-shell landing-section" aria-labelledby="process-title">
-    <div className="landing-process-heading"><div><p className="landing-label">04 / Mon process</p><h2 id="process-title" className="landing-section-title">Avancer avec méthode.<br />Garder l’esprit ouvert.</h2></div><p>Un cadre qui s’adapte au projet, aux contraintes et aux retours du terrain.</p></div>
-    <ol className="landing-process">{steps.map(([title, text], index) => <li key={title}><span className="landing-label">0{index + 1}</span><h3>{title}</h3><p>{text}</p></li>)}</ol>
+    <div className="landing-process-heading"><div><p className="landing-label">04 / Ma démarche en Product Design</p><h2 id="process-title" className="landing-section-title">Une méthode pour avancer.<br />Des retours pour ajuster.</h2></div><p>Un cadre qui s’adapte au projet, aux contraintes et aux retours du terrain.</p></div>
+    <ol className="landing-process">{steps.map(([title, text, output], index) => <li key={title}><span className="landing-label">0{index + 1}</span><h3>{title}</h3><div><p>{text}</p><p className="landing-process-output">{output}</p></div></li>)}</ol>
   </section>;
 }
 
@@ -50,16 +50,16 @@ export function LandingContact() {
   const ref = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end end'] });
-  const y = useTransform(scrollYProgress, [0.15, 0.8], [65, 0]);
-  const opacity = useTransform(scrollYProgress, [0.1, 0.65], [0.25, 1]);
+  const y = useTransform(scrollYProgress, [0.15, 0.8], [18, 0]);
+
   return <section ref={ref} id="contact" className="landing-contact" aria-labelledby="contact-title">
     <div className="landing-contact-sticky">
-      <motion.div className="landing-shell" style={reducedMotion ? undefined : { y, opacity }}>
+      <div className="landing-shell">
         <p className="landing-label">La suite commence par une conversation</p>
-        <h2 id="contact-title">Une idée en tête ?<br />Donnons-lui forme.</h2>
+        <motion.h2 id="contact-title" style={reducedMotion ? undefined : { y }}>Un produit à faire évoluer ?<br />Parlons-en.</motion.h2>
         <a className="landing-button" href="mailto:rayansaan.pro@gmail.com">Me contacter <ArrowUpRight size={18} aria-hidden="true" /></a>
         <a className="landing-contact-email" href="mailto:rayansaan.pro@gmail.com">rayansaan.pro@gmail.com</a>
-      </motion.div>
+      </div>
     </div>
   </section>;
 }
