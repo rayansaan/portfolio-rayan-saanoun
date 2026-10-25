@@ -10,11 +10,11 @@ const logos = [
   { name: 'Veeton', src: '/logos/carousel/Veeton.svg' },
 ];
 
-export function LogoCarousel() {
+export function LogoCarousel({ compact = false }: { compact?: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="w-full px-2 sm:px-6 lg:px-32 xl:px-48 py-4 sm:py-6 overflow-hidden">
+    <div className={compact ? "w-full py-4 sm:py-6 overflow-hidden" : "w-full px-2 sm:px-6 lg:px-32 xl:px-48 py-4 sm:py-6 overflow-hidden"}>
       <div className="max-w-4xl mx-auto overflow-hidden mask-gradient-carousel">
         <div 
           ref={containerRef}

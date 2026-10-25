@@ -5,7 +5,7 @@ const projectSummaries: Record<string, string> = {
   moove: 'Clarifier la recherche et la comparaison des trajets dans l’aviation d’affaires.',
   nash: 'Rendre les outils des énergies renouvelables plus clairs et accessibles.',
   veeton: 'Créer une expérience digitale à la rencontre de la mode et de l’IA.',
-  rakoono: 'Repenser un parcours web pour mieux guider ses utilisateurs.',
+  rakoono: 'Concevoir une expérience d’analyse sportive autour de la gamification et de l’engagement.',
 };
 
 interface ProjectItemProps {
@@ -44,7 +44,7 @@ export function ProjectItem({ project }: ProjectItemProps) {
         <span className="text-xs uppercase tracking-widest text-muted-foreground shrink-0">Voir le projet ↗</span>
         </div>
         
-        <p className="text-base text-muted-foreground leading-relaxed line-clamp-2 min-h-[3rem] mb-4">
+        <p className="text-base text-muted-foreground leading-relaxed min-h-[3rem] mb-4">
           {projectSummaries[project.id] || project.description}
         </p>
         

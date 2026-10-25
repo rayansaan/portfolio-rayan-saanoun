@@ -5,8 +5,8 @@ import { LayoutGrid, Mail, UserRound } from 'lucide-react';
 import { CV_URL } from '@/constants/links';
 
 const navLinks = [
-  { name: 'Work', href: '/#projects', icon: LayoutGrid },
-  { name: 'About', href: '/about', icon: UserRound, isRoute: true },
+  { name: 'Projets', href: '/#projects', icon: LayoutGrid },
+  { name: 'À propos', href: '/about', icon: UserRound, isRoute: true },
   { name: 'Contact', href: 'mailto:rayansaan.pro@gmail.com', icon: Mail },
 ];
 
