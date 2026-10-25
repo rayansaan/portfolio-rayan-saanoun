@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -15,14 +14,8 @@ export function HeroSection() {
           </div>
           <div className="landing-hero-actions">
             <a className="landing-button" href="mailto:rayansaan.pro@gmail.com">Me contacter <ArrowUpRight size={18} aria-hidden="true" /></a>
-            <Link className="landing-text-link" to="/#projects">Voir mes projets <ArrowDown size={16} aria-hidden="true" /></Link>
           </div>
         </div>
-        <Link className="landing-proof" to="/project/moove">
-          <span className="landing-proof-image"><img src="/images/projects/moove/Screen_prez_search.png" alt="Interface de recherche Moove" decoding="async" /></span>
-          <span><span className="landing-label">Un aperçu de mon travail</span><strong>Moove — de la recherche au déploiement</strong><span>16 mois sur un produit de l’aviation d’affaires</span></span>
-          <ArrowUpRight size={20} aria-hidden="true" />
-        </Link>
       </motion.div>
       <a className="landing-discover" href="#qui-je-suis">Découvrir mon parcours <ArrowDown size={16} aria-hidden="true" /></a>
     </section>

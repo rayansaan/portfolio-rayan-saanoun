@@ -14,16 +14,16 @@
 .landing-hero-bottom .landing-hero-secondary { font-size: 15px; line-height: 1.7; color: #646464; margin-top: 16px; max-width: 440px; }
 .landing-hero-actions { display: flex; flex-direction: column; align-items: center; flex: none; gap: 18px; }
 .landing-hero-actions .landing-text-link { margin-top: 0; }
-.landing-proof { display: flex; align-items: center; gap: 20px; padding: 18px 0; margin-top: 40px; border-top: 1px solid #1113; border-bottom: 1px solid #1113; transition: border-color .2s; }
-.landing-proof:hover { border-color: #1118; }
-.landing-proof:focus-visible { outline: 2px solid #111; outline-offset: 5px; }
-.landing-proof-image { width: 120px; flex: none; aspect-ratio: 16/10; overflow: hidden; border-radius: 5px; background: #ddd; }
-.landing-proof img { width: 100%; height: 100%; object-fit: cover; }
-.landing-proof>span:nth-child(2) { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.landing-proof .landing-label { margin: 0; font-size: 10px; }
-.landing-proof strong { font-size: 15px; font-weight: 500; line-height: 1.5; }
-.landing-proof>span>span:last-child { font-size: 12px; color: #646464; }
-.landing-proof>svg { flex: none; margin-left: auto; }
+
+
+
+
+
+
+
+
+
+
 .landing-services article { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
 .landing-services .landing-text-link { font-size: 13px; margin-top: auto; padding-top: 24px; }
 .landing-process p.landing-process-output { margin-top: 12px; font-size: 13px; color: #333; border-left: 2px solid #1113; padding-left: 12px; }
@@ -32,19 +32,32 @@
  .landing-projects { padding-block: 56px; }
  .landing-hero { padding-top: 124px; gap: 32px; }
  .landing-about p:not(.landing-label) { font-size: 15px; }
- .landing-proof { gap: 12px; margin-top: 32px; }
- .landing-proof-image { width: 72px; }
- .landing-proof strong { font-size: 13px; }
- .landing-proof>span>span:last-child { font-size: 11px; }
+
+
+
+
  .landing-services .landing-text-link { padding-top: 16px; }
  .landing-contact h2 { font-size: clamp(2.25rem,9vw,3.5rem); }
 }
 
-/* Center the hero while keeping the project preview easy to scan. */
-.landing-hero { text-align: center; }
+/* Center the content vertically in the viewport, keeping a left reading edge. */
+.landing-hero {
+  position: relative;
+  min-height: 100svh;
+  padding-block: 112px;
+  justify-content: center;
+  text-align: left;
+}
 .landing-hero h1 { color: #111; }
+.landing-hero-bottom,
+.landing-hero-actions { align-items: flex-start; }
 .landing-hero-bottom > div:first-child { width: min(560px, 100%); }
 .landing-hero-bottom p,
-.landing-hero-bottom .landing-hero-secondary { max-width: 100%; margin-inline: auto; }
-.landing-hero .landing-discover { margin-inline: auto; }
-.landing-hero .landing-proof { max-width: 640px; margin-inline: auto; text-align: left; }
+.landing-hero-bottom .landing-hero-secondary { max-width: 100%; margin-inline: 0; }
+.landing-hero .landing-discover { position: absolute; bottom: 24px; left: 0; margin: 0; }
+@media (max-height: 800px) {
+  .landing-hero h1 { font-size: clamp(4rem, 9vw, 7rem); margin-bottom: 28px; }
+}
+@media (max-width: 640px) {
+  .landing-hero { padding-block: 100px; }
+}
