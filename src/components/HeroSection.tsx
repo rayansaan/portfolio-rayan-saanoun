@@ -30,7 +30,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="w-full h-[85vh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-32 xl:px-48 overflow-hidden">
+    <section className="w-full min-h-[85svh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-32 xl:px-48 pt-24 pb-12">
       <div className="flex flex-col items-center text-center gap-6 sm:gap-8">
         {/* Portrait */}
         <motion.img
@@ -60,6 +60,15 @@ export function HeroSection() {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
         >
           Concevoir des produits utiles, compréhensibles et pensés pour leurs utilisateurs.
+        </motion.p>
+
+        <motion.p
+          className="max-w-lg text-sm sm:text-base leading-relaxed text-muted-foreground"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.25 }}
+        >
+          Product designer basé à Bordeaux. Je transforme des parcours complexes en expériences claires, de la recherche aux décisions d’interface.
         </motion.p>
         
         {/* Logo Carousel */}
