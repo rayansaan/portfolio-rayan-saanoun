@@ -4,6 +4,8 @@
 
 +60 % de recherches : chiffre communiqué précédemment par Rayan pour la Search Page. La période, le nombre d’utilisateurs et la méthode de mesure ne sont pas précisés dans le contexte disponible. Ne pas ajouter de précision non confirmée ni de causalité exclusive. Mission corrigée par Rayan à 2 ans. Déploiement auprès de Michelin documenté dans le récit existant.
 
+Chiffres complémentaires communiqués par Rayan le 25 octobre 2026 : plus de 3 000 entreprises font confiance à Moove après deux ans, contre une dizaine au départ ; 300 000 utilisateurs après deux ans, contre une cinquantaine au départ. Ce sont des résultats globaux de croissance de la plateforme, sans attribution exclusive au design. Les cartes conservent les ordres de grandeur de départ et la période.
+
 ## Nash
 
 Un sprint d’une semaine avec livraison d’un parcours et prototype d’onboarding révisés est documenté. Il s’agit d’un indicateur de livraison, pas d’un gain de conversion ou d’activation. KPI d’usage à compléter auprès de Rayan.

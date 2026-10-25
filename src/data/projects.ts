@@ -3,7 +3,11 @@ import type { Project } from '@/types';
 export const uxUiProjects: Project[] = [
   {
     id: 'moove',
-    results: [{ value: '+60 %', label: 'Recherches effectuées sur la plateforme', kind: 'metric' }],
+    results: [
+      { value: '3 000+', label: 'Entreprises qui font confiance à Moove après deux ans, contre une dizaine au départ', kind: 'metric' },
+      { value: '300 000', label: 'Utilisateurs après deux ans, contre une cinquantaine au départ', kind: 'metric' },
+      { value: '+60 %', label: 'Recherches effectuées sur la plateforme', kind: 'metric' },
+    ],
     name: 'Moove',
     imageUrl: '/images/projects/moove/Moove_header.png',
     href: '/project/moove',
