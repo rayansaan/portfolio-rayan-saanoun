@@ -23,8 +23,7 @@ export function LandingIntroduction() {
     <section id="qui-je-suis" className="landing-shell landing-section landing-about" aria-labelledby="intro-title">
       <div className="landing-about-portrait"><img src="/images/profile/portrait-rayan-portfolio.png" alt="Rayan Saanoun" loading="lazy" className="mask-gradient-portrait" /></div>
       <div>
-        <p className="landing-label">01 / Qui je suis</p>
-        <h2 id="intro-title">Comprendre les usages.<br />Concevoir avec les équipes.</h2>
+        <h2 id="intro-title" className="landing-label">01 / Qui je suis</h2>
         <p>Chez Moove, j’ai travaillé pendant 16 mois sur la recherche et la comparaison de trajets dans l’aviation d’affaires, de la compréhension des besoins à l’accompagnement du déploiement.</p>
         <p>Chez Cdiscount, en Design Ops, j’ai contribué à formaliser les façons de travailler des équipes à travers des handbooks et des ateliers. Ces expériences m’ont appris à concevoir l’interface tout en prenant soin de la collaboration qui la rend possible.</p>
         <Link to="/about" className="landing-text-link">En savoir plus sur mon parcours <ArrowUpRight size={16} aria-hidden="true" /></Link>
