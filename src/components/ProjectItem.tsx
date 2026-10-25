@@ -1,6 +1,13 @@
 import { Link } from 'react-router-dom';
 import type { ProjectCard } from '@/types';
 
+const projectSummaries: Record<string, string> = {
+  moove: 'Clarifier la recherche et la comparaison des trajets dans l’aviation d’affaires.',
+  nash: 'Rendre les outils des énergies renouvelables plus clairs et accessibles.',
+  veeton: 'Créer une expérience digitale à la rencontre de la mode et de l’IA.',
+  rakoono: 'Repenser un parcours web pour mieux guider ses utilisateurs.',
+};
+
 interface ProjectItemProps {
   project: ProjectCard;
 }
@@ -9,11 +16,10 @@ export function ProjectItem({ project }: ProjectItemProps) {
   return (
     <Link
       to={project.href || '#'}
-      className="block group cursor-pointer transition-all duration-300 mx-4 md:mx-0"
+      className="block group cursor-pointer transition-all duration-300"
       data-cursor-project
     >
-      {/* Image avec aspect 16:9, bordure 2px noire à 5% et radius 8px */}
-      <div className="aspect-[16/9] rounded-[8px] overflow-hidden mb-4 border-2 border-black/5">
+      <div className="aspect-[16/10] rounded-[8px] overflow-hidden mb-5 border border-black/5 bg-black/5">
         <img
           src={project.imageUrl}
           alt={project.name}
@@ -24,10 +30,10 @@ export function ProjectItem({ project }: ProjectItemProps) {
       </div>
       
       {/* Content */}
-      <div className="mx-1">
-        {/* Nom du projet */}
-        <h3 
-          className="text-xl font-semibold mb-1 transition-opacity duration-200 group-hover:opacity-70"
+      <div className="mx-1 border-t border-black/15 pt-4">
+        <div className="flex items-baseline justify-between gap-3 mb-2">
+        <h3
+          className="text-2xl font-medium transition-opacity duration-200 group-hover:opacity-70"
           style={{ 
             lineHeight: '1.2',
             letterSpacing: '-0.02em',
@@ -35,10 +41,11 @@ export function ProjectItem({ project }: ProjectItemProps) {
         >
           {project.name}
         </h3>
+        <span className="text-xs uppercase tracking-widest text-muted-foreground shrink-0">Voir le projet ↗</span>
+        </div>
         
-        {/* Description courte - 1 ligne max */}
-        <p className="text-base text-muted-foreground truncate mb-3">
-          {project.description}
+        <p className="text-base text-muted-foreground leading-relaxed line-clamp-2 min-h-[3rem] mb-4">
+          {projectSummaries[project.id] || project.description}
         </p>
         
         {/* Tags - max 3 */}

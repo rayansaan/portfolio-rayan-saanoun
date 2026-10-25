@@ -14,105 +14,51 @@ export const uxUiProjects: Project[] = [
     tools: ['Figjam', 'Figma', 'Miro', 'Notion', 'Bubble.io'],
     website: 'https://www.flymoove.com/',
     description: 'Moove est une plateforme SaaS B2B dédiée à la gestion et l\'optimisation des vols dans l\'aviation d\'affaires. J\'y ai travaillé pendant 16 mois en tant que Product Designer SaaS.',
-    markdownContent: `# Moove : L'aviation d'affaires rendue transparente
+    markdownContent: `# Moove : Rendre la comparaison des trajets plus claire
 
-**Index**
-* Le contexte
-* Le problème : La complexité cache la valeur
-* Nos principes : Clarté, Transparence, Évolution
-* Clarté par la comparaison multimodale
-* Transparence grâce à la carte (Map)
-* L'impact : Un déploiement à grande échelle
-* Remerciements
+## Le projet en bref
 
-**10 octobre 2022 — 29 février 2024**
+Moove est une plateforme de l’aviation d’affaires destinée aux opérateurs et aux voyageurs. Pendant 16 mois, j’ai travaillé comme Product Designer sur ses parcours de recherche et de gestion des vols, au sein de l’équipe produit.
 
-Moove est une plateforme SaaS B2B dédiée à la gestion et l'optimisation des vols dans l'aviation d'affaires. J'y ai travaillé pendant 16 mois en tant que Product Designer SaaS. 
+Le point de départ : un moteur de comparaison capable de traiter beaucoup de données, mais une interface qui ne permettait pas d’en comprendre rapidement la valeur. Notre enjeu était de rendre la recherche plus lisible, tout en présentant honnêtement le temps, le prix et l’impact écologique de chaque trajet.
 
-L'objectif de cette étude de cas n'est pas de vous montrer des écrans statiques, mais de vous expliquer comment nous avons rendu un processus complexe (la réservation de jets et l'analyse d'impact) accessible et évident pour les passagers et les opérateurs.
+![Aperçu de la recherche de vols Moove](/images/projects/moove/Screen_prez_search.png)
 
-## Le contexte
+## Comprendre avant de redessiner
 
-Moove est une solution tout-en-un dédiée au secteur de l'aviation d'affaires. C'est une plateforme centralisée conçue pour simplifier et optimiser la gestion des déplacements professionnels par avion privé. Elle offre des outils et des services adaptés aux besoins des opérateurs aériens, des entreprises et des voyageurs.
+Nous avons étudié les besoins des voyageurs et des opérateurs, ainsi que les parcours et interfaces déjà disponibles sur le marché. Ce travail a mis en évidence un décalage : les résultats calculés étaient riches, mais leur présentation ne facilitait ni la comparaison ni la prise de décision.
 
-Aujourd'hui la solution se décline en 4 axes :
+![Analyse comparative des services existants](/images/projects/moove/search/image.png)
 
-**Comparateur de vols privés :** Moove propose un comparateur de vols privés permettant aux utilisateurs de trouver rapidement et facilement les meilleures options pour leurs déplacements en avion privé.
+![Synthèse des enseignements de recherche](/images/projects/moove/search/golden_nuggets.png)
 
-**Gestion de la flotte d'entreprise :** La plateforme offre des outils pour gérer les flottes d'avions d'entreprise, facilitant ainsi la gestion des déplacements professionnels.
+Ces observations ont guidé trois principes : rendre les informations compréhensibles d’un coup d’œil, montrer les coûts financiers et écologiques sans les dissimuler, et faire évoluer l’interface selon les besoins du passager comme de l’opérateur.
 
-**Empty Leg :** Moove propose des Empty Leg, c'est-à-dire des vols à prix réduits lorsqu'un avion privé doit retourner à vide vers sa base ou effectuer un vol sans passagers.
+## Comparer des trajets, pas seulement des vols
 
-**Services aux passagers :** La plateforme offre également des services aux passagers pour améliorer l'expérience de voyage, tels que la gestion des préférences de voyage, l'assistance 24/7 et d'autres services personnalisés.
+Un prix ou une durée de vol ne suffisent pas pour choisir un déplacement. Nous avons conçu une comparaison multimodale qui met en regard le trajet porte à porte, son coût et son impact. L’utilisateur peut ainsi situer l’aviation d’affaires par rapport au train, à la voiture ou à un vol commercial.
 
-## Le problème : La complexité cache la valeur
+Cette décision change la lecture du résultat : les critères deviennent visibles ensemble, au moment où l’utilisateur doit faire son choix.
 
-Au départ, notre comparateur de vols était puissant, mais illisible. 
+![Cartographie des besoins et de leur impact sur la recherche](/images/projects/moove/search/User_map_B2C.png)
 
-L'ancienne page manquait d'uniformité et utilisait des mesures incompréhensibles pour un utilisateur moyen. Le calcul était rapide, mais il échouait à mettre en évidence les forces et les faiblesses de chaque option de voyage. 
+![Évolution des écrans de recherche et de comparaison](/images/projects/moove/search/image%202.png)
 
-Les clients ne comprenaient pas la valeur du service. Les opérateurs ne parvenaient pas à vendre leurs vols. Il fallait tout repenser.
+## Donner un repère spatial à la recherche
 
-### Une technologie puissante mais illisible
+L’analyse concurrentielle montrait aussi le manque d’une représentation claire des itinéraires. Nous avons introduit une carte pour relier les résultats à un trajet concret et faciliter la lecture des options, notamment les vols à vide.
 
-Quand j'ai pris le projet en main, le constat était sans appel : l'ancienne page de recherche exécutait l'analyse comparative rapidement, mais elle manquait cruellement de clarté. 
+![Interface de recherche avec carte et résultats de vols](/images/projects/moove/search/Frame_306.png)
 
-L'interface souffrait d'un manque d'uniformité et utilisait des mesures complexes que l'utilisateur moyen ne parvenait pas à déchiffrer. Résultat : l'outil échouait à mettre en évidence les forces et les faiblesses des différentes options de voyage (train, voiture, vols commerciaux) face à l'aviation d'affaires. Nous avions un moteur puissant sous le capot, mais une carrosserie qui n'inspirait ni confiance ni prise de décision.
+J’ai travaillé avec les fondateurs et les développeurs pour intégrer cette interface dans Bubble. Cette solution nous a permis d’itérer rapidement, tout en imposant des compromis de performance et de fidélité entre maquettes et produit final.
 
-## Nos principes : Clarté, Transparence, Évolution
+## Déploiement et enseignements
 
-Le développement de notre stratégie produit a fait émerger trois piliers :
-1. **Clarté :** L'information doit être digeste instantanément.
-2. **Transparence :** Le coût financier et écologique ne doit jamais être caché.
-3. **Évolution :** L'interface doit s'adapter aussi bien au passager final qu'au courtier.
+La nouvelle recherche a été déployée en octobre 2023. Michelin Air Services a validé la solution et confié à Moove un déploiement plus large avec intégration de sa base de données. C’est un signal concret d’adoption ; il ne remplace pas, à lui seul, des mesures détaillées de l’usage de chaque fonction.
 
-## Clarté par la comparaison multimodale
+Les retours ont également montré l’importance de la relation entre pilote et client. Une messagerie directe est devenue une piste prioritaire pour la suite du produit. Je retiens de ce projet qu’une interface claire aide à décider, mais que les tests et les usages réels doivent continuer à orienter la roadmap.
 
-De nombreux outils vous donnent le prix d'un vol. Presque aucun ne vous donne le coût réel de votre trajet de bout en bout.
-
-Nous avons conçu un calculateur multimodal complet. En un coup d'œil, l'utilisateur évalue le temps "porte-à-porte", le coût total et l'impact écologique. Il peut comparer objectivement le train, la voiture, les vols commerciaux et l'aviation d'affaires.
-
-Sans cette clarté visuelle, l'utilisateur est noyé. Avec elle, il prend une décision éclairée.
-
-### Un calculateur multimodal intelligent
-
-Le résultat est un calculateur multimodal complet qui évalue trois piliers essentiels : le temps de trajet porte-à-porte, le coût total, et l'impact écologique. 
-
-Pour transformer cette vision en réalité rapidement, j'ai collaboré étroitement avec les fondateurs et les développeurs pour implémenter l'interface via l'outil no-code Bubble. Mon rôle de Product Designer a été de m'assurer que chaque décision UI répondait aux objectifs stratégiques définis lors de la phase de recherche, tout en m'adaptant aux contraintes techniques de l'intégration.
-
-## Transparence grâce à la carte (Map)
-
-L'analyse de nos concurrents a révélé un vide : il manquait une représentation spatiale claire.
-
-Nous avons introduit une carte interactive. Ce n'est pas juste un élément esthétique. C'est l'outil qui permet de visualiser le gain de temps et l'empreinte carbone (notamment via les vols à vide / Empty legs) en temps réel.
-
-## L'impact : Un déploiement à grande échelle
-
-Un bon design génère du business. 
-
-La nouvelle version a été finalisée et déployée le 07 octobre 2023. Le résultat ? Michelin Air Services a validé notre solution et nous a confié un déploiement à grande échelle, en intégrant directement sa base de données.
-
-> "Digitalization and modernization, with major time savings and simplified processes. Moove is a game-changer for corporate aviation..." — Vincent Tourlonias, Head of Operational Flows chez Michelin.
-
-L'itération continue. Les retours du terrain nous ont prouvé qu'une messagerie pilote-client était la prochaine étape cruciale pour asseoir cette confiance.
-
-### Un déploiement validé par l'industrie
-
-Le véritable test d'un design reste son adoption sur le marché. Déployée avec succès le 07 octobre 2023, la nouvelle page de recherche a eu un impact business immédiat. 
-
-L'entreprise Michelin Air Services a non seulement validé notre solution, mais nous a confié un déploiement à grande échelle, incluant l'intégration directe de leur base de données. Vincent Tourlonias, Head of Operational Flows chez Michelin, a qualifié Moove de "game-changer pour l'aviation d'affaires", soulignant la simplification des processus et les gains de temps majeurs apportés par la plateforme. De plus, nos recherches et ce premier lancement ont confirmé auprès de Michelin la très forte valeur ajoutée d'intégrer une messagerie directe entre le pilote et le client.
-
-## Remerciements
-
-Construire Moove n'a pas été un effort solitaire. Je tiens à remercier les fondateurs, les développeurs, et le CTO pour leur collaboration étroite, ainsi que les équipes de Michelin pour leurs retours précieux lors de nos phases de test.
-
-## Limites techniques et pivot stratégique
-
-Ce projet de 16 mois a été une immense source d'apprentissages. 
-
-Sur le plan technique, construire le produit sur Bubble.io nous a permis d'itérer vite, mais nous nous sommes heurtés à des limites de performances pour les calculs d'itinéraires complexes et à des difficultés pour maintenir une expérience front-end parfaitement fidèle aux maquettes. 
-
-Sur le plan produit, j'ai réalisé qu'un bon design fait parfois évoluer la trajectoire de l'entreprise : l'expérience a prouvé que la relation humaine était tout aussi vitale que la donnée, faisant du développement de la messagerie pilote-client notre nouvel objectif principal. J'en tire une conviction forte : la roadmap d'un produit complexe ne se devine pas, elle se priorise uniquement sur la base des retours issus de tests utilisateurs continus sur le terrain.`,
+![Vue du produit Moove déployé](/images/projects/moove/search/Moove_header_search.png)`,
     images: [
       '/images/projects/moove/Moove_header.png',
       '/images/projects/moove/Screen_prez_search.png',
@@ -168,6 +114,8 @@ Par manque de ressources techniques lors du lancement, Nash avait opté pour une
 
 L'audit UX que j'ai réalisé a révélé un outil puissant, mais une interface chaotique. Les informations étaient dupliquées, et lorsqu'une fenêtre était fermée, il devenait parfois impossible de retrouver l'information. L'utilisateur était livré à lui-même face à un outil métier complexe.
 
+![Analyse du parcours et des contenus existants](/images/projects/nash/image%202.png)
+
 ## Nos principes
 
 Pour ce sprint, j'ai défini trois axes majeurs de conception :
@@ -175,17 +123,23 @@ Pour ce sprint, j'ai défini trois axes majeurs de conception :
 2. **Clarté :** Éliminer la redondance visuelle (informations dupliquées).
 3. **Accessibilité :** S'adapter à la réalité du terrain et aux habitudes de découverte des opérateurs.
 
+![Organisation des parcours étudiés](/images/projects/nash/image%206.png)
+
 ## Guidage : De la vidéo passive à l'interaction
 
 Regarder une vidéo n'est pas "apprendre à utiliser un outil". 
 
 J'ai remplacé l'onboarding vidéo par une dénomination claire des étapes directement dans l'interface. L'objectif psychologique est de rendre l'utilisateur acteur de sa découverte en l'invitant à interagir avec la carte et les données dès les premières secondes.
 
+![Proposition pour guider les premiers pas dans le produit](/images/projects/nash/image%208.png)
+
 ## Clarté : Nettoyer la navigation
 
 Pour pallier les fenêtres perdues et les données dupliquées, nous avons rationalisé l'architecture de l'information (GUI). 
 
 L'interface a été épurée pour que la donnée (la production d'énergie, la disponibilité des ressources) soit lisible sans effort cognitif inutile.
+
+![Évolution de la navigation de Nash Dev](/images/projects/nash/image.png)
 
 ## Accessibilité : Le pivot "Mobile First"
 
@@ -194,6 +148,8 @@ Voici le point de bascule de ce projet. Au départ, nous pensions concevoir pour
 Cependant, j'ai mené des sessions de recherche et lancé un sondage auprès des utilisateurs. Le constat a été sans appel : la majorité des nouveaux clients intéressés par l'outil le consultaient pour la première fois *depuis leur mobile*. 
 
 J'ai donc fait pivoter toute ma stratégie de conception pour adopter une approche "Mobile First".
+
+![Adaptation des écrans sur mobile](/images/projects/nash/image%207.png)
 
 ## L'impact : Convaincre en une semaine
 
@@ -252,6 +208,8 @@ Mon rôle, le temps d'un sprint d'un mois, a été d'aligner cette technologie d
 
 Veeton a développé une technologie d'intelligence artificielle exclusive permettant aux marques de mode de générer des shootings photo e-commerce de haute qualité à grande échelle, à partir d'une simple photo de vêtement posée à plat.
 
+![Étude des codes de la mode et des expériences comparables](/images/projects/veeton/image%201.png)
+
 ## Le problème : La technologie sans les codes
 
 La technologie de Veeton était puissante, mais son interface et ses visuels de présentation ne parlaient pas au monde de la mode.
@@ -260,12 +218,16 @@ L'audit initial était clair : les visuels de démonstration étaient trop rigid
 
 En l'état, l'interface ne rassurait pas. Sans confiance, impossible de convaincre les directeurs artistiques d'adopter l'outil.
 
+![Analyse de la présentation des modèles générés par IA](/images/projects/veeton/image%202.png)
+
 ## Nos principes
 
 Pour corriger le tir, notre réflexion s'est articulée autour de trois axes :
 1. **Élégance :** L'interface doit s'effacer au profit du vêtement.
 2. **Réassurance :** Démystifier l'IA en montrant le contrôle utilisateur.
 3. **Scalabilité :** Prouver que l'outil gère des collections entières, pas juste une photo.
+
+![Synthèse des pistes de design explorées](/images/projects/veeton/image%204.png)
 
 ## Élégance : Adopter les codes du luxe
 
@@ -276,6 +238,8 @@ J'ai analysé les concurrents (Lalaland, Vmake AI, Botika) et les sites de mode 
 
 En adoptant ces codes, nous avons créé une interface qui utilise un wording valorisant et un design minimaliste. L'outil Veeton n'a plus l'air d'un logiciel SaaS complexe, mais d'une véritable plateforme créative.
 
+![Direction visuelle et écrans de Veeton](/images/projects/veeton/image.png)
+
 ## Réassurance : Comprendre la boîte noire
 
 Une Directrice Artistique comme notre persona "Camille" a besoin d'optimiser ses cycles de création, mais elle refuse de perdre le contrôle.
@@ -283,6 +247,8 @@ Une Directrice Artistique comme notre persona "Camille" a besoin d'optimiser ses
 Nous avons revu le parcours utilisateur pour intégrer des interactions fluides démontrant la flexibilité du modèle. L'interface montre explicitement comment changer les poses ou ajuster les mannequins.
 
 Cette transparence transforme l'IA : elle passe d'une "boîte noire intimidante" à un véritable assistant de création sur-mesure.
+
+![Structure et parcours des écrans envisagés](/images/projects/veeton/image%205.png)
 
 ## Ce que j'ai appris
 
@@ -325,19 +291,29 @@ Rakoono est un assistant intelligent destiné aux équipes de football. Il combi
 
 Rakoono est un assistant intelligent destiné aux équipes de football. Mon défi était de repenser l'expérience utilisateur et l'interface, en me concentrant sur les fonctionnalités clés pour les coachs et les recruteurs.
 
+![Interface d’analyse sportive étudiée](/images/projects/rakoono/image.png)
+
 ## La découverte
 
 Cette phase a consisté en l'organisation de sessions de brainstorming pour explorer comment l'IA de Rakoono peut aider les coachs et recruteurs dans leur quotidien. Nous avons mené des études de marché et démarqué les concurrents potentiels pour comprendre les besoins des équipes de football en matière d'analyse de données sportives.
 
+![Analyse des mécaniques de récompense](/images/projects/rakoono/image%202.png)
+![Analyse des parcours et retours utilisateurs](/images/projects/rakoono/image%203.png)
+
 ## La stratégie
 
 Cette phase a consisté à définir les fonctionnalités clés et l'architecture de l'information. Nous avons créé des user stories et des parcours utilisateurs pour guider le développement.
+
+![Pistes de gamification identifiées](/images/projects/rakoono/image%205.png)
 
 ## La solution : Gamification et engagement
 
 Nous avons défini des parcours utilisateurs et la production de maquettes détaillées. Nous avons intégré des éléments de gamification tels que des systèmes de récompenses, des défis quotidiens et des progressions de niveaux pour rendre l'expérience utilisateur plus engageante.
 
 Interface dédiée aux coachs et recruteurs avec visualisation des données sportives et outils d'analyse.
+
+![Écrans de la solution Rakoono](/images/projects/rakoono/image%204.png)
+![Explorations de l’interface Rakoono](/images/projects/rakoono/image%207.png)
 
 ## Livrables
 

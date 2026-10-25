@@ -23,17 +23,16 @@ function HomePage() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 0 && !hasScrolled) {
-        setHasScrolled(true);
-      }
+      if (window.scrollY > 0 || window.location.hash === '#projects') setHasScrolled(true);
     };
 
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [hasScrolled]);
+  }, []);
 
   return (
     <div className="min-h-screen">
