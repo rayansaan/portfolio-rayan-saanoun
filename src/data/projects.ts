@@ -8,17 +8,17 @@ export const uxUiProjects: Project[] = [
     href: '/project/moove',
     category: 'ux-ui',
     year: '2022-2024',
-    duration: '16 mois',
+    duration: '2 ans',
     location: 'Pépinière 27 - Paris',
     tags: ['B2B', 'Mobile App', 'Prototyping', 'SaaS', 'UX Research', 'UX/UI Design', 'Webapp'],
     tools: ['Figjam', 'Figma', 'Miro', 'Notion', 'Bubble.io'],
     website: 'https://www.flymoove.com/',
-    description: 'Moove est une plateforme SaaS B2B dédiée à la gestion et l\'optimisation des vols dans l\'aviation d\'affaires. J\'y ai travaillé pendant 16 mois en tant que Product Designer SaaS.',
+    description: 'Moove est une plateforme SaaS B2B dédiée à la gestion et l\'optimisation des vols dans l\'aviation d\'affaires. J\'y ai travaillé pendant 2 ans en tant que Product Designer SaaS.',
     markdownContent: `# Moove : Rendre la comparaison des trajets plus claire
 
 ## Le projet en bref
 
-Moove est une plateforme de l’aviation d’affaires destinée aux opérateurs et aux voyageurs. Pendant 16 mois, j’ai travaillé comme Product Designer sur ses parcours de recherche et de gestion des vols, au sein de l’équipe produit.
+Moove est une plateforme de l’aviation d’affaires destinée aux opérateurs et aux voyageurs. Pendant 2 ans, j’ai travaillé comme Product Designer sur ses parcours de recherche et de gestion des vols, au sein de l’équipe produit.
 
 Le point de départ : un moteur de comparaison capable de traiter beaucoup de données, mais une interface qui ne permettait pas d’en comprendre rapidement la valeur. Notre enjeu était de rendre la recherche plus lisible, tout en présentant honnêtement le temps, le prix et l’impact écologique de chaque trajet.
 
