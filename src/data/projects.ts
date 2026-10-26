@@ -82,8 +82,8 @@ Les retours ont également montré l’importance de la relation entre pilote et
   {
     id: 'nash',
     results: [
-      { value: '8 sur 10', label: 'Participants capables de terminer l’onboarding sans assistance — objectif de test', kind: 'target' },
-      { value: '−30 %', label: 'De temps jusqu’à la première action utile — scénario cible : de 5 min à 3 min 30', kind: 'target' },
+      { value: '8 sur 10', label: 'L’objectif est de permettre aux nouveaux utilisateurs de terminer le parcours de prise en main sans aide.', kind: 'target' },
+      { value: '−30 %', label: 'Nous visons une réduction du temps nécessaire pour réaliser la première action utile.', kind: 'target' },
     ],
     name: 'Nash',
     imageUrl: '/images/projects/nash/Nash_header.png',
@@ -187,8 +187,8 @@ La donnée utilisateur (UX Research) bat toujours l'intuition. Sans ce sondage r
   {
     id: 'veeton',
     results: [
-      { value: '9 sur 10', label: 'Participants capables d’expliquer l’offre et ses possibilités de personnalisation — objectif de test', kind: 'target' },
-      { value: '5 %', label: 'Des visiteurs envoyant une demande de démonstration — objectif de conversion', kind: 'target' },
+      { value: '9 sur 10', label: 'L’objectif est que les visiteurs comprennent l’offre et les options de personnalisation.', kind: 'target' },
+      { value: '5 %', label: 'Nous visons ce taux de demandes de démonstration parmi les visiteurs du site.', kind: 'target' },
     ],
     name: 'Veeton',
     imageUrl: '/images/projects/veeton/Slide_-_16.png',
@@ -285,8 +285,8 @@ Je remercie l'équipe fondatrice de Veeton et les résidents de Station F pour n
   {
     id: 'rakoono',
     results: [
-      { value: '8 sur 10', label: 'Participants capables de trouver et d’interpréter une donnée sportive sans aide — objectif de test', kind: 'target' },
-      { value: '−40 %', label: 'De temps pour accéder à une information clé — scénario cible : de 2 min à 1 min 12', kind: 'target' },
+      { value: '8 sur 10', label: 'L’objectif est que les utilisateurs trouvent et comprennent une donnée sportive sans aide.', kind: 'target' },
+      { value: '−40 %', label: 'Nous visons un accès plus rapide aux informations utiles aux coachs et aux recruteurs.', kind: 'target' },
     ],
     name: 'Rakoono',
     imageUrl: '/images/projects/rakoono/Miniature_Rakoono.png',
