@@ -6,7 +6,7 @@ export function HeroSection() {
     <section className="landing-hero landing-shell" aria-labelledby="landing-title">
       <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
         <p className="landing-label">Product Designer · Bordeaux</p>
-        <h1 id="landing-title">Rayan<br />Saanoun.</h1>
+        <h1 id="landing-title">Rayan Saanoun</h1>
         <div className="landing-hero-bottom">
           <div>
             <p>Je transforme des parcours complexes en interfaces claires, de la recherche utilisateur à la conception du produit.</p>

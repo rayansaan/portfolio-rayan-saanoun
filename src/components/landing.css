@@ -81,3 +81,6 @@
   .landing-process li { grid-template-columns: 48px 220px minmax(0, 1fr); gap: 32px; }
   .landing-process li > div { max-width: 760px; }
 }
+
+/* Keep the full name on one line, including narrow mobile viewports. */
+.landing-hero h1 { font-size: clamp(1.75rem, 9vw, 9rem); white-space: nowrap; }
