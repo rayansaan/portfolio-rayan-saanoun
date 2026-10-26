@@ -415,3 +415,7 @@ html.lenis, html.lenis body {
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
 }
+
+@media (min-width: 992px) {
+  .site-header.is-wide { width: min(1200px, calc(100vw - 96px)); }
+}

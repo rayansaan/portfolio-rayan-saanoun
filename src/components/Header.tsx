@@ -10,7 +10,7 @@ const navLinks = [
   { name: 'Contact', href: 'mailto:rayansaan.pro@gmail.com', icon: Mail },
 ];
 
-export function Header() {
+export function Header({ wide = false }: { wide?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -48,7 +48,7 @@ export function Header() {
   }, [isOpen]);
 
   return (
-    <header ref={headerRef} className="site-header">
+    <header ref={headerRef} className={`site-header${wide ? ' is-wide' : ''}`}>
       <div className="site-navbar">
         <Link
           to="/"

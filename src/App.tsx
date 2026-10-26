@@ -38,7 +38,7 @@ function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <Header />
+      <Header wide />
       
       {/* Main Content */}
       <main>

@@ -1,4 +1,4 @@
-.landing-shell{width:min(896px,calc(100% - 48px));margin-inline:auto}
+.landing-shell{width:min(1200px,calc(100% - 48px));margin-inline:auto}
 .landing-label{font-size:11px;letter-spacing:normal;text-transform:uppercase;line-height:1.6;color:#646464;margin-bottom:24px}
 .landing-hero{min-height:92svh;padding-top:176px;padding-bottom:32px;display:flex;flex-direction:column;justify-content:space-between;gap:48px}
 .landing-hero h1{font-size:clamp(4.5rem,11vw,9rem);line-height:.9;letter-spacing:-.065em;font-weight:500;margin:0 0 48px}
@@ -51,7 +51,7 @@
 .landing-hero h1 { color: #111; }
 .landing-hero-bottom,
 .landing-hero-actions { align-items: flex-start; }
-.landing-hero-bottom > div:first-child { width: min(560px, 100%); }
+.landing-hero-bottom > div:first-child { width: min(640px, 100%); }
 .landing-hero-bottom p,
 .landing-hero-bottom .landing-hero-secondary { max-width: 100%; margin-inline: 0; }
 .landing-hero .landing-discover { position: absolute; bottom: 24px; left: 0; margin: 0; }
@@ -69,3 +69,18 @@
   color: #555;
 }
 .landing-about h2.landing-label { font-weight: 400; }
+
+/* Broad editorial sections, with comfortable gutters on large screens. */
+@media (min-width: 992px) {
+  .landing-shell { width: min(1200px, calc(100% - 96px)); }
+  .landing-section { padding-block: 120px; }
+  .landing-about { grid-template-columns: minmax(240px, .7fr) minmax(0, 1.3fr); gap: clamp(48px, 6vw, 88px); }
+  .landing-about-portrait { width: 100%; max-width: 360px; }
+  .landing-about > div { min-width: 0; }
+  .landing-services { gap: 48px; }
+  .landing-process li { grid-template-columns: 48px 220px minmax(0, 1fr); gap: 32px; }
+  .landing-process li > div { max-width: 760px; }
+}
+
+/* Keep the full name on one line, including narrow mobile viewports. */
+.landing-hero h1 { font-size: clamp(1.75rem, 9vw, 9rem); white-space: nowrap; }

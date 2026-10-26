@@ -14,7 +14,7 @@ export function ProjectSection({
 }: ProjectSectionProps) {
   return (
     <section id={title === 'Explorations' ? 'explorations' : undefined} className={`landing-shell landing-projects ${className}`}>
-      <div className="max-w-4xl mx-auto border-t border-black/20 pt-6">
+      <div className="w-full border-t border-black/20 pt-6">
         <div className="mb-10 sm:mb-14 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
             <p className="text-xs uppercase tracking-normal text-muted-foreground mb-4">
@@ -30,7 +30,7 @@ export function ProjectSection({
         </div>
         
         {/* Project Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {projects.map((project) => (
             <ProjectItem key={project.id} project={project} />
           ))}
