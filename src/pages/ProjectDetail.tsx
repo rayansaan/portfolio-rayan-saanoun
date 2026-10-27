@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef, useCallback, memo, type RefObject } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ArrowUpRight, ExternalLink } from 'lucide-react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { ArrowLeft, ArrowRight, ArrowUpRight, ExternalLink } from 'lucide-react';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import { allProjects } from '@/data/projects';
 import { projectImageSizes } from '@/data/projectImageSizes';
@@ -174,6 +174,22 @@ function cleanMarkdown(content: string): string {
     return content.slice(firstH2Index);
   }
   return content;
+}
+
+function ProjectNavigation({ nextProject }: { nextProject?: Project }) {
+  const navigate = useNavigate();
+  const goBack = () => {
+    if (typeof window.history.state?.idx === 'number' && window.history.state.idx > 0) navigate(-1);
+    else navigate('/#projects');
+  };
+  return <nav className="mt-6 grid gap-3" aria-label="Navigation entre les projets">
+    {nextProject && <Link to={nextProject.href || `/project/${nextProject.id}`} aria-label={`Projet suivant : ${nextProject.name}`} className="flex min-h-11 items-center justify-between gap-3 rounded-lg bg-[#110F0F] px-4 py-3 text-sm text-white transition-colors hover:bg-[#110F0F]/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
+      <span>Projet suivant</span><ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+    </Link>}
+    <button type="button" onClick={goBack} className="flex min-h-11 items-center gap-3 rounded-lg border border-black/15 px-4 py-3 text-sm text-left transition-colors hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
+      <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden="true" /><span>Retour</span>
+    </button>
+  </nav>;
 }
 
 function ProjectFacts({ project }: { project: Project }) {
@@ -354,6 +370,9 @@ export function ProjectDetail() {
     );
   }
 
+  const projectIndex = allProjects.findIndex((item) => item.id === project.id);
+  const nextProject = allProjects.length > 1 ? allProjects[(projectIndex + 1) % allProjects.length] : undefined;
+
   const otherProjects = allProjects
     .filter(p => p.id !== id)
     .slice(0, 3);
@@ -417,11 +436,12 @@ export function ProjectDetail() {
             <ProjectFacts project={project} />
             <div className="sticky top-12 border-t border-black/20 pt-6">
               {hasMarkdown && project.markdownContent && <TableOfContents content={outlineContent} />}
+              <ProjectNavigation nextProject={nextProject} />
               <div className="mt-8 h-0.5 bg-black/10"><div className="h-full bg-black" style={{ width: `${scrollProgress}%` }} /></div>
             </div>
           </aside>
           <article className="min-w-0 max-w-[840px]">
-            <div className="lg:hidden"><ProjectFacts project={project} /></div>
+            <div className="lg:hidden mb-10"><ProjectFacts project={project} /><ProjectNavigation nextProject={nextProject} /></div>
             {hasMarkdown && project.markdownContent ? (
               <>
                 <MarkdownContent content={project.markdownContent} projectId={project.id} results={project.results} collaboration={project.collaboration} onImageClick={handleImageClick} />
