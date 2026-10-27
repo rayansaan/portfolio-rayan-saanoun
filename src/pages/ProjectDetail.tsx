@@ -6,7 +6,7 @@ import { allProjects } from '@/data/projects';
 import { projectImageSizes } from '@/data/projectImageSizes';
 import { GSAPFlipLightbox } from '@/components/GSAPFlipLightbox';
 import { generateStandardImageId } from '@/utils/generateId';
-import type { ImageDescription, ProjectResult } from '@/types';
+import type { ImageDescription, ProjectResult, Project } from '@/types';
 
 // Composant Table des matières
 function TableOfContents({ content }: { content: string }) {
@@ -176,6 +176,46 @@ function cleanMarkdown(content: string): string {
   return content;
 }
 
+function ProjectFacts({ project }: { project: Project }) {
+  const facts = [
+    ['Projet', project.name],
+    ['Durée', project.duration],
+    ['Année', project.year],
+    ['Mon rôle', project.role || 'UX/UI design'],
+    ...(project.team?.length ? [['Équipe', project.team.join(', ')]] : []),
+    ...(project.scope ? [['Périmètre', project.scope]] : []),
+    ...(project.audience?.length ? [['Utilisateurs', project.audience.join(', ')]] : []),
+  ];
+  return <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-x-6 mb-10">
+    {facts.map(([label, value]) => <div key={label} className="border-t border-black/15 py-4 min-w-0">
+      <dt className="text-xs text-muted-foreground mb-2">{label}</dt>
+      <dd className="text-sm font-medium leading-relaxed">{value}</dd>
+    </div>)}
+    {project.website && <div className="border-t border-black/15 py-4"><dt className="text-xs text-muted-foreground mb-2">Lien</dt><dd><a href={project.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm underline underline-offset-4">Voir le site <ExternalLink className="h-3 w-3" /></a></dd></div>}
+  </dl>;
+}
+
+function ProjectCollaboration({ collaboration }: { collaboration?: Project['collaboration'] }) {
+  if (!collaboration) return null;
+  return <section className="border-t border-black/15 mt-16 sm:mt-20 pt-8 sm:pt-10" aria-labelledby="comment-j-ai-travaille">
+    <h2 id="comment-j-ai-travaille" className="text-3xl sm:text-4xl font-medium tracking-tight mb-6 scroll-mt-28">Comment j’ai travaillé</h2>
+    <p className="text-base sm:text-lg leading-[1.8] text-[#110F0F]/75">{collaboration.introduction}</p>
+    {collaboration.partners?.length ? <div className="grid sm:grid-cols-2 gap-4 mt-8">
+      {collaboration.partners.map((partner) => <div key={partner.name} className="min-w-0 rounded-xl border border-black/10 bg-white/50 p-5">
+        <h3 className="font-medium mb-2">{partner.name}</h3>
+        <p className="text-sm text-muted-foreground leading-relaxed">{partner.contribution}</p>
+      </div>)}
+    </div> : null}
+    <ol className={`grid sm:grid-cols-2 ${collaboration.steps.length === 5 ? 'xl:grid-cols-5' : 'xl:grid-cols-4'} gap-6 mt-10`} aria-label="Déroulement de la mission">
+      {collaboration.steps.map((step, index) => <li key={step.title} className="min-w-0 border-t border-black/25 pt-4">
+        <span className="text-xs text-muted-foreground">{String(index + 1).padStart(2, '0')}</span>
+        <h3 className="font-medium text-base mt-3 mb-2">{step.title}</h3>
+        <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+      </li>)}
+    </ol>
+  </section>;
+}
+
 function ProjectResults({ results }: { results?: ProjectResult[] }) {
   return <>
         {results && results.length > 0 && (
@@ -204,10 +244,11 @@ function ProjectResults({ results }: { results?: ProjectResult[] }) {
 }
 
 // Composant pour parser le markdown avec IDs
-const MarkdownContent = memo(function MarkdownContent({ content, onImageClick, projectId, results }: {
+const MarkdownContent = memo(function MarkdownContent({ content, onImageClick, projectId, results, collaboration }: {
   content: string;
   projectId: string;
   results?: ProjectResult[];
+  collaboration?: Project['collaboration'];
   onImageClick: (src: string, alt: string, layoutId: string, rect: DOMRect) => void;
 }) {
   const cleanContent = cleanMarkdown(content);
@@ -266,11 +307,15 @@ const MarkdownContent = memo(function MarkdownContent({ content, onImageClick, p
   const boundaries = [cleanContent.indexOf('\n!['), cleanContent.indexOf('\n## ')]
     .filter((index) => index >= 0);
   const summaryEnd = boundaries.length ? Math.min(...boundaries) : cleanContent.length;
+  const nextSection = cleanContent.indexOf('\n## ');
+  const firstSectionEnd = nextSection >= 0 ? nextSection : cleanContent.length;
   return (
     <>
       <ReactMarkdown components={components}>{cleanContent.slice(0, summaryEnd)}</ReactMarkdown>
       <ProjectResults results={results} />
-      <ReactMarkdown components={components}>{cleanContent.slice(summaryEnd)}</ReactMarkdown>
+      <ReactMarkdown components={components}>{cleanContent.slice(summaryEnd, firstSectionEnd)}</ReactMarkdown>
+      <ProjectCollaboration collaboration={collaboration} />
+      <ReactMarkdown components={components}>{cleanContent.slice(firstSectionEnd)}</ReactMarkdown>
     </>
   );
 });
@@ -315,6 +360,12 @@ export function ProjectDetail() {
 
 
   const hasMarkdown = !!project.markdownContent;
+  const cleanedOutline = cleanMarkdown(project.markdownContent || '');
+  const firstSectionBoundary = cleanedOutline.indexOf('\n## ');
+  const outlinePosition = firstSectionBoundary >= 0 ? firstSectionBoundary : cleanedOutline.length;
+  const outlineContent = project.collaboration
+    ? cleanedOutline.slice(0, outlinePosition) + '\n## Comment j’ai travaillé\n' + cleanedOutline.slice(outlinePosition)
+    : cleanedOutline;
 
   return (
     <div className="min-h-screen">
@@ -341,20 +392,13 @@ export function ProjectDetail() {
           <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground mb-7">
             Étude de cas <span className="mx-2">/</span> {project.name}
           </p>
-          <div className="grid lg:grid-cols-[minmax(0,1.5fr)_minmax(260px,0.65fr)] gap-10 lg:gap-16 items-end">
+          <div className="max-w-5xl">
             <div>
               <h1 id="case-title" className="text-4xl sm:text-5xl lg:text-[clamp(3.25rem,5vw,5.5rem)] leading-[1.07] tracking-tight font-medium text-balance">
                 {extractSubtitle(project.markdownContent || '') || project.name}
               </h1>
               <p className="mt-6 max-w-2xl text-base sm:text-lg text-muted-foreground leading-relaxed">{project.description}</p>
             </div>
-            <dl className="grid grid-cols-2 gap-x-5 gap-y-6 border-t border-black/20 pt-5 text-sm">
-              <div><dt className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Projet</dt><dd>{project.name}</dd></div>
-              <div><dt className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Année</dt><dd>{project.year}</dd></div>
-              <div><dt className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Durée</dt><dd>{project.duration}</dd></div>
-              <div><dt className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Rôle</dt><dd>{project.role || 'UX/UI design'}</dd></div>
-              {project.website && <div className="col-span-2"><dt className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Lien</dt><dd><a href={project.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 underline underline-offset-4 hover:opacity-60">Voir le site <ExternalLink className="w-3 h-3" /></a></dd></div>}
-            </dl>
           </div>
         </section>
 
@@ -370,15 +414,17 @@ export function ProjectDetail() {
 
         <div ref={contentRef} className="grid lg:grid-cols-[220px_minmax(0,1fr)] gap-10 lg:gap-20 pt-12 sm:pt-20 pb-24">
           <aside className="hidden lg:block">
+            <ProjectFacts project={project} />
             <div className="sticky top-12 border-t border-black/20 pt-6">
-              {hasMarkdown && project.markdownContent && <TableOfContents content={project.markdownContent} />}
+              {hasMarkdown && project.markdownContent && <TableOfContents content={outlineContent} />}
               <div className="mt-8 h-0.5 bg-black/10"><div className="h-full bg-black" style={{ width: `${scrollProgress}%` }} /></div>
             </div>
           </aside>
           <article className="min-w-0 max-w-[840px]">
+            <div className="lg:hidden"><ProjectFacts project={project} /></div>
             {hasMarkdown && project.markdownContent ? (
               <>
-                <MarkdownContent content={project.markdownContent} projectId={project.id} results={project.results} onImageClick={handleImageClick} />
+                <MarkdownContent content={project.markdownContent} projectId={project.id} results={project.results} collaboration={project.collaboration} onImageClick={handleImageClick} />
 
               </>
             ) : <p className="text-muted-foreground">Contenu en cours de rédaction.</p>}
