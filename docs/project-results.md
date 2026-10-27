@@ -31,3 +31,7 @@ Pour remplacer les résultats qualitatifs par des KPI : valeur avant/après, dé
 - Rakoono : 8 participants sur 10 réussissant une tâche d’analyse ; réduction cible de 40 % du temps d’accès à une information clé (scénario 2 min → 1 min 12).
 
 La mention ne peut devenir « Résultat mesuré » qu’après confirmation des données observées, du périmètre et de la période. Le modèle inclut désormais le type `target` pour préserver cette distinction.
+
+## Présentation des évolutions Moove
+
+Les comparaisons sont présentées dans une pastille verte : environ ×300 pour les entreprises et environ ×6 000 pour les utilisateurs. Calculs : 3 000 / 10 et 300 000 / 50. Les bases de départ sont approximatives ; le signe ≈ est conservé et aucune précision supplémentaire n’est déduite. Les descriptions accessibles des pastilles rappellent le périmètre de deux ans. Les descriptions principales ne répètent plus les valeurs de départ.

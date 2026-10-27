@@ -4,8 +4,8 @@ export const uxUiProjects: Project[] = [
   {
     id: 'moove',
     results: [
-      { value: '3 000+', label: 'Entreprises qui font confiance à Moove après deux ans, contre une dizaine au départ', kind: 'metric' },
-      { value: '300 000', label: 'Utilisateurs après deux ans, contre une cinquantaine au départ', kind: 'metric' },
+      { value: '3 000+', label: 'Entreprises qui font confiance à Moove après deux ans', kind: 'metric', evolution: { value: '≈ ×300', description: 'Nombre d’entreprises multiplié par environ 300 en deux ans, à partir d’une dizaine au départ' } },
+      { value: '300 000', label: 'Utilisateurs après deux ans', kind: 'metric', evolution: { value: '≈ ×6 000', description: 'Nombre d’utilisateurs multiplié par environ 6 000 en deux ans, à partir d’une cinquantaine au départ' } },
       { value: '+60 %', label: 'Recherches effectuées sur la plateforme', kind: 'metric' },
     ],
     name: 'Moove',

@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef, useCallback, memo, type RefObject } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, ExternalLink } from 'lucide-react';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import { allProjects } from '@/data/projects';
 import { projectImageSizes } from '@/data/projectImageSizes';
@@ -180,11 +180,19 @@ function ProjectResults({ results }: { results?: ProjectResult[] }) {
   return <>
         {results && results.length > 0 && (
           <section className="my-8 sm:my-10" aria-label="Résultats et objectifs du projet">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))]">
+            <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))]">
               {results.map((result) => (
-                <div key={result.value} className="rounded-2xl border border-black/15 bg-white/50 p-6 sm:p-8">
+                <div key={result.value} className="project-kpi-card min-w-0 rounded-2xl border border-black/15 bg-white/50 p-5 sm:p-6">
                   {result.kind !== 'target' && <p className="text-xs text-muted-foreground mb-4">{result.kind === 'metric' ? 'Résultat mesuré' : 'Livraison'}</p>}
-                  <p className={`${result.kind !== 'delivery' ? 'text-5xl sm:text-6xl' : 'text-3xl sm:text-4xl'} font-medium tracking-tight leading-tight break-words`}>{result.value}</p>
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                    <p className={`project-kpi-value font-medium tracking-tight leading-tight ${result.kind === 'delivery' ? 'break-words' : 'whitespace-nowrap'}`}>{result.kind === 'delivery' ? result.value : result.value.replace(/ /g, '\u00a0')}</p>
+                    {result.evolution && (
+                      <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-emerald-600/10 px-2.5 py-1.5 text-xs font-medium text-emerald-800 whitespace-nowrap" title={result.evolution.description} aria-label={result.evolution.description}>
+                        <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                        <span aria-hidden="true">{result.evolution.value.replace(/ /g, '\u00a0')}</span>
+                      </span>
+                    )}
+                  </div>
                   <p className="mt-3 max-w-xl text-base text-muted-foreground leading-relaxed">{result.label}</p>
                 </div>
               ))}

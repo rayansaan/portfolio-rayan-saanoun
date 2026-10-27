@@ -20,6 +20,7 @@ export interface ProjectResult {
   value: string;
   label: string;
   kind: 'metric' | 'delivery' | 'target';
+  evolution?: { value: string; description: string };
 }
 
 export interface Project {
