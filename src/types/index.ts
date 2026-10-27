@@ -20,6 +20,7 @@ export interface ProjectResult {
   value: string;
   label: string;
   kind: 'metric' | 'delivery' | 'target';
+  evolution?: { value: string; description: string };
 }
 
 export interface Project {
@@ -40,6 +41,13 @@ export interface Project {
   useCases?: string[];
   role?: string;
   team?: string[];
+  scope?: string;
+  audience?: string[];
+  collaboration?: {
+    introduction: string;
+    partners?: { name: string; contribution: string }[];
+    steps: { title: string; description: string }[];
+  };
   challenge?: string;
   statusQuo?: string | ProjectSection;
   process?: {

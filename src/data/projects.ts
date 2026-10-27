@@ -3,9 +3,30 @@ import type { Project } from '@/types';
 export const uxUiProjects: Project[] = [
   {
     id: 'moove',
+    role: 'Product Designer',
+    team: ['Fondateurs', 'CTO', 'Développeurs'],
+    scope: 'Recherche utilisateur, parcours, interfaces, prototypes et accompagnement du développement',
+    audience: ['Passagers', 'Opérateurs', 'Pilotes'],
+    collaboration: {
+      introduction: 'J’ai travaillé avec les fondateurs, le CTO et les développeurs pour faire évoluer la recherche de vols. Les échanges avec les passagers, les opérateurs et les pilotes nous ont aidés à préciser les besoins. Les retours de Michelin Air Services ont ensuite accompagné les tests et le déploiement.',
+      partners: [
+        { name: 'Utilisateurs', contribution: 'Comprendre les besoins des passagers, opérateurs et pilotes.' },
+        { name: 'Fondateurs', contribution: 'Relier les besoins identifiés aux priorités du produit.' },
+        { name: 'CTO et développeurs', contribution: 'Adapter les propositions aux contraintes de Bubble et accompagner leur mise en œuvre.' },
+        { name: 'Michelin Air Services', contribution: 'Recueillir les retours lors des tests et préparer le déploiement.' },
+      ],
+      steps: [
+        { title: 'Comprendre', description: 'Entretiens avec les utilisateurs et analyse des parcours existants.' },
+        { title: 'Prioriser', description: 'Choix des informations utiles pour comparer les trajets : temps, prix et impact écologique.' },
+        { title: 'Concevoir', description: 'Exploration du comparateur multimodal, des résultats et de la carte.' },
+        { title: 'Tester', description: 'Confrontation des propositions aux usages et recueil des retours.' },
+        { title: 'Accompagner', description: 'Échanges avec les développeurs et suivi des évolutions après déploiement.' },
+      ],
+    },
+
     results: [
-      { value: '3 000+', label: 'Entreprises qui font confiance à Moove après deux ans, contre une dizaine au départ', kind: 'metric' },
-      { value: '300 000', label: 'Utilisateurs après deux ans, contre une cinquantaine au départ', kind: 'metric' },
+      { value: '3 000+', label: 'Entreprises qui font confiance à Moove après deux ans', kind: 'metric', evolution: { value: '≈ ×300', description: 'Nombre d’entreprises multiplié par environ 300 en deux ans, à partir d’une dizaine au départ' } },
+      { value: '300 000', label: 'Utilisateurs après deux ans', kind: 'metric', evolution: { value: '≈ ×6 000', description: 'Nombre d’utilisateurs multiplié par environ 6 000 en deux ans, à partir d’une cinquantaine au départ' } },
       { value: '+60 %', label: 'Recherches effectuées sur la plateforme', kind: 'metric' },
     ],
     name: 'Moove',
@@ -81,6 +102,19 @@ Les retours ont également montré l’importance de la relation entre pilote et
   },
   {
     id: 'nash',
+    role: 'UX/UI Designer',
+    scope: 'Audit UX, recherche sur les usages, refonte de l’onboarding et prototype mobile',
+    audience: ['Nouveaux utilisateurs de Nash Dev'],
+    collaboration: {
+      introduction: 'Sur un sprint d’une semaine, j’ai concentré mon travail sur la prise en main de Nash Dev. L’audit du parcours et le sondage sur les usages ont orienté la conception vers le mobile. Le livrable était un parcours révisé et prototypé dans Figma.',
+      steps: [
+        { title: 'Auditer', description: 'Repérer les informations dupliquées et les difficultés de navigation.' },
+        { title: 'Interroger', description: 'Comprendre comment les nouveaux utilisateurs découvrent l’outil.' },
+        { title: 'Prioriser', description: 'Faire du premier usage sur mobile une priorité du sprint.' },
+        { title: 'Prototyper', description: 'Repenser le guidage et la navigation dans un prototype Figma.' },
+      ],
+    },
+
     results: [
       { value: '8 sur 10', label: 'L’objectif est de permettre aux nouveaux utilisateurs de terminer le parcours de prise en main sans aide.', kind: 'target' },
       { value: '−30 %', label: 'Nous visons une réduction du temps nécessaire pour réaliser la première action utile.', kind: 'target' },
@@ -186,6 +220,23 @@ La donnée utilisateur (UX Research) bat toujours l'intuition. Sans ce sondage r
   },
   {
     id: 'veeton',
+    role: 'UX/UI Designer',
+    team: ['Équipe fondatrice'],
+    scope: 'Analyse concurrentielle, direction visuelle, parcours et maquettes de la landing page',
+    audience: ['Marques de mode', 'Directions artistiques'],
+    collaboration: {
+      introduction: 'Pendant un mois à Station F, j’ai travaillé sur la manière de présenter la technologie de Veeton aux marques de mode. Les échanges avec l’équipe fondatrice et les sessions de brainstorming ont nourri la direction visuelle et la présentation des possibilités de personnalisation.',
+      partners: [
+        { name: 'Équipe fondatrice', contribution: 'Échanger sur le positionnement et la présentation des possibilités du produit.' },
+      ],
+      steps: [
+        { title: 'Comparer', description: 'Étudier Lalaland, Vmake AI et Botika ainsi que les codes des sites de mode.' },
+        { title: 'Cadrer', description: 'Identifier les informations nécessaires pour comprendre le service et garder le contrôle sur le rendu.' },
+        { title: 'Explorer', description: 'Travailler la hiérarchie des visuels, la typographie et les textes.' },
+        { title: 'Concevoir', description: 'Décliner la direction retenue dans les parcours et les maquettes.' },
+      ],
+    },
+
     results: [
       { value: '9 sur 10', label: 'L’objectif est que les visiteurs comprennent l’offre et les options de personnalisation.', kind: 'target' },
       { value: '5 %', label: 'Nous visons ce taux de demandes de démonstration parmi les visiteurs du site.', kind: 'target' },
@@ -284,6 +335,19 @@ Je remercie l'équipe fondatrice de Veeton et les résidents de Station F pour n
   },
   {
     id: 'rakoono',
+    role: 'UX/UI Designer',
+    scope: 'Analyse du marché, parcours, architecture de l’information et prototype interactif',
+    audience: ['Coachs', 'Recruteurs de football'],
+    collaboration: {
+      introduction: 'Le sprint portait sur la façon de rendre les données sportives plus accessibles aux coachs et aux recruteurs. Les sessions de brainstorming et l’étude des solutions existantes ont alimenté les parcours, puis un prototype interactif intégrant des mécaniques de gamification.',
+      steps: [
+        { title: 'Explorer', description: 'Étudier les solutions du marché et les besoins liés à l’analyse sportive.' },
+        { title: 'Structurer', description: 'Définir les fonctionnalités clés, les user stories et les parcours.' },
+        { title: 'Concevoir', description: 'Intégrer les récompenses, les défis et les progressions aux écrans.' },
+        { title: 'Prototyper', description: 'Assembler une expérience interactive dans Figma.' },
+      ],
+    },
+
     results: [
       { value: '8 sur 10', label: 'L’objectif est que les utilisateurs trouvent et comprennent une donnée sportive sans aide.', kind: 'target' },
       { value: '−40 %', label: 'Nous visons un accès plus rapide aux informations utiles aux coachs et aux recruteurs.', kind: 'target' },
