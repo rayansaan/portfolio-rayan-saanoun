@@ -436,8 +436,8 @@ export function ProjectDetail() {
             <ProjectFacts project={project} />
             <div className="sticky top-12 border-t border-black/20 pt-6">
               {hasMarkdown && project.markdownContent && <TableOfContents content={outlineContent} />}
+              <div className="mt-6 h-0.5 bg-black/10"><div className="h-full bg-black" style={{ width: `${scrollProgress}%` }} /></div>
               <ProjectNavigation nextProject={nextProject} />
-              <div className="mt-8 h-0.5 bg-black/10"><div className="h-full bg-black" style={{ width: `${scrollProgress}%` }} /></div>
             </div>
           </aside>
           <article className="min-w-0 max-w-[840px]">
