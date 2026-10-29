@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, ExternalLink } from 'lucide-react'
 import ReactMarkdown, { type Components } from 'react-markdown';
 import { allProjects } from '@/data/projects';
 import { projectImageSizes } from '@/data/projectImageSizes';
+import { Reveal } from '@/components/Reveal';
 import { GSAPFlipLightbox } from '@/components/GSAPFlipLightbox';
 import { generateStandardImageId } from '@/utils/generateId';
 import type { ImageDescription, ProjectResult, Project } from '@/types';
@@ -214,20 +215,20 @@ function ProjectFacts({ project }: { project: Project }) {
 function ProjectCollaboration({ collaboration }: { collaboration?: Project['collaboration'] }) {
   if (!collaboration) return null;
   return <section className="border-t border-black/15 mt-16 sm:mt-20 pt-8 sm:pt-10" aria-labelledby="comment-j-ai-travaille">
-    <h2 id="comment-j-ai-travaille" className="text-3xl sm:text-4xl font-medium tracking-tight mb-6 scroll-mt-28">Comment j’ai travaillé</h2>
-    <p className="text-base sm:text-lg leading-[1.8] text-[#110F0F]/75">{collaboration.introduction}</p>
+    <Reveal><h2 id="comment-j-ai-travaille" className="text-3xl sm:text-4xl font-medium tracking-tight mb-6 scroll-mt-28">Comment j’ai travaillé</h2>
+    <p className="text-base sm:text-lg leading-[1.8] text-[#110F0F]/75">{collaboration.introduction}</p></Reveal>
     {collaboration.partners?.length ? <div className="grid sm:grid-cols-2 gap-4 mt-8">
-      {collaboration.partners.map((partner) => <div key={partner.name} className="min-w-0 rounded-xl border border-black/10 bg-white/50 p-5">
+      {collaboration.partners.map((partner, index) => <Reveal key={partner.name} delay={index * 0.06} className="min-w-0 rounded-xl border border-black/10 bg-white/50 p-5">
         <h3 className="font-medium mb-2">{partner.name}</h3>
         <p className="text-sm text-muted-foreground leading-relaxed">{partner.contribution}</p>
-      </div>)}
+      </Reveal>)}
     </div> : null}
     <ol className={`grid sm:grid-cols-2 ${collaboration.steps.length === 5 ? 'xl:grid-cols-5' : 'xl:grid-cols-4'} gap-6 mt-10`} aria-label="Déroulement de la mission">
-      {collaboration.steps.map((step, index) => <li key={step.title} className="min-w-0 border-t border-black/25 pt-4">
+      {collaboration.steps.map((step, index) => <Reveal as="li" key={step.title} delay={index * 0.06} className="min-w-0 border-t border-black/25 pt-4">
         <span className="text-xs text-muted-foreground">{String(index + 1).padStart(2, '0')}</span>
         <h3 className="font-medium text-base mt-3 mb-2">{step.title}</h3>
         <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
-      </li>)}
+      </Reveal>)}
     </ol>
   </section>;
 }
@@ -455,7 +456,7 @@ export function ProjectDetail() {
       {otherProjects.length > 0 && (
         <section className="border-t border-black/15 px-4 sm:px-6 lg:px-12 py-16 sm:py-24">
           <div className="mx-auto max-w-[1184px]">
-            <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground mb-4">Continuer la visite</p>
+            <p className="text-sm tracking-normal text-muted-foreground mb-4">Continuer la visite</p>
             <h2 className="text-4xl sm:text-5xl font-medium tracking-tight mb-10">Autres projets</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {otherProjects.map((p) => (
