@@ -92,7 +92,7 @@ function TableOfContents({ content }: { content: string }) {
 
   return (
     <nav className="space-y-2">
-      <h3 className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wider">
+      <h3 className="text-sm font-medium text-muted-foreground mb-3 tracking-normal">
         Index
       </h3>
       <ul className="space-y-1.5">
@@ -409,7 +409,7 @@ export function ProjectDetail() {
 
       <main className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-12">
         <section className="pt-16 sm:pt-24 pb-10 sm:pb-16" aria-labelledby="case-title">
-          <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground mb-7">
+          <p className="text-xs tracking-normal text-muted-foreground mb-7">
             Étude de cas <span className="mx-2">/</span> {project.name}
           </p>
           <div className="max-w-5xl">

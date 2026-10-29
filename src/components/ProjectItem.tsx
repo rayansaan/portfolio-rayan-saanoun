@@ -41,7 +41,7 @@ export function ProjectItem({ project }: ProjectItemProps) {
         >
           {project.name}
         </h3>
-        <span className="text-xs uppercase tracking-widest text-muted-foreground shrink-0">Voir le projet ↗</span>
+        <span className="text-xs tracking-normal text-muted-foreground shrink-0">Voir le projet ↗</span>
         </div>
         
         <p className="text-base text-muted-foreground leading-relaxed min-h-[3rem] mb-4">
