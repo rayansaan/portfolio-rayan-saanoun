@@ -1,5 +1,5 @@
 .landing-shell{width:min(1200px,calc(100% - 48px));margin-inline:auto}
-.landing-label{font-size:11px;letter-spacing:normal;text-transform:uppercase;line-height:1.6;color:#646464;margin-bottom:24px}
+.landing-label{font-size:11px;letter-spacing:normal;text-transform:none;line-height:1.6;color:#646464;margin-bottom:24px}
 .landing-hero{min-height:92svh;padding-top:176px;padding-bottom:32px;display:flex;flex-direction:column;justify-content:space-between;gap:48px}
 .landing-hero h1{font-size:clamp(4.5rem,11vw,9rem);line-height:.9;letter-spacing:-.065em;font-weight:500;margin:0 0 48px}
 .landing-hero-bottom{display:flex;flex-direction:column;align-items:center;gap:28px}.landing-hero-bottom p{max-width:450px;font-size:clamp(1.15rem,2.4vw,1.5rem);line-height:1.5;letter-spacing:-.02em}

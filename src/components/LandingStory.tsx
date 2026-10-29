@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { LogoCarousel } from './LogoCarousel';
+import { Reveal } from './Reveal';
 import './landing.css';
 
 const services = [
@@ -40,8 +41,8 @@ export function LandingIntroduction() {
 
 export function LandingProcess() {
   return <section id="process" className="landing-shell landing-section" aria-labelledby="process-title">
-    <div className="landing-process-heading"><div><p className="landing-label">04 / Ma démarche en Product Design</p><h2 id="process-title" className="landing-section-title">Une méthode pour avancer.<br />Des retours pour ajuster.</h2></div><p>Un cadre qui s’adapte au projet, aux contraintes et aux retours du terrain.</p></div>
-    <ol className="landing-process">{steps.map(([title, text, output], index) => <li key={title}><span className="landing-label">0{index + 1}</span><h3>{title}</h3><div><p>{text}</p><p className="landing-process-output">{output}</p></div></li>)}</ol>
+    <Reveal className="landing-process-heading"><div><p className="landing-label">04 / Ma démarche en Product Design</p><h2 id="process-title" className="landing-section-title">Une méthode pour avancer.<br />Des retours pour ajuster.</h2></div><p>Un cadre qui s’adapte au projet, aux contraintes et aux retours du terrain.</p></Reveal>
+    <ol className="landing-process">{steps.map(([title, text, output], index) => <Reveal as="li" key={title} delay={index * 0.06}><span className="landing-label">0{index + 1}</span><h3>{title}</h3><div><p>{text}</p><p className="landing-process-output">{output}</p></div></Reveal>)}</ol>
   </section>;
 }
 
